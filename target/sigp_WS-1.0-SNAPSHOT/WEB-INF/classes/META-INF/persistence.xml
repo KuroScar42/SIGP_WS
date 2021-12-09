@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+  <!-- Define Persistence Unit -->
+  <persistence-unit name="sigp_PU" transaction-type="JTA">
+    <jta-data-source>jdbc/sigp</jta-data-source>
+    <class>cr.grupojf.sigp.sigp_ws.model.PruebaTabla1</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.Moneda</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.CuentasPagar</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.Personas</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.Usuarios</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.CierresCaja</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.Facturas</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.TipoCuentaPagar</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.DenominacionEfectivo</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.Proveedores</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.Efectivo</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.AperturaCaja</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.Empresas</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.OtrosValores</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.Creditos</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.Emisores</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.CuentasCobrar</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.MetodosPago</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.BodegasProductos</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.TipoCambio</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.Bodegas</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.Productos</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.Clientes</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.FacturasProductos</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.Roles</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.Lechones</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.Cerdos</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.Inseminacion</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.Pedidos</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.ProductosPedidos</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.Embarazos</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.Partos</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.0.50:3306/sigp_DB?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="sigp"/>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+      <property name="eclipselink.logging.level.sql" value="FINE"/>
+      <property name="eclipselink.logging.parameters" value="true"/>
+      <property name="eclipselink.logging.logger" value="JavaLogger"/>
+      <property name="eclipselink.logging.level" value="FINE"/>
+    </properties>
+  </persistence-unit>
+</persistence>
