@@ -25,9 +25,6 @@ public class PedidosDto {
 //        this.fechaPedido = p.getFechaPedido().toString();
         this.estado = p.getEstadoPedido();
         this.descripcion = p.getDescripcionPedido();
-//        if (p.getIdCliente() != null) {
-//            this.cliente = new ClientesDto(p.getIdCliente());
-//        }
         this.cliente = p.getCliente();
     }
 
@@ -78,14 +75,6 @@ public class PedidosDto {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
-//    public ClientesDto getCliente() {
-//        return cliente;
-//    }
-//
-//    public void setCliente(ClientesDto cliente) {
-//        this.cliente = cliente;
-//    }
 
     public String getCliente() {
         return cliente;
