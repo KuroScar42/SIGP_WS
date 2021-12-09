@@ -6,9 +6,7 @@ package cr.grupojf.sigp.sigp_ws.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -38,7 +35,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Pedidos.findByFechaEntrega", query = "SELECT p FROM Pedidos p WHERE p.fechaEntrega = :fechaEntrega"),
     @NamedQuery(name = "Pedidos.findByFechaPedido", query = "SELECT p FROM Pedidos p WHERE p.fechaPedido = :fechaPedido"),
     @NamedQuery(name = "Pedidos.findByEstadoPedido", query = "SELECT p FROM Pedidos p WHERE p.estadoPedido = :estadoPedido"),
-    @NamedQuery(name = "Pedidos.findByDescripcionPedido", query = "SELECT p FROM Pedidos p WHERE p.descripcionPedido = :descripcionPedido")})
+    @NamedQuery(name = "Pedidos.findByDescripcionPedido", query = "SELECT p FROM Pedidos p WHERE p.descripcionPedido = :descripcionPedido"),
+    @NamedQuery(name = "Pedidos.findByCliente", query = "SELECT p FROM Pedidos p WHERE p.cliente = :cliente")})
 public class Pedidos implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -68,11 +66,11 @@ public class Pedidos implements Serializable {
     @Size(max = 500)
     @Column(name = "DESCRIPCION_PEDIDO")
     private String descripcionPedido;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPedidos")
-    private List<ProductosPedidos> productosPedidosList;
-    @JoinColumn(name = "ID_CLIENTE", referencedColumnName = "ID_CLIENTE")
-    @ManyToOne
-    private Clientes idCliente;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 80)
+    @Column(name = "Cliente")
+    private String cliente;
     @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")
     @ManyToOne
     private Usuarios idUsuario;
@@ -84,11 +82,12 @@ public class Pedidos implements Serializable {
         this.idPedidos = idPedidos;
     }
 
-    public Pedidos(Integer idPedidos, String codigoPedido, Date fechaEntrega, String estadoPedido) {
+    public Pedidos(Integer idPedidos, String codigoPedido, Date fechaEntrega, String estadoPedido, String cliente) {
         this.idPedidos = idPedidos;
         this.codigoPedido = codigoPedido;
         this.fechaEntrega = fechaEntrega;
         this.estadoPedido = estadoPedido;
+        this.cliente = cliente;
     }
 
     public Integer getIdPedidos() {
@@ -139,20 +138,12 @@ public class Pedidos implements Serializable {
         this.descripcionPedido = descripcionPedido;
     }
 
-    public List<ProductosPedidos> getProductosPedidosList() {
-        return productosPedidosList;
+    public String getCliente() {
+        return cliente;
     }
 
-    public void setProductosPedidosList(List<ProductosPedidos> productosPedidosList) {
-        this.productosPedidosList = productosPedidosList;
-    }
-
-    public Clientes getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(Clientes idCliente) {
-        this.idCliente = idCliente;
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
     }
 
     public Usuarios getIdUsuario() {

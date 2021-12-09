@@ -80,8 +80,6 @@ public class Clientes implements Serializable {
     private int version;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCliente")
     private List<Facturas> facturasList;
-    @OneToMany(mappedBy = "idCliente")
-    private List<Pedidos> pedidosList;
     @JoinColumn(name = "ID_FACTURA", referencedColumnName = "ID_FACTURA")
     @ManyToOne(optional = false)
     private Facturas idFactura;
@@ -91,8 +89,6 @@ public class Clientes implements Serializable {
     @JoinColumn(name = "ID_PRESONA", referencedColumnName = "ID_PRESONA")
     @ManyToOne
     private Personas idPresona;
-    @OneToMany(mappedBy = "idCliente")
-    private List<Creditos> creditosList;
 
     public Clientes() {
     }
@@ -183,14 +179,6 @@ public class Clientes implements Serializable {
         this.facturasList = facturasList;
     }
 
-    public List<Pedidos> getPedidosList() {
-        return pedidosList;
-    }
-
-    public void setPedidosList(List<Pedidos> pedidosList) {
-        this.pedidosList = pedidosList;
-    }
-
     public Facturas getIdFactura() {
         return idFactura;
     }
@@ -213,14 +201,6 @@ public class Clientes implements Serializable {
 
     public void setIdPresona(Personas idPresona) {
         this.idPresona = idPresona;
-    }
-
-    public List<Creditos> getCreditosList() {
-        return creditosList;
-    }
-
-    public void setCreditosList(List<Creditos> creditosList) {
-        this.creditosList = creditosList;
     }
 
     @Override

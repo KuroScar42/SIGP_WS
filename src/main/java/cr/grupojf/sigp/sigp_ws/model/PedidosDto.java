@@ -16,7 +16,7 @@ public class PedidosDto {
     private String fechaPedido;
     private String estado;
     private String descripcion;
-    private ClientesDto cliente;
+    private String cliente;
 
     public PedidosDto(Pedidos p) {
         this.Id = p.getIdPedidos();
@@ -25,9 +25,10 @@ public class PedidosDto {
 //        this.fechaPedido = p.getFechaPedido().toString();
         this.estado = p.getEstadoPedido();
         this.descripcion = p.getDescripcionPedido();
-        if (p.getIdCliente() != null) {
-            this.cliente = new ClientesDto(p.getIdCliente());
-        }
+//        if (p.getIdCliente() != null) {
+//            this.cliente = new ClientesDto(p.getIdCliente());
+//        }
+        this.cliente = p.getCliente();
     }
 
     public Integer getId() {
@@ -78,12 +79,22 @@ public class PedidosDto {
         this.descripcion = descripcion;
     }
 
-    public ClientesDto getCliente() {
+//    public ClientesDto getCliente() {
+//        return cliente;
+//    }
+//
+//    public void setCliente(ClientesDto cliente) {
+//        this.cliente = cliente;
+//    }
+
+    public String getCliente() {
         return cliente;
     }
 
-    public void setCliente(ClientesDto cliente) {
+    public void setCliente(String cliente) {
         this.cliente = cliente;
     }
+    
+    
 
 }

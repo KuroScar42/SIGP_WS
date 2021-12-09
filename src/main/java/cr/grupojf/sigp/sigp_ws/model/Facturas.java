@@ -49,19 +49,13 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Facturas.findByObservacionesFactura", query = "SELECT f FROM Facturas f WHERE f.observacionesFactura = :observacionesFactura")})
 public class Facturas implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "ID_FACTURA")
-    private Integer idFactura;
     @Basic(optional = false)
     @NotNull
     @Lob
     @Column(name = "TIPO_FACTURA")
     private byte[] tipoFactura;
     @Basic(optional = false)
-    @NotNull
+    @NotNull()
     @Size(min = 1, max = 35)
     @Column(name = "REFERENCIA_FACTURA")
     private String referenciaFactura;
@@ -114,6 +108,12 @@ public class Facturas implements Serializable {
     @Size(min = 1, max = 500)
     @Column(name = "OBSERVACIONES_FACTURA")
     private String observacionesFactura;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID_FACTURA")
+    private Integer idFactura;
     @JoinColumn(name = "ID_APERTURA", referencedColumnName = "ID_APERTURA")
     @ManyToOne
     private AperturaCaja idApertura;
@@ -350,5 +350,6 @@ public class Facturas implements Serializable {
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Facturas[ idFactura=" + idFactura + " ]";
     }
+
     
 }

@@ -35,6 +35,8 @@
     <class>cr.grupojf.sigp.sigp_ws.model.ProductosPedidos</class>
     <class>cr.grupojf.sigp.sigp_ws.model.Embarazos</class>
     <class>cr.grupojf.sigp.sigp_ws.model.Partos</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.AperturaCajas</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.Monedas</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.0.50:3306/sigp_DB?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
