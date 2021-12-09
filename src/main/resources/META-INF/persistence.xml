@@ -4,7 +4,6 @@
   <persistence-unit name="sigp_PU" transaction-type="JTA">
     <jta-data-source>jdbc/sigp</jta-data-source>
     <class>cr.grupojf.sigp.sigp_ws.model.PruebaTabla1</class>
-    <class>cr.grupojf.sigp.sigp_ws.model.Moneda</class>
     <class>cr.grupojf.sigp.sigp_ws.model.CuentasPagar</class>
     <class>cr.grupojf.sigp.sigp_ws.model.Personas</class>
     <class>cr.grupojf.sigp.sigp_ws.model.Usuarios</class>
@@ -37,6 +36,7 @@
     <class>cr.grupojf.sigp.sigp_ws.model.Partos</class>
     <class>cr.grupojf.sigp.sigp_ws.model.AperturaCajas</class>
     <class>cr.grupojf.sigp.sigp_ws.model.Monedas</class>
+    <class>cr.grupojf.sigp.sigp_ws.model.CierresCajas</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.0.50:3306/sigp_DB?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

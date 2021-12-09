@@ -33,12 +33,6 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Monedas.findByEstadoMoneda", query = "SELECT m FROM Monedas m WHERE m.estadoMoneda = :estadoMoneda")})
 public class Monedas implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "ID_MONEDA")
-    private Integer idMoneda;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 8)
@@ -54,6 +48,15 @@ public class Monedas implements Serializable {
     @Size(min = 1, max = 1)
     @Column(name = "ESTADO_MONEDA")
     private String estadoMoneda;
+    @OneToMany(mappedBy = "idMoneda")
+    private List<DenominacionEfectivo> denominacionEfectivoList;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID_MONEDA")
+    private Integer idMoneda;
     @OneToMany(mappedBy = "idMoneda")
     private List<MetodosPago> metodosPagoList;
 
@@ -134,6 +137,14 @@ public class Monedas implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Monedas[ idMoneda=" + idMoneda + " ]";
+    }
+
+    public List<DenominacionEfectivo> getDenominacionEfectivoList() {
+        return denominacionEfectivoList;
+    }
+
+    public void setDenominacionEfectivoList(List<DenominacionEfectivo> denominacionEfectivoList) {
+        this.denominacionEfectivoList = denominacionEfectivoList;
     }
     
 }

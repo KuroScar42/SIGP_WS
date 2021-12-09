@@ -47,7 +47,7 @@ public class TipoCambio implements Serializable {
     private float ventaCambio;
     @JoinColumn(name = "ID_MONEDA", referencedColumnName = "ID_MONEDA")
     @ManyToOne
-    private Moneda idMoneda;
+    private Monedas idMoneda;
 
     public TipoCambio() {
     }
@@ -86,11 +86,11 @@ public class TipoCambio implements Serializable {
         this.ventaCambio = ventaCambio;
     }
 
-    public Moneda getIdMoneda() {
+    public Monedas getIdMoneda() {
         return idMoneda;
     }
 
-    public void setIdMoneda(Moneda idMoneda) {
+    public void setIdMoneda(Monedas idMoneda) {
         this.idMoneda = idMoneda;
     }
 

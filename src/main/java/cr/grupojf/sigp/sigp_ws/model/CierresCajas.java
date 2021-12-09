@@ -27,14 +27,14 @@ import javax.validation.constraints.Size;
  * @author sigp
  */
 @Entity
-@Table(name = "Cierres_Caja")
+@Table(name = "Cierres_Cajas")
 @NamedQueries({
-    @NamedQuery(name = "CierresCaja.findAll", query = "SELECT c FROM CierresCaja c"),
-    @NamedQuery(name = "CierresCaja.findByIdCierre", query = "SELECT c FROM CierresCaja c WHERE c.idCierre = :idCierre"),
-    @NamedQuery(name = "CierresCaja.findByCodigoCierre", query = "SELECT c FROM CierresCaja c WHERE c.codigoCierre = :codigoCierre"),
-    @NamedQuery(name = "CierresCaja.findByFechaCierre", query = "SELECT c FROM CierresCaja c WHERE c.fechaCierre = :fechaCierre"),
-    @NamedQuery(name = "CierresCaja.findByEstadoCierre", query = "SELECT c FROM CierresCaja c WHERE c.estadoCierre = :estadoCierre")})
-public class CierresCaja implements Serializable {
+    @NamedQuery(name = "CierresCajas.findAll", query = "SELECT c FROM CierresCajas c"),
+    @NamedQuery(name = "CierresCajas.findByIdCierre", query = "SELECT c FROM CierresCajas c WHERE c.idCierre = :idCierre"),
+    @NamedQuery(name = "CierresCajas.findByCodigoCierre", query = "SELECT c FROM CierresCajas c WHERE c.codigoCierre = :codigoCierre"),
+    @NamedQuery(name = "CierresCajas.findByFechaCierre", query = "SELECT c FROM CierresCajas c WHERE c.fechaCierre = :fechaCierre"),
+    @NamedQuery(name = "CierresCajas.findByEstadoCierre", query = "SELECT c FROM CierresCajas c WHERE c.estadoCierre = :estadoCierre")})
+public class CierresCajas implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -59,7 +59,7 @@ public class CierresCaja implements Serializable {
     private String estadoCierre;
     @JoinColumn(name = "ID_APERTURA", referencedColumnName = "ID_APERTURA")
     @ManyToOne
-    private AperturaCaja idApertura;
+    private AperturaCajas idApertura;
     @JoinColumn(name = "ID_EFECTIVO", referencedColumnName = "ID_EFECTIVO")
     @ManyToOne
     private Efectivo idEfectivo;
@@ -67,14 +67,14 @@ public class CierresCaja implements Serializable {
     @ManyToOne
     private OtrosValores idValores;
 
-    public CierresCaja() {
+    public CierresCajas() {
     }
 
-    public CierresCaja(Integer idCierre) {
+    public CierresCajas(Integer idCierre) {
         this.idCierre = idCierre;
     }
 
-    public CierresCaja(Integer idCierre, String codigoCierre, Date fechaCierre, String estadoCierre) {
+    public CierresCajas(Integer idCierre, String codigoCierre, Date fechaCierre, String estadoCierre) {
         this.idCierre = idCierre;
         this.codigoCierre = codigoCierre;
         this.fechaCierre = fechaCierre;
@@ -113,11 +113,11 @@ public class CierresCaja implements Serializable {
         this.estadoCierre = estadoCierre;
     }
 
-    public AperturaCaja getIdApertura() {
+    public AperturaCajas getIdApertura() {
         return idApertura;
     }
 
-    public void setIdApertura(AperturaCaja idApertura) {
+    public void setIdApertura(AperturaCajas idApertura) {
         this.idApertura = idApertura;
     }
 
@@ -147,10 +147,10 @@ public class CierresCaja implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CierresCaja)) {
+        if (!(object instanceof CierresCajas)) {
             return false;
         }
-        CierresCaja other = (CierresCaja) object;
+        CierresCajas other = (CierresCajas) object;
         if ((this.idCierre == null && other.idCierre != null) || (this.idCierre != null && !this.idCierre.equals(other.idCierre))) {
             return false;
         }
@@ -159,7 +159,7 @@ public class CierresCaja implements Serializable {
 
     @Override
     public String toString() {
-        return "cr.grupojf.sigp.sigp_ws.model.CierresCaja[ idCierre=" + idCierre + " ]";
+        return "cr.grupojf.sigp.sigp_ws.model.CierresCajas[ idCierre=" + idCierre + " ]";
     }
     
 }

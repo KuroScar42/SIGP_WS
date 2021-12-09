@@ -62,7 +62,7 @@ public class MetodosPago implements Serializable {
     private int versionPago;
     @JoinColumn(name = "ID_MONEDA", referencedColumnName = "ID_MONEDA")
     @ManyToOne
-    private Moneda idMoneda;
+    private Monedas idMoneda;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMetodo")
     private List<Facturas> facturasList;
     @OneToMany(mappedBy = "idMetodo")
@@ -122,11 +122,11 @@ public class MetodosPago implements Serializable {
         this.versionPago = versionPago;
     }
 
-    public Moneda getIdMoneda() {
+    public Monedas getIdMoneda() {
         return idMoneda;
     }
 
-    public void setIdMoneda(Moneda idMoneda) {
+    public void setIdMoneda(Monedas idMoneda) {
         this.idMoneda = idMoneda;
     }
 

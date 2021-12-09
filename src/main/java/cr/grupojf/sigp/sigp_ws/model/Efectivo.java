@@ -48,7 +48,7 @@ public class Efectivo implements Serializable {
     @Column(name = "TOTAL_EFECTIVO")
     private int totalEfectivo;
     @OneToMany(mappedBy = "idEfectivo")
-    private List<CierresCaja> cierresCajaList;
+    private List<CierresCajas> cierresCajasList;
     @JoinColumn(name = "ID_DENOMINACION", referencedColumnName = "ID_DENOMINACION")
     @ManyToOne
     private DenominacionEfectivo idDenominacion;
@@ -90,12 +90,12 @@ public class Efectivo implements Serializable {
         this.totalEfectivo = totalEfectivo;
     }
 
-    public List<CierresCaja> getCierresCajaList() {
-        return cierresCajaList;
+    public List<CierresCajas> getCierresCajasList() {
+        return cierresCajasList;
     }
 
-    public void setCierresCajaList(List<CierresCaja> cierresCajaList) {
-        this.cierresCajaList = cierresCajaList;
+    public void setCierresCajasList(List<CierresCajas> cierresCajasList) {
+        this.cierresCajasList = cierresCajasList;
     }
 
     public DenominacionEfectivo getIdDenominacion() {

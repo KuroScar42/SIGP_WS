@@ -48,7 +48,7 @@ public class OtrosValores implements Serializable {
     @Column(name = "MONTO_TOTAL")
     private float montoTotal;
     @OneToMany(mappedBy = "idValores")
-    private List<CierresCaja> cierresCajaList;
+    private List<CierresCajas> cierresCajasList;
     @JoinColumn(name = "ID_METODO", referencedColumnName = "ID_METODO")
     @ManyToOne
     private MetodosPago idMetodo;
@@ -90,12 +90,12 @@ public class OtrosValores implements Serializable {
         this.montoTotal = montoTotal;
     }
 
-    public List<CierresCaja> getCierresCajaList() {
-        return cierresCajaList;
+    public List<CierresCajas> getCierresCajasList() {
+        return cierresCajasList;
     }
 
-    public void setCierresCajaList(List<CierresCaja> cierresCajaList) {
-        this.cierresCajaList = cierresCajaList;
+    public void setCierresCajasList(List<CierresCajas> cierresCajasList) {
+        this.cierresCajasList = cierresCajasList;
     }
 
     public MetodosPago getIdMetodo() {

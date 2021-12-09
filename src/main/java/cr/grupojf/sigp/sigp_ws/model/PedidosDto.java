@@ -4,6 +4,8 @@
  */
 package cr.grupojf.sigp.sigp_ws.model;
 
+import java.util.Date;
+
 /**
  *
  * @author sigp
@@ -12,8 +14,8 @@ public class PedidosDto {
 
     private Integer Id;
     private String codigoPedido;
-    private String fechaEntrega;
-    private String fechaPedido;
+    private Date fechaEntrega;
+    private Date fechaPedido;
     private String estado;
     private String descripcion;
     private String cliente;
@@ -21,13 +23,10 @@ public class PedidosDto {
     public PedidosDto(Pedidos p) {
         this.Id = p.getIdPedidos();
         this.codigoPedido = p.getCodigoPedido();
-//        this.fechaEntrega = p.getFechaEntrega().toString();
-//        this.fechaPedido = p.getFechaPedido().toString();
+        this.fechaEntrega = p.getFechaEntrega();
+        this.fechaPedido = p.getFechaPedido();
         this.estado = p.getEstadoPedido();
         this.descripcion = p.getDescripcionPedido();
-//        if (p.getIdCliente() != null) {
-//            this.cliente = new ClientesDto(p.getIdCliente());
-//        }
         this.cliente = p.getCliente();
     }
 
@@ -47,21 +46,23 @@ public class PedidosDto {
         this.codigoPedido = codigoPedido;
     }
 
-    public String getFechaEntrega() {
+    public Date getFechaEntrega() {
         return fechaEntrega;
     }
 
-    public void setFechaEntrega(String fechaEntrega) {
+    public void setFechaEntrega(Date fechaEntrega) {
         this.fechaEntrega = fechaEntrega;
     }
 
-    public String getFechaPedido() {
+    public Date getFechaPedido() {
         return fechaPedido;
     }
 
-    public void setFechaPedido(String fechaPedido) {
+    public void setFechaPedido(Date fechaPedido) {
         this.fechaPedido = fechaPedido;
     }
+    
+    
 
     public String getEstado() {
         return estado;
@@ -78,14 +79,6 @@ public class PedidosDto {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
-//    public ClientesDto getCliente() {
-//        return cliente;
-//    }
-//
-//    public void setCliente(ClientesDto cliente) {
-//        this.cliente = cliente;
-//    }
 
     public String getCliente() {
         return cliente;
