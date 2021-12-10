@@ -40,7 +40,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Productos.findProductosByBodega", query = "SELECT p FROM Bodegas b join b.bodegasProductosList bp join bp.idProducto p WHERE p.estado = 'A' and b.idBodega = :idBodega"),
     @NamedQuery(name = "Productos.findProductosByBodegaComplete", query = "SELECT p,bp FROM Bodegas b join b.bodegasProductosList bp join bp.idProducto p WHERE b.idBodega = :idBodega and p.estado = 'A'"),
     @NamedQuery(name = "Productos.findProductoByBodega", query = "SELECT p,bp FROM Bodegas b join b.bodegasProductosList bp join bp.idProducto p WHERE p.estado = 'A' and b.idBodega = :idBodega and p.codigoInterno = :codigo"),
-    @NamedQuery(name = "Productos.findProductoByPedido", query = "SELECT p,pl.cantidad FROM Productos p join p.productosPedidosList pl join pl.idPedidos pe where pe.idPedidos = :pedidoId"),
+    @NamedQuery(name = "Productos.findProductoByPedido", query = "SELECT p,pl.cantidad,pe FROM Productos p join p.productosPedidosList pl join pl.idPedidos pe where pe.idPedidos = :pedidoId"),
     @NamedQuery(name = "Productos.findByNombreProducto", query = "SELECT p FROM Productos p WHERE p.nombreProducto = :nombreProducto"),
     @NamedQuery(name = "Productos.findByDescripcionProducto", query = "SELECT p FROM Productos p WHERE p.descripcionProducto = :descripcionProducto"),
     @NamedQuery(name = "Productos.findByUnidadEmbalage", query = "SELECT p FROM Productos p WHERE p.unidadEmbalage = :unidadEmbalage"),
@@ -126,6 +126,20 @@ public class Productos implements Serializable {
         this.codigoCabys = codigoCabys;
         this.estado = estado;
         this.version = version;
+    }
+    
+    public Productos(ProductosDto p) {
+        this.idProducto = p.getId();
+        actualizarProducto(p);
+    }
+    
+    public void actualizarProducto(ProductosDto p) {
+        this.nombreProducto = p.getNombre();
+        this.codigoInterno =p.getCodigoInterno();
+        this.unidadEmbalage = p.getUnidadEmbalage();
+        this.precioCosto = p.getCosto();
+        this.codigoCabys = p.getCodigoCabys();
+        this.estado = p.getEstado();
     }
 
     public Integer getIdProducto() {

@@ -21,6 +21,11 @@ public class BodegasProductosDto {
         this.unidadMedida = bp.getUnidadMedida();
     }
 
+    public BodegasProductosDto() {
+    }
+    
+    
+
     public Integer getId() {
         return id;
     }

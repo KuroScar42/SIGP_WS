@@ -34,6 +34,9 @@ public class ClientesDto {
         }
     }
 
+    public ClientesDto() {
+    }
+
     public Integer getId() {
         return id;
     }

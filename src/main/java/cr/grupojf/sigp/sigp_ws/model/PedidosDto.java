@@ -5,6 +5,7 @@
 package cr.grupojf.sigp.sigp_ws.model;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -19,6 +20,9 @@ public class PedidosDto {
     private String estado;
     private String descripcion;
     private String cliente;
+    private List<ProductosPedidosDto> productosPedido;
+    private List<ProductosPedidosDto> eliminados;
+    private PersonasDto persona;
 
     public PedidosDto(Pedidos p) {
         this.Id = p.getIdPedidos();
@@ -28,7 +32,14 @@ public class PedidosDto {
         this.estado = p.getEstadoPedido();
         this.descripcion = p.getDescripcionPedido();
         this.cliente = p.getCliente();
+        if (p.getIdUsuario() != null) {
+            this.persona = new PersonasDto(p.getIdUsuario().getIdPresona());
+        }
     }
+
+    public PedidosDto() {
+    }
+    
 
     public Integer getId() {
         return Id;
@@ -87,6 +98,32 @@ public class PedidosDto {
     public void setCliente(String cliente) {
         this.cliente = cliente;
     }
+
+    public List<ProductosPedidosDto> getProductosPedido() {
+        return productosPedido;
+    }
+
+    public void setProductosPedido(List<ProductosPedidosDto> productosPedido) {
+        this.productosPedido = productosPedido;
+    }
+
+    public PersonasDto getPersona() {
+        return persona;
+    }
+
+    public void setPersona(PersonasDto persona) {
+        this.persona = persona;
+    }
+
+    public List<ProductosPedidosDto> getEliminados() {
+        return eliminados;
+    }
+
+    public void setEliminados(List<ProductosPedidosDto> eliminados) {
+        this.eliminados = eliminados;
+    }
+    
+    
     
     
 

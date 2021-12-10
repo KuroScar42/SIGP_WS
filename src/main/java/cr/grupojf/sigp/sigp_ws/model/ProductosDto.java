@@ -47,6 +47,10 @@ public class ProductosDto {
         return id;
     }
 
+    public ProductosDto() {
+    }
+    
+
     public void setId(Integer id) {
         this.id = id;
     }

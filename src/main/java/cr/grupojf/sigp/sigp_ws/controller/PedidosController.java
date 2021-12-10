@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -70,4 +71,20 @@ public class PedidosController {
         }
     }
     
+    @POST
+    @Path("/guardarPedido")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response guardarPedidos(PedidosDto ped) {
+        try {
+            Respuesta respuesta = service.guardarPedido(ped);
+            if (!respuesta.getEstado()) {
+                return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
+            }
+            return Response.ok((PedidosDto) respuesta.getResultado("pedido")).build();
+        }catch (Exception ex) {
+            Logger.getLogger(PedidosController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al guardar pedido").build();
+        }
+    }
 }

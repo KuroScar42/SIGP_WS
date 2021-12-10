@@ -7,6 +7,8 @@ package cr.grupojf.sigp.sigp_ws.service;
 import cr.grupojf.sigp.sigp_ws.model.BodegaDto;
 import cr.grupojf.sigp.sigp_ws.model.Bodegas;
 import cr.grupojf.sigp.sigp_ws.model.BodegasProductos;
+import cr.grupojf.sigp.sigp_ws.model.Pedidos;
+import cr.grupojf.sigp.sigp_ws.model.PedidosDto;
 import cr.grupojf.sigp.sigp_ws.model.ProductosDto;
 import cr.grupojf.sigp.sigp_ws.model.Productos;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
@@ -105,6 +107,5 @@ public class ProductosService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los inventarios.", "getBodegas " + ex.getMessage());
         }
     }
-    
     
 }

@@ -8,6 +8,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -31,7 +33,7 @@ public class ProductosPedidos implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_PRODUCTOS_PEDIDOS")
     private Integer idProductosPedidos;
     @Basic(optional = false)
@@ -55,6 +57,17 @@ public class ProductosPedidos implements Serializable {
     public ProductosPedidos(Integer idProductosPedidos, int cantidad) {
         this.idProductosPedidos = idProductosPedidos;
         this.cantidad = cantidad;
+    }
+
+    public ProductosPedidos(ProductosPedidosDto pp) {
+        this.idProductosPedidos = pp.getId();
+        actualizarProductoPedido(pp);
+    }
+    
+    public void actualizarProductoPedido(ProductosPedidosDto pp) {
+        this.cantidad = pp.getCantidad();
+        this.idPedidos = new Pedidos(pp.getPedido());
+        this.idProducto = new Productos(pp.getProducto());
     }
 
     public Integer getIdProductosPedidos() {
@@ -113,5 +126,7 @@ public class ProductosPedidos implements Serializable {
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.ProductosPedidos[ idProductosPedidos=" + idProductosPedidos + " ]";
     }
+
+    
     
 }

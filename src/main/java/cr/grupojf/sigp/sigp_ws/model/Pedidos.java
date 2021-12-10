@@ -90,6 +90,20 @@ public class Pedidos implements Serializable {
         this.cliente = cliente;
     }
 
+    public Pedidos(PedidosDto pedidoDto) {
+        this.idPedidos = pedidoDto.getId();
+        actualizarPedido(pedidoDto);
+    }
+    
+    public void actualizarPedido(PedidosDto p) {
+        this.codigoPedido = p.getCodigoPedido();
+        this.descripcionPedido = p.getDescripcion();
+        this.estadoPedido = p.getEstado();
+        this.fechaEntrega = p.getFechaEntrega();
+        this.fechaPedido = p.getFechaPedido();
+        this.cliente=p.getCliente();
+    }
+
     public Integer getIdPedidos() {
         return idPedidos;
     }

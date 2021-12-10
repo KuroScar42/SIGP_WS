@@ -10,15 +10,35 @@ package cr.grupojf.sigp.sigp_ws.model;
  */
 // servira como el detalle del pedido
 public class ProductosPedidosDto {
+    private Integer id;
     private Integer cantidad;
     private ProductosDto producto;
+    private PedidosDto pedido;
 
-    public ProductosPedidosDto(Integer cantidad, Productos producto) {
+    public ProductosPedidosDto(Integer cantidad, Productos producto,Pedidos pedido) {
         this.cantidad = cantidad;
         if (producto != null) {
             this.producto = new ProductosDto(producto);
         }
+        if (pedido != null) {
+            this.pedido = new PedidosDto(pedido);
+        }
     }
+    
+    public ProductosPedidosDto(ProductosPedidos p){
+        this.id = p.getIdProductosPedidos();
+        this.cantidad = p.getCantidad();
+        if (producto != null) {
+            this.producto = new ProductosDto(p.getIdProducto());
+        }
+        if (pedido != null) {
+            this.pedido = new PedidosDto(p.getIdPedidos());
+        }
+    }
+
+    public ProductosPedidosDto() {
+    }
+    
 
     public Integer getCantidad() {
         return cantidad;
@@ -35,6 +55,23 @@ public class ProductosPedidosDto {
     public void setProducto(ProductosDto producto) {
         this.producto = producto;
     }
+
+    public PedidosDto getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(PedidosDto pedido) {
+        this.pedido = pedido;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    
     
     
 }

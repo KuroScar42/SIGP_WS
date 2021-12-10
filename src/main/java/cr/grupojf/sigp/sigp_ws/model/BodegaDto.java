@@ -23,6 +23,10 @@ public class BodegaDto {
         this.estado = bod.getEstado();
     }
 
+    public BodegaDto() {
+    }
+    
+
     public Integer getId() {
         return Id;
     }
