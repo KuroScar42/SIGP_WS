@@ -90,6 +90,9 @@ public class PedidosServices {
                 pp.setPedido(new PedidosDto(pedido));
                 guardarProductoPedido(pp);
             }
+            for (ProductosPedidosDto pp : pedidoDto.getEliminados()) {
+                eliminarProductoPedido(pp);
+            }
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Pedido", new PedidosDto(pedido));
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar los pedidos.", e);
@@ -113,6 +116,29 @@ public class PedidosServices {
             }
             em.flush();
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "productoPedido", new ProductosPedidosDto(productoPedido));
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al guardar el producto pedido", e);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el producto pedido", "guardarProductoPedido " + e.getMessage());
+        }
+    }
+    
+    /** 
+     * Elimina el ProductoPedido a travez del id
+     **/
+    public Respuesta eliminarProductoPedido(ProductosPedidosDto pp){
+        try {
+            ProductosPedidos productoPedido;
+            if (pp.getId() != null && pp.getId() > 0) {
+                productoPedido = em.find(ProductosPedidos.class, pp.getId());
+                if (productoPedido == null) {
+                    return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encontro el productoPedido especificado", "eliminarProductoPedido NoResultException");
+                }
+                em.remove(pp);
+            } else {
+                return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encontro el productoPedido especificado", "eliminarProductoPedido NoResultException");
+            }
+            em.flush();
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "");
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar el producto pedido", e);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el producto pedido", "guardarProductoPedido " + e.getMessage());
