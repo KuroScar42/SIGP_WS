@@ -71,6 +71,23 @@ public class ProductosService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los productos del inventario.", "getProductosByBodega " + ex.getMessage());
         }
     }
+    public Respuesta getProductosByBodegaComplSR(Integer bodegaId) {
+        try {
+            Query query = em.createNamedQuery("Productos.findProductosByBodegaCompleteSR", Bodegas.class);
+            query.setParameter("idBodega", bodegaId);
+            
+            List<Object[]> productos = query.getResultList();
+            List<ProductosDto> productosDtoList = new ArrayList<>();
+
+            for (Object[] producto : productos) {
+                productosDtoList.add(new ProductosDto((Productos)producto[0],(BodegasProductos)producto[1]));
+            }
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "productos", productosDtoList);
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar los productos del inventario.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los productos del inventario.", "getProductosByBodega " + ex.getMessage());
+        }
+    }
 
     public Respuesta getProductoByBodega(Integer bodegaId, String codigoProd) {
         try {

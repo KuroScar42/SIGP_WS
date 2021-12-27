@@ -72,6 +72,26 @@ public class ProductosController {
         }
     }
     
+    //SR significa "Sin restricciones"//
+    @GET
+    @Path("/getProductosByBodegaComplSR/{bodegaId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getProductosByBodegaComplSR(@PathParam("bodegaId") Integer bodegaId) {
+        try {
+            Respuesta respuesta = service.getProductosByBodegaComplSR(bodegaId);
+            if (!respuesta.getEstado()) {
+                return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
+            }
+            List resultado = (List) respuesta.getResultado("productos");
+            return Response.ok(new GenericEntity<List<ProductosDto>>(resultado) {
+            }).build();
+        } catch (Exception ex) {
+            Logger.getLogger(ProductosController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar los productos").build();
+        }
+    }
+    
     
     
     @GET

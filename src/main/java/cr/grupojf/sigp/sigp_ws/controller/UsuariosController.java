@@ -53,7 +53,7 @@ public class UsuariosController {
     @Path("/getAllUsuarios")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getProductosByBodega() {
+    public Response getAllUsuarios() {
         try {
             Respuesta respuesta = service.getAllUsuarios();
             if (!respuesta.getEstado()) {
