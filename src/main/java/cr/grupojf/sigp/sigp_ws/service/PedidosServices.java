@@ -50,7 +50,9 @@ public class PedidosServices {
         }
     }
     
-    // obtiene todos los productos que estan sujetos a un pedido
+    /**
+     * Obtiene todos los productos que estan sujetos a un pedido 
+     **/
     public Respuesta getProductosByPedidos(Integer pedidoId){
         try {
             Query query = em.createNamedQuery("Productos.findProductoByPedido", Productos.class);
