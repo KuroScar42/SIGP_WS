@@ -61,7 +61,7 @@ public class PedidosServices {
             List<ProductosPedidosDto> productosDtoList = new ArrayList<>();
 
             for (Object[] producto : productos) {
-                productosDtoList.add(new ProductosPedidosDto((Integer) producto[1],(Productos)producto[0],(Pedidos)producto[2]));
+                productosDtoList.add(new ProductosPedidosDto((ProductosPedidos) producto[1],(Productos)producto[0],(Pedidos)producto[2]));
             }
 
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "productos", productosDtoList);
@@ -135,7 +135,7 @@ public class PedidosServices {
                 if (productoPedido == null) {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encontro el productoPedido especificado", "eliminarProductoPedido NoResultException");
                 }
-                em.remove(pp);
+                em.remove(productoPedido);
             } else {
                 return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encontro el productoPedido especificado", "eliminarProductoPedido NoResultException");
             }

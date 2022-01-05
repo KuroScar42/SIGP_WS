@@ -1,54 +1,56 @@
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\JAXRSConfiguration.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\controller\MetodoPagoController.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\CuentasCobrar.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\util\CodigoRespuesta.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\Cerdos.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\AperturaCajas.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\Embarazos.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\Roles.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\BodegasProductos.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\CerdosDto.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\MetodosPagoDto.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\AperturaCajasDto.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\ClientesDto.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\service\PedidosServices.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\Lechones.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\Pedidos.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\TipoCuentaPagar.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\Facturas.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\PedidosDto.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\util\Respuesta.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\BodegasProductosDto.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\CierresCajasDto.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\service\UsuariosService.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\Efectivo.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\FacturasProductos.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\PersonasDto.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\Personas.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\Monedas.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\CierresCajas.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\Bodegas.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\UsuarioDto.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\Clientes.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\Proveedores.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\Productos.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\controller\PedidosController.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\Partos.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\BodegaDto.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\CuentasPagar.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\service\MetodoPagoService.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\Emisores.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\Inseminacion.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\DenominacionEfectivo.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\ProductosDto.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\OtrosValores.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\MetodosPago.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\service\ProductosService.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\Creditos.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\ProductosPedidosDto.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\Usuarios.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\Empresas.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\ProductosPedidos.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\model\TipoCambio.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\controller\ProductosController.java
-D:\Hernan\Desktop\Ingenieria de sistemas II\Proyecto\SIGP_WS\src\main\java\cr\grupojf\sigp\sigp_ws\controller\UsuariosController.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Clientes.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Empresas.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/util/CodigoRespuesta.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/PedidosDto.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/AperturaCajas.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/service/MetodoPagoService.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/ProductosDto.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Emisores.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Bodegas.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/BodegasProductos.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/OtrosValores.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Cerdos.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Monedas.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/BodegaDto.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Facturas.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Partos.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/JAXRSConfiguration.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/TipoCambio.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/controller/PedidosController.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Proveedores.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/util/Respuesta.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/CuentasCobrarDto.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Lechones.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/ProductosPedidosDto.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/service/PedidosServices.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Usuarios.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/CierresCajas.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/controller/ProductosController.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/UsuarioDto.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Roles.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/BodegasProductosDto.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/ProductosPedidos.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/CerdosDto.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/MetodosPago.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/AperturaCajasDto.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Efectivo.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Inseminacion.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/controller/UsuariosController.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/CreditosDto.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Pedidos.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/FacturasProductos.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/CuentasPagar.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Creditos.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/ClientesDto.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/TipoCuentaPagar.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/CuentasCobrar.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/DenominacionEfectivo.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/CierresCajasDto.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/controller/MetodoPagoController.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Personas.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/PersonasDto.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/service/UsuariosService.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/MetodosPagoDto.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Embarazos.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/service/ProductosService.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Productos.java

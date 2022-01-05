@@ -4,6 +4,7 @@
  */
 package cr.grupojf.sigp.sigp_ws.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class PedidosDto {
     }
 
     public PedidosDto() {
+        eliminados = new ArrayList<>();
     }
     
 
