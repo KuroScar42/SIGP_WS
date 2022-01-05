@@ -53,11 +53,11 @@ public class FacturasProductos implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "PRECIO_sIVA")
-    private float pRECIOsIVA;
+    private float preciosIva;
     @Basic(optional = false)
     @NotNull
     @Column(name = "PRECIO_cIVA")
-    private float pRECIOcIVA;
+    private float preciocIva;
     @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO")
     @ManyToOne(optional = false)
     private Productos idProducto;
@@ -77,8 +77,8 @@ public class FacturasProductos implements Serializable {
         this.cantidadProducto = cantidadProducto;
         this.descuentoProducto = descuentoProducto;
         this.ivaProcucto = ivaProcucto;
-        this.pRECIOsIVA = pRECIOsIVA;
-        this.pRECIOcIVA = pRECIOcIVA;
+        this.preciosIva = pRECIOsIVA;
+        this.preciocIva = pRECIOcIVA;
     }
 
     public Integer getIdFacturasProductos() {
@@ -113,20 +113,20 @@ public class FacturasProductos implements Serializable {
         this.ivaProcucto = ivaProcucto;
     }
 
-    public float getPRECIOsIVA() {
-        return pRECIOsIVA;
+    public float getPreciosIva() {
+        return preciosIva;
     }
 
-    public void setPRECIOsIVA(float pRECIOsIVA) {
-        this.pRECIOsIVA = pRECIOsIVA;
+    public void setPreciosIva(float preciosIva) {
+        this.preciosIva = preciosIva;
     }
 
-    public float getPRECIOcIVA() {
-        return pRECIOcIVA;
+    public float getPreciocIva() {
+        return preciocIva;
     }
 
-    public void setPRECIOcIVA(float pRECIOcIVA) {
-        this.pRECIOcIVA = pRECIOcIVA;
+    public void setPreciocIva(float preciocIva) {
+        this.preciocIva = preciocIva;
     }
 
     public Productos getIdProducto() {
