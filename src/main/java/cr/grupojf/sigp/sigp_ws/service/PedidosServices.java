@@ -29,10 +29,11 @@ import javax.persistence.Query;
 @Stateless
 @LocalBean
 public class PedidosServices {
+
     private static final Logger LOG = Logger.getLogger(PedidosServices.class.getName());
     @PersistenceContext(unitName = "sigp_PU")
     protected EntityManager em;
-    
+
     public Respuesta getPedidos() {
         try {
             Query query = em.createNamedQuery("Pedidos.findAll", Pedidos.class);
@@ -49,11 +50,12 @@ public class PedidosServices {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los pedidos.", "getPedidos " + ex.getMessage());
         }
     }
-    
+
     /**
-     * Obtiene todos los productos que estan sujetos a un pedido 
-     **/
-    public Respuesta getProductosByPedidos(Integer pedidoId){
+     * Obtiene todos los productos que estan sujetos a un pedido
+     *
+     */
+    public Respuesta getProductosByPedidos(Integer pedidoId) {
         try {
             Query query = em.createNamedQuery("Productos.findProductoByPedido", Productos.class);
             query.setParameter("pedidoId", pedidoId);
@@ -61,7 +63,9 @@ public class PedidosServices {
             List<ProductosPedidosDto> productosDtoList = new ArrayList<>();
 
             for (Object[] producto : productos) {
-                productosDtoList.add(new ProductosPedidosDto((ProductosPedidos) producto[1],(Productos)producto[0],(Pedidos)producto[2]));
+                ProductosPedidosDto pp = new ProductosPedidosDto((ProductosPedidos) producto[1], (Productos) producto[0], (Pedidos) producto[2]);
+                pp.asignarBodega(((Productos) producto[0]).getBodegasProductosList());
+                productosDtoList.add(pp);
             }
 
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "productos", productosDtoList);
@@ -70,7 +74,7 @@ public class PedidosServices {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los productos del pedido.", "getProductosByPedidos " + ex.getMessage());
         }
     }
-    
+
     public Respuesta guardarPedido(PedidosDto pedidoDto) {
         try {
             Pedidos pedido;
@@ -87,13 +91,17 @@ public class PedidosServices {
                 em.persist(pedido);
             }
             em.flush();
-            for (ProductosPedidosDto pp : pedidoDto.getProductosPedido()) {
-                pp.setProducto(new ProductosDto(em.getReference(Productos.class, pp.getProducto().getId())));
-                pp.setPedido(new PedidosDto(pedido));
-                guardarProductoPedido(pp);
+            if (pedidoDto.getProductosPedido() != null) {
+                for (ProductosPedidosDto pp : pedidoDto.getProductosPedido()) {
+                    pp.setProducto(new ProductosDto(em.getReference(Productos.class, pp.getProducto().getId())));
+                    pp.setPedido(new PedidosDto(pedido));
+                    guardarProductoPedido(pp);
+                }
             }
-            for (ProductosPedidosDto pp : pedidoDto.getEliminados()) {
-                eliminarProductoPedido(pp);
+            if (pedidoDto.getEliminados() != null) {
+                for (ProductosPedidosDto pp : pedidoDto.getEliminados()) {
+                    eliminarProductoPedido(pp);
+                }
             }
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Pedido", new PedidosDto(pedido));
         } catch (Exception e) {
@@ -101,7 +109,7 @@ public class PedidosServices {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar los pedidos.", "guardarPedido " + e.getMessage());
         }
     }
-    
+
     public Respuesta guardarProductoPedido(ProductosPedidosDto pp) {
         try {
             ProductosPedidos productoPedido;
@@ -123,11 +131,12 @@ public class PedidosServices {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el producto pedido", "guardarProductoPedido " + e.getMessage());
         }
     }
-    
-    /** 
+
+    /**
      * Elimina el ProductoPedido a travez del id
-     **/
-    public Respuesta eliminarProductoPedido(ProductosPedidosDto pp){
+     *
+     */
+    public Respuesta eliminarProductoPedido(ProductosPedidosDto pp) {
         try {
             ProductosPedidos productoPedido;
             if (pp.getId() != null && pp.getId() > 0) {
