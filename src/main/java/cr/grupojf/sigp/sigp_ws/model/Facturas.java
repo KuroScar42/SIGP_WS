@@ -59,7 +59,7 @@ public class Facturas implements Serializable {
     @NotNull
     @Lob
     @Column(name = "TIPO_FACTURA")
-    private byte[] tipoFactura;
+    private String tipoFactura;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 35)
@@ -139,7 +139,7 @@ public class Facturas implements Serializable {
         this.idFactura = idFactura;
     }
 
-    public Facturas(Integer idFactura, byte[] tipoFactura, String referenciaFactura, String claveFactura, String electronicaFactura, Date fechaFactura, String estadoFactura, int versionFactura, float subtotalFactura, float ivaFactura, float totalFactura, float pagoFactura, float vueltoFactura, String observacionesFactura) {
+    public Facturas(Integer idFactura, String tipoFactura, String referenciaFactura, String claveFactura, String electronicaFactura, Date fechaFactura, String estadoFactura, int versionFactura, float subtotalFactura, float ivaFactura, float totalFactura, float pagoFactura, float vueltoFactura, String observacionesFactura) {
         this.idFactura = idFactura;
         this.tipoFactura = tipoFactura;
         this.referenciaFactura = referenciaFactura;
@@ -164,11 +164,11 @@ public class Facturas implements Serializable {
         this.idFactura = idFactura;
     }
 
-    public byte[] getTipoFactura() {
+    public String getTipoFactura() {
         return tipoFactura;
     }
 
-    public void setTipoFactura(byte[] tipoFactura) {
+    public void setTipoFactura(String tipoFactura) {
         this.tipoFactura = tipoFactura;
     }
 
