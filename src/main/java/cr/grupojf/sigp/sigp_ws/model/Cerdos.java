@@ -92,6 +92,11 @@ public class Cerdos implements Serializable {
         this.pesoCerdo = pesoCerdo;
     }
 
+    public Cerdos(CerdosDto cerdoDto) {
+        this.idCerdo = cerdoDto.getId();
+        this.actualizarPedido(cerdoDto);
+    }
+
     public Integer getIdCerdo() {
         return idCerdo;
     }
@@ -187,6 +192,16 @@ public class Cerdos implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Cerdos[ idCerdo=" + idCerdo + " ]";
+    }
+
+    public void actualizarPedido(CerdosDto cerdoDto) {
+        this.codigoCerdo = cerdoDto.getCodigo();
+        this.sexoCerdo = cerdoDto.getSexo();
+        this.estadoCerdo = cerdoDto.getEstado();
+        this.descripcionCerdo = cerdoDto.getDescripcion();
+        this.fechaNacimiento = cerdoDto.getNacimiento();
+        this.pesoCerdo = cerdoDto.getPeso();
+
     }
     
 }
