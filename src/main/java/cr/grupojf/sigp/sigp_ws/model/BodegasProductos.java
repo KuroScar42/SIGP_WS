@@ -71,6 +71,11 @@ public class BodegasProductos implements Serializable {
         this.unidadMedida = unidadMedida;
     }
 
+    public BodegasProductos(BodegasProductosDto bp) {
+        this.idBodegaProductos = bp.getId();
+        this.actualizar(bp);
+    }
+
     public Integer getIdBodegaProductos() {
         return idBodegaProductos;
     }
@@ -142,6 +147,19 @@ public class BodegasProductos implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.BodegasProductos[ idBodegaProductos=" + idBodegaProductos + " ]";
+    }
+
+    public void actualizar(BodegasProductosDto bp) {
+        if (bp.getBodega() != null) {
+            this.idBodega = new Bodegas(bp.getBodega());
+        }
+        if (bp.getProducto() != null) {
+            this.idProducto = new Productos(bp.getProducto());
+        }
+        this.cantidadProducto = bp.getCantidad();
+        this.precioProducto = bp.getPrecio();
+        this.unidadMedida = bp.getUnidadMedida();
+//        this.idBodega = bp.getBodega();
     }
     
 }

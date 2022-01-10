@@ -18,6 +18,7 @@ import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -33,6 +34,42 @@ import javax.ws.rs.core.Response;
 public class ProductosController {
     @EJB
     private ProductosService service;
+    
+    
+    
+    @POST
+    @Path("/guardarProducto")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response guardarProducto(ProductosDto productoDto) {
+        try {
+            Respuesta respuesta = service.guardarProducto(productoDto);
+            if (!respuesta.getEstado()) {
+                return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
+            }
+            return Response.ok((ProductosDto) respuesta.getResultado("producto")).build();
+        }catch (Exception ex) {
+            Logger.getLogger(ProductosController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al guardar el producto").build();
+        }
+    }
+    
+    @POST
+    @Path("/moveProduct")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response moveProduct(Integer bodegaIdTarget, Integer productId, Float cant) {
+        try {
+            Respuesta respuesta = service.moveProduct(bodegaIdTarget, productId, cant);
+            if (!respuesta.getEstado()) {
+                return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
+            }
+            return Response.ok((ProductosDto) respuesta.getResultado("producto")).build();
+        }catch (Exception ex) {
+            Logger.getLogger(ProductosController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al mover el producto de bodega").build();
+        }
+    }
     
     @GET
     @Path("/getProductosByBodega/{bodegaId}")
@@ -72,7 +109,9 @@ public class ProductosController {
         }
     }
     
-    //SR significa "Sin restricciones"//
+    /**
+     * SR significa "Sin restricciones"
+    */
     @GET
     @Path("/getProductosByBodegaComplSR/{bodegaId}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -129,5 +168,13 @@ public class ProductosController {
             Logger.getLogger(ProductosController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar las bodegas").build();
         }
+    }
+    
+    @POST
+    @Path("moveProduct")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response moveProduct(){
+        return null;
     }
 }

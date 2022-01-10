@@ -10,12 +10,20 @@ package cr.grupojf.sigp.sigp_ws.model;
  */
 public class BodegasProductosDto {
     private Integer id;
+    private BodegaDto bodega;
+    private ProductosDto producto;
     private Float cantidad;
     private Float precio;
     private String unidadMedida;
 
     public BodegasProductosDto(BodegasProductos bp) {
         this.id = bp.getIdBodegaProductos();
+        if (bp.getIdBodega() != null) {
+            this.bodega = new BodegaDto(bp.getIdBodega());
+        }
+        if (bp.getIdProducto() != null) {
+            this.producto = new ProductosDto(bp.getIdProducto());
+        }
         this.cantidad = bp.getCantidadProducto();
         this.precio = bp.getPrecioProducto();
         this.unidadMedida = bp.getUnidadMedida();
@@ -56,6 +64,22 @@ public class BodegasProductosDto {
 
     public void setUnidadMedida(String unidadMedida) {
         this.unidadMedida = unidadMedida;
+    }
+
+    public BodegaDto getBodega() {
+        return bodega;
+    }
+
+    public void setBodega(BodegaDto bodega) {
+        this.bodega = bodega;
+    }
+
+    public ProductosDto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(ProductosDto producto) {
+        this.producto = producto;
     }
     
 }

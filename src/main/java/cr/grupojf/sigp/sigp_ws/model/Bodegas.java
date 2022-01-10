@@ -85,6 +85,12 @@ public class Bodegas implements Serializable {
         this.version = version;
     }
 
+    Bodegas(BodegaDto b) {
+        this.idBodega = b.getId();
+        this.actualizar(b);
+        
+    }
+
     public Integer getIdBodega() {
         return idBodega;
     }
@@ -164,6 +170,10 @@ public class Bodegas implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Bodegas[ idBodega=" + idBodega + " ]";
+    }
+
+    public void actualizar(BodegaDto b) {
+//        this.
     }
     
 }
