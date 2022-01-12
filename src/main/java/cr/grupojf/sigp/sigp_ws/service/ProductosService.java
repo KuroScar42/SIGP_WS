@@ -50,8 +50,21 @@ public class ProductosService {
                 em.persist(producto);
             }
             em.flush();
+            BodegasProductosDto e;
             if (productoDto.getDetalles() != null) {
-                Respuesta res = this.guardarProductoBodega(productoDto.getDetalles());
+                e = productoDto.getDetalles();
+                if (productoDto.getBodega() != null) {
+                    e.setBodega(productoDto.getBodega());
+                }
+                Respuesta res = this.guardarProductoBodega(e);
+                if (!res.getEstado()) {
+                    return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, res.getMensaje(), res.getMensajeInterno());
+                }
+            } else if (productoDto.getBodega() != null) {
+                e = new BodegasProductosDto();
+                e.setBodega(productoDto.getBodega());
+                e.setProducto(productoDto);
+                Respuesta res = this.guardarProductoBodega(e);
                 if (!res.getEstado()) {
                     return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, res.getMensaje(), res.getMensajeInterno());
                 }
