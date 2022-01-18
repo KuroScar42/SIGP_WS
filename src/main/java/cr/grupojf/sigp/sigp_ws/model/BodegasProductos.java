@@ -27,6 +27,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "BodegasProductos.findAll", query = "SELECT b FROM BodegasProductos b"),
     @NamedQuery(name = "BodegasProductos.findByIdBodegaProductos", query = "SELECT b FROM BodegasProductos b WHERE b.idBodegaProductos = :idBodegaProductos"),
     @NamedQuery(name = "BodegasProductos.findByCantidadProducto", query = "SELECT b FROM BodegasProductos b WHERE b.cantidadProducto = :cantidadProducto"),
+    @NamedQuery(name = "BodegasProductos.findByBodProd", query = "SELECT b FROM BodegasProductos b WHERE b.idBodega = :bodega and b.idProducto = :producto"),
     @NamedQuery(name = "BodegasProductos.findByPrecioProducto", query = "SELECT b FROM BodegasProductos b WHERE b.precioProducto = :precioProducto"),
     @NamedQuery(name = "BodegasProductos.findByUnidadMedida", query = "SELECT b FROM BodegasProductos b WHERE b.unidadMedida = :unidadMedida")})
 public class BodegasProductos implements Serializable {

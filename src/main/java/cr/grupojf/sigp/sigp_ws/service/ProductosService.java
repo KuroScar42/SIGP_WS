@@ -8,6 +8,7 @@ import cr.grupojf.sigp.sigp_ws.model.BodegaDto;
 import cr.grupojf.sigp.sigp_ws.model.Bodegas;
 import cr.grupojf.sigp.sigp_ws.model.BodegasProductos;
 import cr.grupojf.sigp.sigp_ws.model.BodegasProductosDto;
+import cr.grupojf.sigp.sigp_ws.model.MoveProductDto;
 import cr.grupojf.sigp.sigp_ws.model.ProductosDto;
 import cr.grupojf.sigp.sigp_ws.model.Productos;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
@@ -20,6 +21,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -50,21 +52,22 @@ public class ProductosService {
                 em.persist(producto);
             }
             em.flush();
-            BodegasProductosDto e;
-            if (productoDto.getDetalles() != null) {
-                e = productoDto.getDetalles();
-                if (productoDto.getBodega() != null) {
-                    e.setBodega(productoDto.getBodega());
-                }
-                Respuesta res = this.guardarProductoBodega(e);
-                if (!res.getEstado()) {
-                    return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, res.getMensaje(), res.getMensajeInterno());
-                }
-            } else if (productoDto.getBodega() != null) {
-                e = new BodegasProductosDto();
-                e.setBodega(productoDto.getBodega());
-                e.setProducto(productoDto);
-                Respuesta res = this.guardarProductoBodega(e);
+            BodegasProductosDto bodegaProducto;
+//            if (productoDto.getDetalles() != null) {
+//                bodegaProducto = productoDto.getDetalles();
+//                if (productoDto.getBodega() != null) {
+//                    e.setBodega(productoDto.getBodega());
+//                }
+//                Respuesta res = this.guardarProductoBodega(bodegaProducto);
+//                if (!res.getEstado()) {
+//                    return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, res.getMensaje(), res.getMensajeInterno());
+//                }
+//            } else 
+            if (productoDto.getBodega() != null) {
+                bodegaProducto = new BodegasProductosDto();
+                bodegaProducto.setBodega(productoDto.getBodega());
+                bodegaProducto.setProducto(productoDto);
+                Respuesta res = this.guardarProductoBodega(bodegaProducto);
                 if (!res.getEstado()) {
                     return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, res.getMensaje(), res.getMensajeInterno());
                 }
@@ -100,9 +103,65 @@ public class ProductosService {
         }
     }
 
-    public Respuesta moveProduct(Integer bodegaIdTarget, Integer productId, Float cant) {
+    public Respuesta moveProduct(MoveProductDto m) {
         try {
-            Productos producto;
+            Bodegas origen = null;
+            Bodegas destino = null;
+            Productos producto = null;
+            if (m.getOrigen() != null) {
+                if (m.getOrigen().getId() != null && m.getOrigen().getId() > 0) {
+                    origen = em.find(Bodegas.class, m.getOrigen().getId());
+                }
+            }
+            if (m.getDestino()!= null) {
+                if (m.getDestino().getId() != null && m.getDestino().getId() > 0) {
+                    origen = em.find(Bodegas.class, m.getDestino().getId());
+                }
+            }
+            if (m.getProducto() != null) {
+                producto = em.find(Productos.class, m.getProducto().getId());
+            }
+            if (origen != null && destino != null && producto != null) {
+                try {
+                    // obtiene el bodegaProducto del origen
+                    Query query = em.createNamedQuery("BodegasProductos.findByBodProd", BodegasProductos.class);
+                    query.setParameter("bodega", origen);
+                    query.setParameter("producto", producto);
+                    BodegasProductos o = (BodegasProductos) query.getSingleResult();
+                    if (o.getCantidadProducto() - m.getCantidad() >= 0) {
+                        try {
+                            query = em.createNamedQuery("BodegasProductos.findByBodProd", BodegasProductos.class);
+                            query.setParameter("bodega", destino);
+                            query.setParameter("producto", producto);
+                            BodegasProductos d = (BodegasProductos) query.getSingleResult();
+                            o.setCantidadProducto(o.getCantidadProducto() - m.getCantidad());
+                            d.setCantidadProducto(m.getCantidad());
+                            // Se actualiza ambas entidades
+                            em.merge(o);
+                            em.merge(d);
+                            
+                            em.flush();
+                        } catch (NoResultException e) {
+                            // en caso de que no se encuentre se crea nuevo y se guarda
+                            BodegasProductos d = new BodegasProductos();
+                            d.setIdBodega(destino);
+                            d.setIdProducto(producto);
+                            d.setCantidadProducto(m.getCantidad());
+                            em.persist(d);
+                            em.flush();
+                        } catch (Exception e) {
+                            throw new Exception();
+                        }
+                    }
+                    
+                } catch (NonUniqueResultException | NoResultException e) {
+                    // nunca deberia de estar aqui pero no se sabe
+                } catch (Exception e) {
+                    
+                }
+            } else {
+                // respuesta negativa
+            }
 //            if (productoDto.getId() != null && productoDto.getId() > 0) {
 //                producto = em.find(Productos.class, productoDto.getId());
 //                if (producto == null) {
@@ -118,8 +177,8 @@ public class ProductosService {
 //            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "producto", new ProductosDto(producto));
             return null;
         } catch (Exception e) {
-            LOG.log(Level.SEVERE, "Ocurrio un error al guardar el cerdo.", e);
-            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar cerdo.", "guardarCerdo " + e.getMessage());
+            LOG.log(Level.SEVERE, "Ocurrio un error al mover producto de bodega.", e);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al mover el producto.", "moveProduct " + e.getMessage());
         }
     }
 
