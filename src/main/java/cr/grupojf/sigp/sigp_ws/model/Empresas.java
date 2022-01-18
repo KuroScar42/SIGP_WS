@@ -83,6 +83,11 @@ public class Empresas implements Serializable {
         this.version = version;
     }
 
+    public Empresas(EmpresasDto empresaDto) {
+        this.idEmpresa = empresaDto.getId();
+        this.actualizarPedido(empresaDto);
+    }
+
     public Integer getIdEmpresa() {
         return idEmpresa;
     }
@@ -164,6 +169,13 @@ public class Empresas implements Serializable {
 
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    public void actualizarPedido(EmpresasDto empresaDto) {
+        this.cedulaEmpresa = empresaDto.getCedula();
+        this.estadoEmrpresa = empresaDto.getEstado();
+        this.nombreEmpresa = empresaDto.getNombre();
+        this.razonSocial = empresaDto.getRazonSocial();
     }
     
 }

@@ -19,6 +19,7 @@ public class ClientesDto {
     private String direccion;
     private String estado;
     private PersonasDto persona;
+    private EmpresasDto empresa;
 
     public ClientesDto(Clientes c) {
         this.id = c.getIdCliente();
@@ -29,8 +30,11 @@ public class ClientesDto {
         this.telefono2 = c.getEmailCliente();
         this.direccion = c.getDireccionCliente();
         this.estado = c.getEstadoCliente();
-        if (c.getIdPresona() != null) {
-            this.persona = new PersonasDto(c.getIdPresona());
+        if (c.getIdPersona() != null) {
+            this.persona = new PersonasDto(c.getIdPersona());
+        }
+        if (c.getIdEmpresa() != null) {
+            this.empresa = new EmpresasDto(c.getIdEmpresa());
         }
     }
 
@@ -107,6 +111,14 @@ public class ClientesDto {
 
     public void setPersona(PersonasDto persona) {
         this.persona = persona;
+    }
+
+    public EmpresasDto getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(EmpresasDto empresa) {
+        this.empresa = empresa;
     }
 
 }

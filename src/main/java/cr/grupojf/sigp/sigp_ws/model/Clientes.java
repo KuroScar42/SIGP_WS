@@ -88,7 +88,7 @@ public class Clientes implements Serializable {
     private Empresas idEmpresa;
     @JoinColumn(name = "ID_PRESONA", referencedColumnName = "ID_PRESONA")
     @ManyToOne
-    private Personas idPresona;
+    private Personas idPersona;
 
     public Clientes() {
     }
@@ -104,6 +104,11 @@ public class Clientes implements Serializable {
         this.telefono2Cliente = telefono2Cliente;
         this.estadoCliente = estadoCliente;
         this.version = version;
+    }
+
+    public Clientes(ClientesDto clienteDto) {
+        this.idCliente = clienteDto.getId();
+        this.actualizarPedido(clienteDto);
     }
 
     public Integer getIdCliente() {
@@ -186,12 +191,12 @@ public class Clientes implements Serializable {
         this.idEmpresa = idEmpresa;
     }
 
-    public Personas getIdPresona() {
-        return idPresona;
+    public Personas getIdPersona() {
+        return idPersona;
     }
 
-    public void setIdPresona(Personas idPresona) {
-        this.idPresona = idPresona;
+    public void setIdPersona(Personas idPresona) {
+        this.idPersona = idPresona;
     }
 
     @Override
@@ -217,6 +222,14 @@ public class Clientes implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Clientes[ idCliente=" + idCliente + " ]";
+    }
+
+    public void actualizarPedido(ClientesDto c) {
+        this.direccionCliente = c.getDireccion();
+        this.emailCliente = c.getEmail();
+        this.estadoCliente = c.getEstado();
+        this.telefono2Cliente = c.getTelefono2();
+        this.telefonoCliente = c.getTelefono();
     }
     
 }

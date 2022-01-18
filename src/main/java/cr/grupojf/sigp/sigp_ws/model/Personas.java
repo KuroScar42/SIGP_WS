@@ -86,6 +86,11 @@ public class Personas implements Serializable {
         this.versionPersona = versionPersona;
     }
 
+    public Personas(PersonasDto personaDto) {
+        this.idPresona = personaDto.getId();
+        this.actualizarPedido(personaDto);
+    }
+
     public Integer getIdPresona() {
         return idPresona;
     }
@@ -173,6 +178,14 @@ public class Personas implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Personas[ idPresona=" + idPresona + " ]";
+    }
+
+    public void actualizarPedido(PersonasDto personaDto) {
+        this.apellido2Persona = personaDto.getApellido2();
+        this.apellidoPersona = personaDto.getApellido();
+        this.cedulaPersona = personaDto.getCedula();
+        this.estadoPersona = personaDto.getEstado();
+        this.nomrePersona = personaDto.getNombre();
     }
     
 }
