@@ -13,10 +13,13 @@ import cr.grupojf.sigp.sigp_ws.model.Personas;
 import cr.grupojf.sigp.sigp_ws.model.PersonasDto;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
 import cr.grupojf.sigp.sigp_ws.util.Respuesta;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -112,6 +115,21 @@ public class ClienteService {
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar la empresa.", e);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar la empresa.", "guardarEmpresa " + e.getMessage());
+        }
+    }
+    
+    public Respuesta getClientes() {
+        try {
+            Query query = em.createNamedQuery("Clientes.findAll", Clientes.class);
+            List<Clientes> clientes = query.getResultList();
+            List<ClientesDto> clientesDtoList = new ArrayList<>();
+            clientes.forEach((cliente) -> {
+                clientesDtoList.add(new ClientesDto(cliente));
+            });
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "clientes", clientesDtoList);
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar los clientes.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los clientes.", "getClientes" + ex.getMessage());
         }
     }
     
