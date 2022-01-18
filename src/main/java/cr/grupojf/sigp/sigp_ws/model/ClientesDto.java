@@ -11,8 +11,8 @@ package cr.grupojf.sigp.sigp_ws.model;
 public class ClientesDto {
 
     private Integer id;
-    private String cedula;
-    private String cliente;
+//    private String cedula;
+//    private String cliente;
     private String email;
     private String telefono;
     private String telefono2;
@@ -22,8 +22,8 @@ public class ClientesDto {
 
     public ClientesDto(Clientes c) {
         this.id = c.getIdCliente();
-        this.cedula = c.getCedulaCliente();
-        this.cliente = c.getEmailCliente();
+//        this.cedula = c.getCedulaCliente();
+//        this.cliente = c.getEmailCliente();
         this.email = c.getEmailCliente();
         this.telefono = c.getEmailCliente();
         this.telefono2 = c.getEmailCliente();
@@ -45,21 +45,21 @@ public class ClientesDto {
         this.id = id;
     }
 
-    public String getCedula() {
-        return cedula;
-    }
-
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
-    }
-
-    public String getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(String cliente) {
-        this.cliente = cliente;
-    }
+//    public String getCedula() {
+//        return cedula;
+//    }
+//
+//    public void setCedula(String cedula) {
+//        this.cedula = cedula;
+//    }
+//
+//    public String getCliente() {
+//        return cliente;
+//    }
+//
+//    public void setCliente(String cliente) {
+//        this.cliente = cliente;
+//    }
 
     public String getEmail() {
         return email;

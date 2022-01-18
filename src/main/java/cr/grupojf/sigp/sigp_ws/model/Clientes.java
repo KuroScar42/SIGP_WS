@@ -46,11 +46,11 @@ public class Clientes implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID_CLIENTE")
     private Integer idCliente;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 13)
-    @Column(name = "CEDULA_CLIENTE")
-    private String cedulaCliente;
+//    @Basic(optional = false)
+//    @NotNull
+//    @Size(min = 1, max = 13)
+//    @Column(name = "CEDULA_CLIENTE")
+//    private String cedulaCliente;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -97,9 +97,8 @@ public class Clientes implements Serializable {
         this.idCliente = idCliente;
     }
 
-    public Clientes(Integer idCliente, String cedulaCliente, String emailCliente, String telefonoCliente, String telefono2Cliente, String estadoCliente, int version) {
+    public Clientes(Integer idCliente, String emailCliente, String telefonoCliente, String telefono2Cliente, String estadoCliente, int version) {
         this.idCliente = idCliente;
-        this.cedulaCliente = cedulaCliente;
         this.emailCliente = emailCliente;
         this.telefonoCliente = telefonoCliente;
         this.telefono2Cliente = telefono2Cliente;
@@ -113,14 +112,6 @@ public class Clientes implements Serializable {
 
     public void setIdCliente(Integer idCliente) {
         this.idCliente = idCliente;
-    }
-
-    public String getCedulaCliente() {
-        return cedulaCliente;
-    }
-
-    public void setCedulaCliente(String cedulaCliente) {
-        this.cedulaCliente = cedulaCliente;
     }
 
     public String getEmailCliente() {

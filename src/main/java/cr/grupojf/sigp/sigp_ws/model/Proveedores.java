@@ -65,25 +65,25 @@ public class Proveedores implements Serializable {
     @Size(max = 30)
     @Column(name = "RAZON_SOCIAL")
     private String razonSocial;
-    @Basic(optional = false)
-    @NotNull
+//    @Basic(optional = false)
+//    @NotNull
     @Column(name = "INTERES_MORATORIO")
     private float interesMoratorio;
-    @Basic(optional = false)
-    @NotNull
+//    @Basic(optional = false)
+//    @NotNull
     @Column(name = "DESCUENTO")
     private float descuento;
-    @Basic(optional = false)
-    @NotNull
+//    @Basic(optional = false)
+//    @NotNull
     @Column(name = "PLAZO_CREDITO")
     private int plazoCredito;
-    @Basic(optional = false)
-    @NotNull
+//    @Basic(optional = false)
+//    @NotNull
     @Size(min = 1, max = 2)
     @Column(name = "TIPO_DEVOLUCIONES")
     private String tipoDevoluciones;
-    @Basic(optional = false)
-    @NotNull
+//    @Basic(optional = false)
+//    @NotNull
     @Size(min = 1, max = 30)
     @Column(name = "CUENTA_PAGO")
     private String cuentaPago;
