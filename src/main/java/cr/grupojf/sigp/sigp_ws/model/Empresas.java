@@ -41,6 +41,11 @@ public class Empresas implements Serializable {
     private String nombreEmpresa;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 30)
+    @Column(name = "CEDULA_EMPRESA")
+    private String cedulaEmpresa;
+    @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 16)
     @Column(name = "RAZON_SOCIAL")
     private String razonSocial;
@@ -92,6 +97,14 @@ public class Empresas implements Serializable {
 
     public void setNombreEmpresa(String nombreEmpresa) {
         this.nombreEmpresa = nombreEmpresa;
+    }
+
+    public String getCedulaEmpresa() {
+        return cedulaEmpresa;
+    }
+
+    public void setCedulaEmpresa(String cedulaEmpresa) {
+        this.cedulaEmpresa = cedulaEmpresa;
     }
 
     public String getRazonSocial() {

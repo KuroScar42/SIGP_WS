@@ -44,8 +44,13 @@ public class Personas implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "NOMRE_PERSONA")
+    @Column(name = "NOMBRE_PERSONA")
     private String nomrePersona;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 30)
+    @Column(name = "CEDULA_PERSONA")
+    private String cedulaPersona;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -95,6 +100,14 @@ public class Personas implements Serializable {
 
     public void setNomrePersona(String nomrePersona) {
         this.nomrePersona = nomrePersona;
+    }
+
+    public String getCedulaPersona() {
+        return cedulaPersona;
+    }
+
+    public void setCedulaPersona(String cedulaPersona) {
+        this.cedulaPersona = cedulaPersona;
     }
 
     public String getApellidoPersona() {
