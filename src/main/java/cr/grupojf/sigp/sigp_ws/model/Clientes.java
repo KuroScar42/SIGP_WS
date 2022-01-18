@@ -19,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -53,17 +54,16 @@ public class Clientes implements Serializable {
 //    private String cedulaCliente;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
+    @Size(max = 20)
     @Column(name = "EMAIL_CLIENTE")
     private String emailCliente;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
+    @Size(max = 20)
     @Column(name = "TELEFONO_CLIENTE")
     private String telefonoCliente;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
+//    @Basic(optional = false)
+    @Size(max = 20)
     @Column(name = "TELEFONO2_CLIENTE")
     private String telefono2Cliente;
     @Size(max = 500)
@@ -75,7 +75,7 @@ public class Clientes implements Serializable {
     @Column(name = "ESTADO_CLIENTE")
     private String estadoCliente;
     @Basic(optional = false)
-    @NotNull
+    @Version
     @Column(name = "VERSION")
     private int version;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCliente")
@@ -108,7 +108,7 @@ public class Clientes implements Serializable {
 
     public Clientes(ClientesDto clienteDto) {
         this.idCliente = clienteDto.getId();
-        this.actualizarPedido(clienteDto);
+        this.actualizarCliente(clienteDto);
     }
 
     public Integer getIdCliente() {
@@ -224,7 +224,7 @@ public class Clientes implements Serializable {
         return "cr.grupojf.sigp.sigp_ws.model.Clientes[ idCliente=" + idCliente + " ]";
     }
 
-    public void actualizarPedido(ClientesDto c) {
+    public void actualizarCliente(ClientesDto c) {
         this.direccionCliente = c.getDireccion();
         this.emailCliente = c.getEmail();
         this.estadoCliente = c.getEstado();

@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -25,12 +27,14 @@ import javax.persistence.Query;
  *
  * @author herna
  */
+@Stateless
+@LocalBean
 public class ClienteService {
-    
+
     private static final Logger LOG = Logger.getLogger(ClienteService.class.getName());
     @PersistenceContext(unitName = "sigp_PU")
     protected EntityManager em;
-    
+
     public Respuesta guardarCliente(ClientesDto clienteDto) {
         try {
             Clientes cliente;
@@ -40,12 +44,21 @@ public class ClienteService {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encontro el cliente especificado", "guardarCliente NoResultException");
                 }
                 cliente = actualizar(cliente, clienteDto);
-                cliente.actualizarPedido(clienteDto);
-                cliente = em.merge(cliente);
+                cliente.actualizarCliente(clienteDto);
+                if (cliente.getIdPersona() != null || cliente.getIdEmpresa() != null) {
+                    cliente = em.merge(cliente);
+                }else{
+                    return new Respuesta(false, CodigoRespuesta.ERROR_CLIENTE, "Falta de información acerca del cliente", "guardarCliente InformationMissing");
+                }
             } else {
                 cliente = new Clientes(clienteDto);
                 cliente = actualizar(cliente, clienteDto);
-                em.persist(cliente);
+                if (cliente.getIdPersona() != null || cliente.getIdEmpresa() != null) {
+                    em.persist(cliente);
+                }else{
+                    return new Respuesta(false, CodigoRespuesta.ERROR_CLIENTE, "Falta de información acerca del cliente", "guardarCliente InformationMissing");
+                }
+                
             }
             em.flush();
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "cliente", new ClientesDto(cliente));
@@ -54,26 +67,26 @@ public class ClienteService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el cliente.", "guardarCliente " + e.getMessage());
         }
     }
-    
-    private Clientes actualizar(Clientes c, ClientesDto cd){
+
+    private Clientes actualizar(Clientes c, ClientesDto cd) {
         if (cd.getPersona() != null) {
             Respuesta res = guardarPersona(cd.getPersona());
             if (res.getEstado()) {
-                c.setIdPersona((Personas) res.getResultado("persona"));
-            }else{
+                c.setIdPersona(new Personas((PersonasDto) res.getResultado("persona")));
+            } else {
                 // validar la accion si fallara 
             }
         } else if (cd.getEmpresa() != null) {
             Respuesta res = guardarEmpresa(cd.getEmpresa());
             if (res.getEstado()) {
-                c.setIdEmpresa((Empresas) res.getResultado("empresa"));
-            }else{
+                c.setIdEmpresa(new Empresas((EmpresasDto) res.getResultado("empresa")));
+            } else {
                 // validar la accion si fallara
             }
         }
         return c;
     }
-    
+
     public Respuesta guardarPersona(PersonasDto personaDto) {
         try {
             Personas persona;
@@ -95,7 +108,7 @@ public class ClienteService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar la persona.", "guardarPersona " + e.getMessage());
         }
     }
-    
+
     public Respuesta guardarEmpresa(EmpresasDto empresaDto) {
         try {
             Empresas empresa;
@@ -117,7 +130,6 @@ public class ClienteService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar la empresa.", "guardarEmpresa " + e.getMessage());
         }
     }
-    
     public Respuesta getClientes() {
         try {
             Query query = em.createNamedQuery("Clientes.findAll", Clientes.class);
@@ -132,6 +144,4 @@ public class ClienteService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los clientes.", "getClientes" + ex.getMessage());
         }
     }
-    
-    
 }

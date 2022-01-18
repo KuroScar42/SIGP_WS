@@ -16,6 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -55,7 +56,7 @@ public class Empresas implements Serializable {
     @Column(name = "ESTADO_EMRPRESA")
     private String estadoEmrpresa;
     @Basic(optional = false)
-    @NotNull
+    @Version
     @Column(name = "VERSION")
     private int version;
 
