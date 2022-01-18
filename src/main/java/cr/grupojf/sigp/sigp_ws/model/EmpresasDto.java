@@ -13,6 +13,7 @@ public class EmpresasDto {
     private Integer id;
     private String nombre;
     private String razonSocial;
+    private String cedula;
     private String estado;
 
     public EmpresasDto() {
@@ -22,6 +23,7 @@ public class EmpresasDto {
         this.id = e.getIdEmpresa();
         this.nombre = e.getNombreEmpresa();
         this.razonSocial = e.getRazonSocial();
+        this.cedula = e.getCedulaEmpresa();
         this.estado = e.getEstadoEmrpresa();
     }
 
@@ -56,9 +58,13 @@ public class EmpresasDto {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
-    
-    
-    
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
     
 }

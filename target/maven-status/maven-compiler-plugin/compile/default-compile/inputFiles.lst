@@ -9,6 +9,7 @@
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Emisores.java
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Bodegas.java
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/FacturasDto.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/controller/GranjaController.java
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/BodegasProductos.java
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/OtrosValores.java
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Cerdos.java
@@ -21,6 +22,7 @@
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Partos.java
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/JAXRSConfiguration.java
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/TipoCambio.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/service/GranjaService.java
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/controller/PedidosController.java
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/MonedasDto.java
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Proveedores.java

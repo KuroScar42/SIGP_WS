@@ -7,6 +7,7 @@ cr/grupojf/sigp/sigp_ws/model/Facturas.class
 cr/grupojf/sigp/sigp_ws/controller/ProductosController$2.class
 cr/grupojf/sigp/sigp_ws/model/MetodosPagoDto.class
 cr/grupojf/sigp/sigp_ws/model/ProductosPedidosDto.class
+cr/grupojf/sigp/sigp_ws/service/GranjaService.class
 cr/grupojf/sigp/sigp_ws/model/MetodosPago.class
 cr/grupojf/sigp/sigp_ws/controller/PedidosController.class
 cr/grupojf/sigp/sigp_ws/model/RolesDto.class
@@ -31,6 +32,7 @@ cr/grupojf/sigp/sigp_ws/model/TipoCambio.class
 cr/grupojf/sigp/sigp_ws/model/Proveedores.class
 cr/grupojf/sigp/sigp_ws/model/Efectivo.class
 cr/grupojf/sigp/sigp_ws/model/BodegaDto.class
+cr/grupojf/sigp/sigp_ws/controller/GranjaController$1.class
 cr/grupojf/sigp/sigp_ws/model/EmpresasDto.class
 cr/grupojf/sigp/sigp_ws/model/Monedas.class
 cr/grupojf/sigp/sigp_ws/controller/PedidosController$2.class
@@ -75,6 +77,7 @@ cr/grupojf/sigp/sigp_ws/service/MetodoPagoService.class
 cr/grupojf/sigp/sigp_ws/service/PedidosServices.class
 cr/grupojf/sigp/sigp_ws/model/ProductosPedidos.class
 cr/grupojf/sigp/sigp_ws/controller/PedidosController$1.class
+cr/grupojf/sigp/sigp_ws/controller/GranjaController.class
 cr/grupojf/sigp/sigp_ws/model/Creditos.class
 cr/grupojf/sigp/sigp_ws/model/DenominacionEfectivo.class
 cr/grupojf/sigp/sigp_ws/controller/ProductosController$3.class

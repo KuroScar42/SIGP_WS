@@ -31,7 +31,7 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Clientes.findAll", query = "SELECT c FROM Clientes c"),
     @NamedQuery(name = "Clientes.findByIdCliente", query = "SELECT c FROM Clientes c WHERE c.idCliente = :idCliente"),
-    @NamedQuery(name = "Clientes.findByCedulaCliente", query = "SELECT c FROM Clientes c WHERE c.cedulaCliente = :cedulaCliente"),
+//    @NamedQuery(name = "Clientes.findByCedulaCliente", query = "SELECT c FROM Clientes c WHERE c.cedulaCliente = :cedulaCliente"),
     @NamedQuery(name = "Clientes.findByEmailCliente", query = "SELECT c FROM Clientes c WHERE c.emailCliente = :emailCliente"),
     @NamedQuery(name = "Clientes.findByTelefonoCliente", query = "SELECT c FROM Clientes c WHERE c.telefonoCliente = :telefonoCliente"),
     @NamedQuery(name = "Clientes.findByTelefono2Cliente", query = "SELECT c FROM Clientes c WHERE c.telefono2Cliente = :telefono2Cliente"),
@@ -80,9 +80,9 @@ public class Clientes implements Serializable {
     private int version;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCliente")
     private List<Facturas> facturasList;
-    @JoinColumn(name = "ID_FACTURA", referencedColumnName = "ID_FACTURA")
-    @ManyToOne(optional = false)
-    private Facturas idFactura;
+//    @JoinColumn(name = "ID_FACTURA", referencedColumnName = "ID_FACTURA")
+//    @ManyToOne(optional = false)
+//    private Facturas idFactura;
     @JoinColumn(name = "ID_EMPRESA", referencedColumnName = "ID_EMPRESA")
     @ManyToOne
     private Empresas idEmpresa;
@@ -170,13 +170,13 @@ public class Clientes implements Serializable {
         this.facturasList = facturasList;
     }
 
-    public Facturas getIdFactura() {
-        return idFactura;
-    }
-
-    public void setIdFactura(Facturas idFactura) {
-        this.idFactura = idFactura;
-    }
+//    public Facturas getIdFactura() {
+//        return idFactura;
+//    }
+//
+//    public void setIdFactura(Facturas idFactura) {
+//        this.idFactura = idFactura;
+//    }
 
     public Empresas getIdEmpresa() {
         return idEmpresa;

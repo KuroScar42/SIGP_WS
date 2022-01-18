@@ -22,6 +22,7 @@ public class PersonasDto {
         this.nombre = p.getNomrePersona();
         this.apellido = p.getApellidoPersona();
         this.apellido2 =p.getApellido2Persona();
+        this.cedula = p.getCedulaPersona();
         this.estado = p.getEstadoPersona();
     }
 

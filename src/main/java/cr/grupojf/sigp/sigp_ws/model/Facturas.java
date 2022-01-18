@@ -129,8 +129,8 @@ public class Facturas implements Serializable {
     @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")
     @ManyToOne
     private Usuarios idUsuario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFactura")
-    private List<Clientes> clientesList;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFactura")
+//    private List<Clientes> clientesList;
 
     public Facturas() {
     }
@@ -308,13 +308,13 @@ public class Facturas implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public List<Clientes> getClientesList() {
-        return clientesList;
-    }
-
-    public void setClientesList(List<Clientes> clientesList) {
-        this.clientesList = clientesList;
-    }
+//    public List<Clientes> getClientesList() {
+//        return clientesList;
+//    }
+//
+//    public void setClientesList(List<Clientes> clientesList) {
+//        this.clientesList = clientesList;
+//    }
 
     @Override
     public int hashCode() {
