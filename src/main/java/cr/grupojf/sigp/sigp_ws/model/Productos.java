@@ -41,7 +41,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Productos.findProductosByBodegaComplete", query = "SELECT p,bp FROM Bodegas b join b.bodegasProductosList bp join bp.idProducto p WHERE b.idBodega = :idBodega and p.estado = 'A'"),
     @NamedQuery(name = "Productos.findProductosByBodegaCompleteSR", query = "SELECT p,bp FROM Bodegas b join b.bodegasProductosList bp join bp.idProducto p WHERE b.idBodega = :idBodega"),
     @NamedQuery(name = "Productos.findProductoByBodega", query = "SELECT p,bp FROM Bodegas b join b.bodegasProductosList bp join bp.idProducto p WHERE p.estado = 'A' and b.idBodega = :idBodega and p.codigoInterno = :codigo"),
-    @NamedQuery(name = "Productos.findProductoByPedido", query = "SELECT p,pl.cantidad,pe FROM Productos p join p.productosPedidosList pl join pl.idPedidos pe where pe.idPedidos = :pedidoId"),
+    @NamedQuery(name = "Productos.findProductoByPedido", query = "SELECT p,pl,pe FROM Productos p join p.productosPedidosList pl join pl.idPedidos pe where pe.idPedidos = :pedidoId"),
     @NamedQuery(name = "Productos.findByNombreProducto", query = "SELECT p FROM Productos p WHERE p.nombreProducto = :nombreProducto"),
     @NamedQuery(name = "Productos.findByDescripcionProducto", query = "SELECT p FROM Productos p WHERE p.descripcionProducto = :descripcionProducto"),
     @NamedQuery(name = "Productos.findByUnidadEmbalage", query = "SELECT p FROM Productos p WHERE p.unidadEmbalage = :unidadEmbalage"),

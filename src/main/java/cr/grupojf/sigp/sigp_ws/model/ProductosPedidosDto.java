@@ -4,6 +4,8 @@
  */
 package cr.grupojf.sigp.sigp_ws.model;
 
+import java.util.List;
+
 /**
  *
  * @author sigp
@@ -15,8 +17,8 @@ public class ProductosPedidosDto {
     private ProductosDto producto;
     private PedidosDto pedido;
 
-    public ProductosPedidosDto(Integer cantidad, Productos producto,Pedidos pedido) {
-        this.cantidad = cantidad;
+    public ProductosPedidosDto(ProductosPedidos productoP, Productos producto,Pedidos pedido) {
+        this(productoP);
         if (producto != null) {
             this.producto = new ProductosDto(producto);
         }
@@ -72,6 +74,10 @@ public class ProductosPedidosDto {
         this.id = id;
     }
     
-    
+    public void asignarBodega(List<BodegasProductos> bodegas){
+        if (this.getProducto() != null) {
+            producto.setDetalles(new BodegasProductosDto(bodegas.stream().findFirst().filter(e->e.getIdBodega().getIdBodega()==1).get()));
+        }
+    }
     
 }

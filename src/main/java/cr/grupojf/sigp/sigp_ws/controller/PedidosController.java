@@ -81,7 +81,7 @@ public class PedidosController {
             if (!respuesta.getEstado()) {
                 return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
             }
-            return Response.ok((PedidosDto) respuesta.getResultado("pedido")).build();
+            return Response.ok((PedidosDto) respuesta.getResultado("Pedido")).build();
         }catch (Exception ex) {
             Logger.getLogger(PedidosController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al guardar pedido").build();

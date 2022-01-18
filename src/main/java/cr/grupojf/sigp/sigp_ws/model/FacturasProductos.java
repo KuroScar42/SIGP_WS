@@ -28,8 +28,9 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "FacturasProductos.findByCantidadProducto", query = "SELECT f FROM FacturasProductos f WHERE f.cantidadProducto = :cantidadProducto"),
     @NamedQuery(name = "FacturasProductos.findByDescuentoProducto", query = "SELECT f FROM FacturasProductos f WHERE f.descuentoProducto = :descuentoProducto"),
     @NamedQuery(name = "FacturasProductos.findByIvaProcucto", query = "SELECT f FROM FacturasProductos f WHERE f.ivaProcucto = :ivaProcucto"),
-    @NamedQuery(name = "FacturasProductos.findByPRECIOsIVA", query = "SELECT f FROM FacturasProductos f WHERE f.pRECIOsIVA = :pRECIOsIVA"),
-    @NamedQuery(name = "FacturasProductos.findByPRECIOcIVA", query = "SELECT f FROM FacturasProductos f WHERE f.pRECIOcIVA = :pRECIOcIVA")})
+//    @NamedQuery(name = "FacturasProductos.findByPRECIOsIVA", query = "SELECT f FROM FacturasProductos f WHERE f.pRECIOsIVA = :pRECIOsIVA"),
+//    @NamedQuery(name = "FacturasProductos.findByPRECIOcIVA", query = "SELECT f FROM FacturasProductos f WHERE f.pRECIOcIVA = :pRECIOcIVA")
+})
 public class FacturasProductos implements Serializable {
 
     private static final long serialVersionUID = 1L;
