@@ -9,12 +9,14 @@ package cr.grupojf.sigp.sigp_ws.model;
  * @author sigp
  */
 public class UsuarioDto {
+    private Integer id;
     private String nombreUsuario;
     private String contrasena;
     private String estado;
     private PersonasDto persona;
 
     public UsuarioDto(Usuarios u) {
+        this.id = u.getIdUsuario();
         this.contrasena = u.getContrasennaUsuario();
         this.nombreUsuario = u.getNombreUsuario();
         this.estado = u.getEstadoUsuario();
