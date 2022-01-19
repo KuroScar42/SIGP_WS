@@ -18,7 +18,9 @@ public class UsuarioDto {
         this.contrasena = u.getContrasennaUsuario();
         this.nombreUsuario = u.getNombreUsuario();
         this.estado = u.getEstadoUsuario();
-        this.persona = new PersonasDto(u.getIdPresona());
+        if (u.getIdPresona() != null) {
+            this.persona = new PersonasDto(u.getIdPresona());
+        }
     }
 
 //    public UsuarioDto(Usuarios u, Personas p) {
