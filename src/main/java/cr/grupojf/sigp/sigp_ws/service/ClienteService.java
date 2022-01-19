@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -143,6 +144,23 @@ public class ClienteService {
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al consultar los clientes.", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los clientes.", "getClientes" + ex.getMessage());
+        }
+    }
+    
+    public Respuesta getClienteByCedula(String cedula) {
+        try {
+            Query query = em.createNamedQuery("Clientes.findByCedulaCliente", Clientes.class);
+            query.setParameter("cedula", cedula);
+            Clientes cliente = (Clientes) query.getSingleResult();
+            ClientesDto clienteDto = new ClientesDto(cliente);
+
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "cliente", clienteDto);
+        } catch (NoResultException ex) {
+            LOG.log(Level.SEVERE, "No existe el cliente con '" + cedula, ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "No existe el cliente con '" + cedula, "getClienteByCedula " + ex.getMessage());
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar el cliente", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar el cliente", "getClienteByCedula " + ex.getMessage());
         }
     }
 }
