@@ -26,8 +26,8 @@ public class ClientesDto {
 //        this.cedula = c.getCedulaCliente();
 //        this.cliente = c.getEmailCliente();
         this.email = c.getEmailCliente();
-        this.telefono = c.getEmailCliente();
-        this.telefono2 = c.getEmailCliente();
+        this.telefono = c.getTelefonoCliente();
+        this.telefono2 = c.getTelefono2Cliente();
         this.direccion = c.getDireccionCliente();
         this.estado = c.getEstadoCliente();
         if (c.getIdPersona() != null) {

@@ -130,6 +130,7 @@ public class ClienteService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar la empresa.", "guardarEmpresa " + e.getMessage());
         }
     }
+    
     public Respuesta getClientes() {
         try {
             Query query = em.createNamedQuery("Clientes.findAll", Clientes.class);
