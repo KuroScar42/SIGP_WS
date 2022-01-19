@@ -37,10 +37,9 @@ public class UsuariosService {
             Query query = em.createNamedQuery("Usuarios.findByNombreUsuarioContrasenia", Usuarios.class);
             query.setParameter("nombreUsuario", nombre);
             query.setParameter("contrasennaUsuario", contrasenia);
-            Usuarios usuario = (Usuarios) query.getSingleResult();
-            PersonasDto personaDto = new PersonasDto(usuario.getIdPresona());
+            UsuarioDto usuario = new UsuarioDto((Usuarios) query.getSingleResult());
 
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "personaUsuario", personaDto);
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "usuario", usuario);
         } catch (NoResultException ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al consultar el usuario.", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "No existe el usuario con las credeciales especificadas","getUsuByNomContra" + ex.getMessage());

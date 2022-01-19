@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -31,18 +32,18 @@ public class UsuariosController {
     @EJB
     private UsuariosService service;
     
-    @GET
-    @Path("/getUsuByNombreContra/{nombre}/{contrasenia}")
+    @POST
+    @Path("/verifyUser")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getUsuByNombreContra(@PathParam("nombre")String nombre, @PathParam("contrasenia")String contrasenia) {
+    public Response getUsuByNombreContra(UsuarioDto usuarioDto) {
         try {
-            Respuesta respuesta = service.getUsuByNomContra(nombre,contrasenia);
+            Respuesta respuesta = service.getUsuByNomContra(usuarioDto.getNombreUsuario(),usuarioDto.getContrasena());
             if (!respuesta.getEstado()) {
                 return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
             }
-            PersonasDto persona = (PersonasDto) respuesta.getResultado("personaUsuario");
-            return Response.ok(persona).build();
+            UsuarioDto usuario = (UsuarioDto) respuesta.getResultado("usuario");
+            return Response.ok(usuario).build();
         } catch (Exception ex) {
             Logger.getLogger(ProductosController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar el usuario").build();
