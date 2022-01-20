@@ -68,4 +68,24 @@ public class UsuariosController {
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar los usuarios").build();
         }
     }
+    
+    @GET
+    @Path("/getAllPermisos")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getAllPermisos() {
+        try {
+            Respuesta respuesta = service.getAllPermisos();
+            if (!respuesta.getEstado()) {
+                return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
+            }
+            List resultado = (List) respuesta.getResultado("permisos");
+            return Response.ok(new GenericEntity<List<PermisoDto>>(resultado) {
+            }).build();
+        } catch (Exception ex) {
+            Logger.getLogger(ProductosController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar los usuarios").build();
+        }
+    }
+    
 }
