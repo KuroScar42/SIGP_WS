@@ -34,7 +34,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Usuarios.findByEstadoUsuario", query = "SELECT u FROM Usuarios u WHERE u.estadoUsuario = :estadoUsuario"),
     @NamedQuery(name = "Usuarios.findByVersionUsuario", query = "SELECT u FROM Usuarios u WHERE u.versionUsuario = :versionUsuario")})
 public class Usuarios implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,6 +60,9 @@ public class Usuarios implements Serializable {
     @NotNull
     @Column(name = "VERSION_USUARIO")
     private int versionUsuario;
+    @JoinColumn(name = "ID_ROL", referencedColumnName = "ID_ROL")
+    @ManyToOne
+    private Roles idRol;
     @JoinColumn(name = "ID_PRESONA", referencedColumnName = "ID_PRESONA")
     @ManyToOne
     private Personas idPresona;
@@ -150,6 +153,14 @@ public class Usuarios implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Usuarios[ idUsuario=" + idUsuario + " ]";
+    }
+
+    public Roles getIdRol() {
+        return idRol;
+    }
+
+    public void setIdRol(Roles idRol) {
+        this.idRol = idRol;
     }
     
 }

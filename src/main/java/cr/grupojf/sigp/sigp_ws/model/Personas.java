@@ -28,13 +28,13 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Personas.findAll", query = "SELECT p FROM Personas p"),
     @NamedQuery(name = "Personas.findByIdPresona", query = "SELECT p FROM Personas p WHERE p.idPresona = :idPresona"),
-    @NamedQuery(name = "Personas.findByNomrePersona", query = "SELECT p FROM Personas p WHERE p.nomrePersona = :nomrePersona"),
+    @NamedQuery(name = "Personas.findByNombrePersona", query = "SELECT p FROM Personas p WHERE p.nombrePersona = :nombrePersona"),
     @NamedQuery(name = "Personas.findByApellidoPersona", query = "SELECT p FROM Personas p WHERE p.apellidoPersona = :apellidoPersona"),
     @NamedQuery(name = "Personas.findByApellido2Persona", query = "SELECT p FROM Personas p WHERE p.apellido2Persona = :apellido2Persona"),
     @NamedQuery(name = "Personas.findByEstadoPersona", query = "SELECT p FROM Personas p WHERE p.estadoPersona = :estadoPersona"),
     @NamedQuery(name = "Personas.findByVersionPersona", query = "SELECT p FROM Personas p WHERE p.versionPersona = :versionPersona")})
 public class Personas implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,17 +45,17 @@ public class Personas implements Serializable {
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "NOMBRE_PERSONA")
-    private String nomrePersona;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 30)
-    @Column(name = "CEDULA_PERSONA")
-    private String cedulaPersona;
+    private String nombrePersona;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "APELLIDO_PERSONA")
     private String apellidoPersona;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 30)
+    @Column(name = "CEDULA_PERSONA")
+    private String cedulaPersona;
     @Size(max = 20)
     @Column(name = "APELLIDO2_PERSONA")
     private String apellido2Persona;
@@ -78,9 +78,9 @@ public class Personas implements Serializable {
         this.idPresona = idPresona;
     }
 
-    public Personas(Integer idPresona, String nomrePersona, String apellidoPersona, String estadoPersona, int versionPersona) {
+    public Personas(Integer idPresona, String nombrePersona, String apellidoPersona, String estadoPersona, int versionPersona) {
         this.idPresona = idPresona;
-        this.nomrePersona = nomrePersona;
+        this.nombrePersona = nombrePersona;
         this.apellidoPersona = apellidoPersona;
         this.estadoPersona = estadoPersona;
         this.versionPersona = versionPersona;
@@ -97,14 +97,6 @@ public class Personas implements Serializable {
 
     public void setIdPresona(Integer idPresona) {
         this.idPresona = idPresona;
-    }
-
-    public String getNomrePersona() {
-        return nomrePersona;
-    }
-
-    public void setNomrePersona(String nomrePersona) {
-        this.nomrePersona = nomrePersona;
     }
 
     public String getCedulaPersona() {
@@ -185,7 +177,15 @@ public class Personas implements Serializable {
         this.apellidoPersona = personaDto.getApellido();
         this.cedulaPersona = personaDto.getCedula();
         this.estadoPersona = personaDto.getEstado();
-        this.nomrePersona = personaDto.getNombre();
+        this.nombrePersona = personaDto.getNombre();
+    }
+
+    public String getNombrePersona() {
+        return nombrePersona;
+    }
+
+    public void setNombrePersona(String nombrePersona) {
+        this.nombrePersona = nombrePersona;
     }
     
 }

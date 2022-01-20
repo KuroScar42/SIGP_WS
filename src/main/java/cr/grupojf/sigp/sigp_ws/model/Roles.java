@@ -17,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -34,7 +35,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Roles.findByEstadoRol", query = "SELECT r FROM Roles r WHERE r.estadoRol = :estadoRol"),
     @NamedQuery(name = "Roles.findByNombreRol", query = "SELECT r FROM Roles r WHERE r.nombreRol = :nombreRol")})
 public class Roles implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,6 +57,12 @@ public class Roles implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "NOMBRE_ROL")
     private String nombreRol;
+    @ManyToMany(mappedBy = "rolesList")
+    private List<Permisos> permisosList;
+//    @OneToMany(mappedBy = "idRol")
+//    private List<Usuarios> usuariosList;
+
+    
     @JoinTable(name = "Usuarios_Permisos", joinColumns = {
         @JoinColumn(name = "ID_ROL", referencedColumnName = "ID_ROL")}, inverseJoinColumns = {
         @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")})
@@ -139,6 +146,14 @@ public class Roles implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Roles[ idRol=" + idRol + " ]";
+    }
+
+    public List<Permisos> getPermisosList() {
+        return permisosList;
+    }
+
+    public void setPermisosList(List<Permisos> permisosList) {
+        this.permisosList = permisosList;
     }
     
 }
