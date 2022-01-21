@@ -30,7 +30,6 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Cerdos.findAll", query = "SELECT c FROM Cerdos c"),
     @NamedQuery(name = "Cerdos.findByIdCerdo", query = "SELECT c FROM Cerdos c WHERE c.idCerdo = :idCerdo"),
     @NamedQuery(name = "Cerdos.findByCodigoCerdo", query = "SELECT c FROM Cerdos c WHERE c.codigoCerdo = :codigoCerdo"),
-    @NamedQuery(name = "Cerdos.findBySexoCerdo", query = "SELECT c FROM Cerdos c WHERE c.sexoCerdo = :sexoCerdo"),
     @NamedQuery(name = "Cerdos.findByEstadoCerdo", query = "SELECT c FROM Cerdos c WHERE c.estadoCerdo = :estadoCerdo"),
     @NamedQuery(name = "Cerdos.findByDescripcionCerdo", query = "SELECT c FROM Cerdos c WHERE c.descripcionCerdo = :descripcionCerdo"),
     @NamedQuery(name = "Cerdos.findByFechaNacimiento", query = "SELECT c FROM Cerdos c WHERE c.fechaNacimiento = :fechaNacimiento"),

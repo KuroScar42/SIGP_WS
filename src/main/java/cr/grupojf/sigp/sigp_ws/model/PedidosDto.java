@@ -34,7 +34,7 @@ public class PedidosDto {
         this.descripcion = p.getDescripcionPedido();
         this.cliente = p.getCliente();
         if (p.getIdUsuario() != null) {
-            this.persona = new PersonasDto(p.getIdUsuario().getIdPresona());
+            this.persona = new PersonasDto(p.getIdUsuario().getIdPersona());
         }
     }
 

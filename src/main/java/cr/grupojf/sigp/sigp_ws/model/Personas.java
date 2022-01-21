@@ -27,7 +27,7 @@ import javax.validation.constraints.Size;
 @Table(name = "Personas")
 @NamedQueries({
     @NamedQuery(name = "Personas.findAll", query = "SELECT p FROM Personas p"),
-    @NamedQuery(name = "Personas.findByIdPresona", query = "SELECT p FROM Personas p WHERE p.idPresona = :idPresona"),
+    @NamedQuery(name = "Personas.findByIdPersona", query = "SELECT p FROM Personas p WHERE p.idPersona = :idPersona"),
     @NamedQuery(name = "Personas.findByNombrePersona", query = "SELECT p FROM Personas p WHERE p.nombrePersona = :nombrePersona"),
     @NamedQuery(name = "Personas.findByApellidoPersona", query = "SELECT p FROM Personas p WHERE p.apellidoPersona = :apellidoPersona"),
     @NamedQuery(name = "Personas.findByApellido2Persona", query = "SELECT p FROM Personas p WHERE p.apellido2Persona = :apellido2Persona"),
@@ -70,18 +70,18 @@ public class Personas implements Serializable {
     @OneToMany(mappedBy = "idPersona")
     private List<Clientes> clientesList;
     private static final long serialVersionUID = 1L;
-    @OneToMany(mappedBy = "idPresona")
+    @OneToMany(mappedBy = "idPersona")
     private List<Usuarios> usuariosList;
 
     public Personas() {
     }
 
-    public Personas(Integer idPresona) {
-        this.idPersona = idPresona;
+    public Personas(Integer idPersona) {
+        this.idPersona = idPersona;
     }
 
-    public Personas(Integer idPresona, String nombrePersona, String apellidoPersona, String estadoPersona, int versionPersona) {
-        this.idPersona = idPresona;
+    public Personas(Integer idPersona, String nombrePersona, String apellidoPersona, String estadoPersona, int versionPersona) {
+        this.idPersona = idPersona;
         this.nombrePersona = nombrePersona;
         this.apellidoPersona = apellidoPersona;
         this.estadoPersona = estadoPersona;
@@ -92,15 +92,7 @@ public class Personas implements Serializable {
         this.idPersona = personaDto.getId();
         this.actualizarPedido(personaDto);
     }
-
-    public Integer getIdPresona() {
-        return idPersona;
-    }
-
-    public void setIdPresona(Integer idPresona) {
-        this.idPersona = idPresona;
-    }
-
+    
     public String getCedulaPersona() {
         return cedulaPersona;
     }

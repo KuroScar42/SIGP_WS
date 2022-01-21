@@ -79,7 +79,7 @@ public class Clientes implements Serializable {
     @JoinColumn(name = "ID_EMPRESA", referencedColumnName = "ID_EMPRESA")
     @ManyToOne
     private Empresas idEmpresa;
-    @JoinColumn(name = "ID_PRESONA", referencedColumnName = "ID_PRESONA")
+    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
     @ManyToOne
     private Personas idPersona;
 
@@ -188,8 +188,8 @@ public class Clientes implements Serializable {
         return idPersona;
     }
 
-    public void setIdPersona(Personas idPresona) {
-        this.idPersona = idPresona;
+    public void setIdPersona(Personas idPersona) {
+        this.idPersona = idPersona;
     }
 
     @Override

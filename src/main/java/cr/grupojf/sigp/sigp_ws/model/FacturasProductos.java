@@ -27,7 +27,7 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "FacturasProductos.findByIdFacturasProductos", query = "SELECT f FROM FacturasProductos f WHERE f.idFacturasProductos = :idFacturasProductos"),
     @NamedQuery(name = "FacturasProductos.findByCantidadProducto", query = "SELECT f FROM FacturasProductos f WHERE f.cantidadProducto = :cantidadProducto"),
     @NamedQuery(name = "FacturasProductos.findByDescuentoProducto", query = "SELECT f FROM FacturasProductos f WHERE f.descuentoProducto = :descuentoProducto"),
-    @NamedQuery(name = "FacturasProductos.findByIvaProcucto", query = "SELECT f FROM FacturasProductos f WHERE f.ivaProcucto = :ivaProcucto"),
+    @NamedQuery(name = "FacturasProductos.findByIvaProducto", query = "SELECT f FROM FacturasProductos f WHERE f.ivaProducto = :ivaProducto"),
 //    @NamedQuery(name = "FacturasProductos.findByPRECIOsIVA", query = "SELECT f FROM FacturasProductos f WHERE f.pRECIOsIVA = :pRECIOsIVA"),
 //    @NamedQuery(name = "FacturasProductos.findByPRECIOcIVA", query = "SELECT f FROM FacturasProductos f WHERE f.pRECIOcIVA = :pRECIOcIVA")
 })
@@ -74,7 +74,7 @@ public class FacturasProductos implements Serializable {
         this.idFacturasProductos = idFacturasProductos;
     }
 
-    public FacturasProductos(Integer idFacturasProductos, float cantidadProducto, float descuentoProducto, float ivaProcucto, float pRECIOsIVA, float pRECIOcIVA) {
+    public FacturasProductos(Integer idFacturasProductos, float cantidadProducto, float descuentoProducto, float ivaProducto, float pRECIOsIVA, float pRECIOcIVA) {
         this.idFacturasProductos = idFacturasProductos;
         this.cantidadProducto = cantidadProducto;
         this.descuentoProducto = descuentoProducto;

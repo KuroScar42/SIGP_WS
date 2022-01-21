@@ -17,7 +17,7 @@ public class PersonasDto {
     private String estado;
 
     public PersonasDto(Personas p) {
-        this.id = p.getIdPresona();
+        this.id = p.getIdPersona();
         this.cedula = p.getCedulaPersona();
         this.nombre = p.getNombrePersona();
         this.apellido = p.getApellidoPersona();

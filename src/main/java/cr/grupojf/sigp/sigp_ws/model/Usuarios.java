@@ -140,12 +140,12 @@ public class Usuarios implements Serializable {
         this.versionUsuario = versionUsuario;
     }
 
-    public Personas getIdPresona() {
+    public Personas getIdPersona() {
         return idPersona;
     }
 
-    public void setIdPresona(Personas idPresona) {
-        this.idPersona = idPresona;
+    public void setIdPersona(Personas idPersona) {
+        this.idPersona = idPersona;
     }
 
     @Override

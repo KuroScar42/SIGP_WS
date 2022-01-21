@@ -31,12 +31,6 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Proveedores.findByNombreProveedor", query = "SELECT p FROM Proveedores p WHERE p.nombreProveedor = :nombreProveedor"),
     @NamedQuery(name = "Proveedores.findByTipoCedula", query = "SELECT p FROM Proveedores p WHERE p.tipoCedula = :tipoCedula"),
     @NamedQuery(name = "Proveedores.findByCedula", query = "SELECT p FROM Proveedores p WHERE p.cedula = :cedula"),
-    @NamedQuery(name = "Proveedores.findByRazonSocial", query = "SELECT p FROM Proveedores p WHERE p.razonSocial = :razonSocial"),
-    @NamedQuery(name = "Proveedores.findByInteresMoratorio", query = "SELECT p FROM Proveedores p WHERE p.interesMoratorio = :interesMoratorio"),
-    @NamedQuery(name = "Proveedores.findByDescuento", query = "SELECT p FROM Proveedores p WHERE p.descuento = :descuento"),
-    @NamedQuery(name = "Proveedores.findByPlazoCredito", query = "SELECT p FROM Proveedores p WHERE p.plazoCredito = :plazoCredito"),
-    @NamedQuery(name = "Proveedores.findByTipoDevoluciones", query = "SELECT p FROM Proveedores p WHERE p.tipoDevoluciones = :tipoDevoluciones"),
-    @NamedQuery(name = "Proveedores.findByCuentaPago", query = "SELECT p FROM Proveedores p WHERE p.cuentaPago = :cuentaPago"),
     @NamedQuery(name = "Proveedores.findByEstado", query = "SELECT p FROM Proveedores p WHERE p.estado = :estado"),
     @NamedQuery(name = "Proveedores.findByVersion", query = "SELECT p FROM Proveedores p WHERE p.version = :version")})
 public class Proveedores implements Serializable {
