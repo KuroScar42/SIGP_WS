@@ -35,7 +35,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Roles.findByEstadoRol", query = "SELECT r FROM Roles r WHERE r.estadoRol = :estadoRol"),
     @NamedQuery(name = "Roles.findByNombreRol", query = "SELECT r FROM Roles r WHERE r.nombreRol = :nombreRol")})
 public class Roles implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,18 +57,11 @@ public class Roles implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "NOMBRE_ROL")
     private String nombreRol;
+    @OneToMany(mappedBy = "idRol")
+    private List<Usuarios> usuariosList;
     @ManyToMany(mappedBy = "rolesList")
     private List<Permisos> permisosList;
-//    @OneToMany(mappedBy = "idRol")
-//    private List<Usuarios> usuariosList;
-
     
-    @JoinTable(name = "Usuarios_Permisos", joinColumns = {
-        @JoinColumn(name = "ID_ROL", referencedColumnName = "ID_ROL")}, inverseJoinColumns = {
-        @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")})
-    @ManyToMany
-    private List<Usuarios> usuariosList;
-
     public Roles() {
     }
 

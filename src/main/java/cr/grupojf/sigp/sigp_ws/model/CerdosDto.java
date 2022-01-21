@@ -17,8 +17,8 @@ public class CerdosDto {
     private String sexo;
     private String estado;
     private String descripcion;
-    private String nacimiento;
-    private String peso;
+    private Date nacimiento;
+    private Float peso;
 
     public CerdosDto() {
     }
@@ -26,8 +26,7 @@ public class CerdosDto {
     public CerdosDto(Cerdos cerdo){
         this.id = cerdo.getIdCerdo();
         this.codigo = cerdo.getCodigoCerdo();
-        this.sexo = cerdo.getSexoCerdo();
-        this.estado = cerdo.getSexoCerdo();
+        this.estado = cerdo.getEstadoCerdo();
         this.descripcion = cerdo.getDescripcionCerdo();
         this.nacimiento = cerdo.getFechaNacimiento();
         this.peso = cerdo.getPesoCerdo();
@@ -73,19 +72,19 @@ public class CerdosDto {
         this.descripcion = descripcion;
     }
 
-    public String getNacimiento() {
+    public Date getNacimiento() {
         return nacimiento;
     }
 
-    public void setNacimiento(String nacimiento) {
+    public void setNacimiento(Date nacimiento) {
         this.nacimiento = nacimiento;
     }
 
-    public String getPeso() {
+    public Float getPeso() {
         return peso;
     }
 
-    public void setPeso(String peso) {
+    public void setPeso(Float peso) {
         this.peso = peso;
     }
     

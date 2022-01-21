@@ -5,6 +5,7 @@
 package cr.grupojf.sigp.sigp_ws.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -14,6 +15,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -47,29 +50,21 @@ public class Cerdos implements Serializable {
     private String codigoCerdo;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2)
-    @Column(name = "SEXO_CERDO")
-    private String sexoCerdo;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 1)
     @Column(name = "ESTADO_CERDO")
     private String estadoCerdo;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 750)
+    @Size(max = 750)
     @Column(name = "DESCRIPCION_CERDO")
     private String descripcionCerdo;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
     @Column(name = "FECHA_NACIMIENTO")
-    private String fechaNacimiento;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaNacimiento;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
     @Column(name = "PESO_CERDO")
-    private String pesoCerdo;
+    private float pesoCerdo;
     @OneToMany(mappedBy = "idCerdo")
     private List<Embarazos> embarazosList;
     @OneToMany(mappedBy = "idCerdo")
@@ -82,10 +77,9 @@ public class Cerdos implements Serializable {
         this.idCerdo = idCerdo;
     }
 
-    public Cerdos(Integer idCerdo, String codigoCerdo, String sexoCerdo, String estadoCerdo, String descripcionCerdo, String fechaNacimiento, String pesoCerdo) {
+    public Cerdos(Integer idCerdo, String codigoCerdo, String sexoCerdo, String estadoCerdo, String descripcionCerdo, Date fechaNacimiento, Float pesoCerdo) {
         this.idCerdo = idCerdo;
         this.codigoCerdo = codigoCerdo;
-        this.sexoCerdo = sexoCerdo;
         this.estadoCerdo = estadoCerdo;
         this.descripcionCerdo = descripcionCerdo;
         this.fechaNacimiento = fechaNacimiento;
@@ -113,14 +107,6 @@ public class Cerdos implements Serializable {
         this.codigoCerdo = codigoCerdo;
     }
 
-    public String getSexoCerdo() {
-        return sexoCerdo;
-    }
-
-    public void setSexoCerdo(String sexoCerdo) {
-        this.sexoCerdo = sexoCerdo;
-    }
-
     public String getEstadoCerdo() {
         return estadoCerdo;
     }
@@ -137,19 +123,19 @@ public class Cerdos implements Serializable {
         this.descripcionCerdo = descripcionCerdo;
     }
 
-    public String getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public String getPesoCerdo() {
+    public float getPesoCerdo() {
         return pesoCerdo;
     }
 
-    public void setPesoCerdo(String pesoCerdo) {
+    public void setPesoCerdo(float pesoCerdo) {
         this.pesoCerdo = pesoCerdo;
     }
 
@@ -196,7 +182,6 @@ public class Cerdos implements Serializable {
 
     public void actualizarPedido(CerdosDto cerdoDto) {
         this.codigoCerdo = cerdoDto.getCodigo();
-        this.sexoCerdo = cerdoDto.getSexo();
         this.estadoCerdo = cerdoDto.getEstado();
         this.descripcionCerdo = cerdoDto.getDescripcion();
         this.fechaNacimiento = cerdoDto.getNacimiento();

@@ -64,12 +64,12 @@ public class Partos implements Serializable {
     private int cantidadVivos;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "CANTIDA_NACIDOS_MUERTOS")
-    private int cantidaNacidosMuertos;
+    @Column(name = "CANTIDAD_NACIDOS_MUERTOS")
+    private int cantidadNacidosMuertos;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "CANTIDA_MOMIAS")
-    private int cantidaMomias;
+    @Column(name = "CANTIDAD_MOMIAS")
+    private int cantidadMomias;
     @Basic(optional = false)
     @NotNull
     @Column(name = "CANTIDAD_ESTRIPADOS")
@@ -86,6 +86,14 @@ public class Partos implements Serializable {
     @Size(max = 750)
     @Column(name = "DETALLE_PARTO")
     private String detalleParto;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "CANTIDA_NACIDOS_MUERTOS")
+    private int cantidaNacidosMuertos;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "CANTIDA_MOMIAS")
+    private int cantidaMomias;
     @JoinTable(name = "Supervisores_Parto", joinColumns = {
         @JoinColumn(name = "ID_PARTO", referencedColumnName = "ID_PARTO")}, inverseJoinColumns = {
         @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")})
@@ -263,6 +271,23 @@ public class Partos implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Partos[ idParto=" + idParto + " ]";
+    }
+
+    
+    public int getCantidadNacidosMuertos() {
+        return cantidadNacidosMuertos;
+    }
+
+    public void setCantidadNacidosMuertos(int cantidadNacidosMuertos) {
+        this.cantidadNacidosMuertos = cantidadNacidosMuertos;
+    }
+
+    public int getCantidadMomias() {
+        return cantidadMomias;
+    }
+
+    public void setCantidadMomias(int cantidadMomias) {
+        this.cantidadMomias = cantidadMomias;
     }
     
 }

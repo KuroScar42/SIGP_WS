@@ -18,6 +18,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -29,18 +30,13 @@ import javax.validation.constraints.Size;
 @Table(name = "Permisos")
 @NamedQueries({
     @NamedQuery(name = "Permisos.findAll", query = "SELECT p FROM Permisos p"),
+    @NamedQuery(name = "Permisos.findAllActive", query = "SELECT p FROM Permisos p where p.estado = 'A'"),
     @NamedQuery(name = "Permisos.findByIdPermso", query = "SELECT p FROM Permisos p WHERE p.idPermso = :idPermso"),
     @NamedQuery(name = "Permisos.findByPermiso", query = "SELECT p FROM Permisos p WHERE p.permiso = :permiso"),
     @NamedQuery(name = "Permisos.findByEstado", query = "SELECT p FROM Permisos p WHERE p.estado = :estado"),
     @NamedQuery(name = "Permisos.findByVersion", query = "SELECT p FROM Permisos p WHERE p.version = :version")})
 public class Permisos implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "ID_PERMSO")
-    private Integer idPermso;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -49,6 +45,14 @@ public class Permisos implements Serializable {
     @Size(max = 1)
     @Column(name = "ESTADO")
     private String estado;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID_PERMSO")
+    private Integer idPermso;
+    @Version
     @Column(name = "VERSION")
     private Integer version;
     @JoinTable(name = "Role_Permiso", joinColumns = {
@@ -77,21 +81,6 @@ public class Permisos implements Serializable {
         this.idPermso = idPermso;
     }
 
-    public String getPermiso() {
-        return permiso;
-    }
-
-    public void setPermiso(String permiso) {
-        this.permiso = permiso;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
 
     public Integer getVersion() {
         return version;
@@ -132,6 +121,22 @@ public class Permisos implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Permisos[ idPermso=" + idPermso + " ]";
+    }
+
+    public String getPermiso() {
+        return permiso;
+    }
+
+    public void setPermiso(String permiso) {
+        this.permiso = permiso;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
     
 }

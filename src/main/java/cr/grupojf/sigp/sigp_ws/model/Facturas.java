@@ -57,7 +57,7 @@ public class Facturas implements Serializable {
     private Integer idFactura;
     @Basic(optional = false)
     @NotNull
-    @Lob
+    @Size(min = 1, max = 2)
     @Column(name = "TIPO_FACTURA")
     private String tipoFactura;
     @Basic(optional = false)
@@ -114,6 +114,9 @@ public class Facturas implements Serializable {
     @Size(min = 1, max = 500)
     @Column(name = "OBSERVACIONES_FACTURA")
     private String observacionesFactura;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFactura")
+    private List<FacturasProductos> facturasProductosList;
+    
     @JoinColumn(name = "ID_APERTURA", referencedColumnName = "ID_APERTURA")
     @ManyToOne
     private AperturaCajas idApertura;
@@ -129,8 +132,6 @@ public class Facturas implements Serializable {
     @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")
     @ManyToOne
     private Usuarios idUsuario;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFactura")
-//    private List<Clientes> clientesList;
 
     public Facturas() {
     }
@@ -339,6 +340,14 @@ public class Facturas implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Facturas[ idFactura=" + idFactura + " ]";
+    }
+
+    public List<FacturasProductos> getFacturasProductosList() {
+        return facturasProductosList;
+    }
+
+    public void setFacturasProductosList(List<FacturasProductos> facturasProductosList) {
+        this.facturasProductosList = facturasProductosList;
     }
     
 }

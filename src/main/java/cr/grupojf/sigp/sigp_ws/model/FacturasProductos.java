@@ -49,16 +49,17 @@ public class FacturasProductos implements Serializable {
     private float descuentoProducto;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "IVA_PROCUCTO")
-    private float ivaProcucto;
+    @Column(name = "IVA_PRODUCTO")
+    private float ivaProducto;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "PRECIO_sIVA")
-    private float preciosIva;
+    @Column(name = "PRECIO")
+    private float precio;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "PRECIO_cIVA")
-    private float preciocIva;
+    @Column(name = "PRECIO_IVA")
+    private float precioIva;
+    @Basic(optional = false)
     @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO")
     @ManyToOne(optional = false)
     private Productos idProducto;
@@ -77,9 +78,9 @@ public class FacturasProductos implements Serializable {
         this.idFacturasProductos = idFacturasProductos;
         this.cantidadProducto = cantidadProducto;
         this.descuentoProducto = descuentoProducto;
-        this.ivaProcucto = ivaProcucto;
-        this.preciosIva = pRECIOsIVA;
-        this.preciocIva = pRECIOcIVA;
+//        this.ivaProcucto = ivaProcucto;
+//        this.preciosIva = pRECIOsIVA;
+//        this.preciocIva = pRECIOcIVA;
     }
 
     public Integer getIdFacturasProductos() {
@@ -104,30 +105,6 @@ public class FacturasProductos implements Serializable {
 
     public void setDescuentoProducto(float descuentoProducto) {
         this.descuentoProducto = descuentoProducto;
-    }
-
-    public float getIvaProcucto() {
-        return ivaProcucto;
-    }
-
-    public void setIvaProcucto(float ivaProcucto) {
-        this.ivaProcucto = ivaProcucto;
-    }
-
-    public float getPreciosIva() {
-        return preciosIva;
-    }
-
-    public void setPreciosIva(float preciosIva) {
-        this.preciosIva = preciosIva;
-    }
-
-    public float getPreciocIva() {
-        return preciocIva;
-    }
-
-    public void setPreciocIva(float preciocIva) {
-        this.preciocIva = preciocIva;
     }
 
     public Productos getIdProducto() {
@@ -169,6 +146,30 @@ public class FacturasProductos implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.FacturasProductos[ idFacturasProductos=" + idFacturasProductos + " ]";
+    }
+
+    public float getIvaProducto() {
+        return ivaProducto;
+    }
+
+    public void setIvaProducto(float ivaProducto) {
+        this.ivaProducto = ivaProducto;
+    }
+
+    public float getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(float precio) {
+        this.precio = precio;
+    }
+
+    public float getPrecioIva() {
+        return precioIva;
+    }
+
+    public void setPrecioIva(float precioIva) {
+        this.precioIva = precioIva;
     }
     
 }

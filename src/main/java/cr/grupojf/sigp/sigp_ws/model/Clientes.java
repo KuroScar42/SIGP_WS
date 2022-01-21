@@ -40,29 +40,23 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Clientes.findByEstadoCliente", query = "SELECT c FROM Clientes c WHERE c.estadoCliente = :estadoCliente"),
     @NamedQuery(name = "Clientes.findByVersion", query = "SELECT c FROM Clientes c WHERE c.version = :version")})
 public class Clientes implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID_CLIENTE")
     private Integer idCliente;
-//    @Basic(optional = false)
-//    @NotNull
-//    @Size(min = 1, max = 13)
-//    @Column(name = "CEDULA_CLIENTE")
-//    private String cedulaCliente;
     @Basic(optional = false)
     @NotNull
-    @Size(max = 20)
+    @Size(min = 1, max = 20)
     @Column(name = "EMAIL_CLIENTE")
     private String emailCliente;
     @Basic(optional = false)
     @NotNull
-    @Size(max = 20)
+    @Size(min = 1, max = 20)
     @Column(name = "TELEFONO_CLIENTE")
     private String telefonoCliente;
-//    @Basic(optional = false)
     @Size(max = 20)
     @Column(name = "TELEFONO2_CLIENTE")
     private String telefono2Cliente;
@@ -74,15 +68,14 @@ public class Clientes implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "ESTADO_CLIENTE")
     private String estadoCliente;
+    @OneToMany(mappedBy = "idCliente")
+    private List<Creditos> creditosList;
     @Basic(optional = false)
     @Version
     @Column(name = "VERSION")
     private int version;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCliente")
     private List<Facturas> facturasList;
-//    @JoinColumn(name = "ID_FACTURA", referencedColumnName = "ID_FACTURA")
-//    @ManyToOne(optional = false)
-//    private Facturas idFactura;
     @JoinColumn(name = "ID_EMPRESA", referencedColumnName = "ID_EMPRESA")
     @ManyToOne
     private Empresas idEmpresa;
@@ -230,6 +223,16 @@ public class Clientes implements Serializable {
         this.estadoCliente = c.getEstado();
         this.telefono2Cliente = c.getTelefono2();
         this.telefonoCliente = c.getTelefono();
+    }
+
+    
+
+    public List<Creditos> getCreditosList() {
+        return creditosList;
+    }
+
+    public void setCreditosList(List<Creditos> creditosList) {
+        this.creditosList = creditosList;
     }
     
 }

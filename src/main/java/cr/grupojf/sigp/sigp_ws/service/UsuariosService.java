@@ -4,6 +4,8 @@
  */
 package cr.grupojf.sigp.sigp_ws.service;
 
+import cr.grupojf.sigp.sigp_ws.model.PermisoDto;
+import cr.grupojf.sigp.sigp_ws.model.Permisos;
 import cr.grupojf.sigp.sigp_ws.model.PersonasDto;
 import cr.grupojf.sigp.sigp_ws.model.UsuarioDto;
 import cr.grupojf.sigp.sigp_ws.model.Usuarios;
@@ -60,6 +62,23 @@ public class UsuariosService {
             }
 
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "usuarios", usuariosDtoList);
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar los usuarios del sistema", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los usuarios del sistema.", "getAllUsuarios " + ex.getMessage());
+        }
+    }
+
+    public Respuesta getAllPermisos() {
+        try {
+            Query query = em.createNamedQuery("Permisos.findAllActive", Permisos.class);
+            List<Permisos> permisos = query.getResultList();
+            List<PermisoDto> permisosDtoList = new ArrayList<>();
+
+            for (Permisos permiso : permisos) {
+                permisosDtoList.add(new PermisoDto(permiso));
+            }
+
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "permisos", permisosDtoList);
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al consultar los usuarios del sistema", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los usuarios del sistema.", "getAllUsuarios " + ex.getMessage());

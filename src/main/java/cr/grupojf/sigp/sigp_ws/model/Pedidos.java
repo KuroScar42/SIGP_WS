@@ -6,7 +6,9 @@ package cr.grupojf.sigp.sigp_ws.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -55,22 +58,26 @@ public class Pedidos implements Serializable {
     @Column(name = "FECHA_ENTREGA")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaEntrega;
-    @Column(name = "FECHA_PEDIDO")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaPedido;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1)
     @Column(name = "ESTADO_PEDIDO")
     private String estadoPedido;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "CLIENTE")
+    private String cliente;
     @Size(max = 500)
     @Column(name = "DESCRIPCION_PEDIDO")
     private String descripcionPedido;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 80)
-    @Column(name = "Cliente")
-    private String cliente;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPedidos")
+    private List<ProductosPedidos> productosPedidosList;
+
+    
+    @Column(name = "FECHA_PEDIDO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaPedido;
     @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")
     @ManyToOne
     private Usuarios idUsuario;
@@ -152,13 +159,6 @@ public class Pedidos implements Serializable {
         this.descripcionPedido = descripcionPedido;
     }
 
-    public String getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(String cliente) {
-        this.cliente = cliente;
-    }
 
     public Usuarios getIdUsuario() {
         return idUsuario;
@@ -191,6 +191,22 @@ public class Pedidos implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Pedidos[ idPedidos=" + idPedidos + " ]";
+    }
+
+    public String getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
+    }
+
+    public List<ProductosPedidos> getProductosPedidosList() {
+        return productosPedidosList;
+    }
+
+    public void setProductosPedidosList(List<ProductosPedidos> productosPedidosList) {
+        this.productosPedidosList = productosPedidosList;
     }
     
 }

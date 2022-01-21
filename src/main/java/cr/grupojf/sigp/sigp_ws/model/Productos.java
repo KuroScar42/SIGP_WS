@@ -65,7 +65,7 @@ public class Productos implements Serializable {
     @Column(name = "CODIGO_BARRAS")
     private String codigoBarras;
     @Basic(optional = false)
-    @NotNull
+    @NotNull()
     @Size(min = 1, max = 20)
     @Column(name = "NOMBRE_PRODUCTO")
     private String nombreProducto;
@@ -77,7 +77,7 @@ public class Productos implements Serializable {
     @Column(name = "UNIDAD_EMBALAGE")
     private float unidadEmbalage;
     @Basic(optional = false)
-    @NotNull
+    @NotNull()
     @Column(name = "PRECIO_COSTO")
     private float precioCosto;
     @Basic(optional = false)
@@ -85,12 +85,9 @@ public class Productos implements Serializable {
     @Size(min = 1, max = 16)
     @Column(name = "CODIGO_CABYS")
     private String codigoCabys;
-    @Column(name = "CADUCIDAD")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date caducidad;
-    @NotNull
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "IVA_PRODUCTO")
-    private float ivaProducto;
+    private Float ivaProducto;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1)
@@ -100,6 +97,9 @@ public class Productos implements Serializable {
     @NotNull
     @Column(name = "VERSION")
     private int version;
+    @Column(name = "CADUCIDAD")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date caducidad;
     @JoinTable(name = "Productos_Proveedores", joinColumns = {
         @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO")}, inverseJoinColumns = {
         @JoinColumn(name = "ID_PROVEEDOR", referencedColumnName = "ID_PROVEEDOR")})
@@ -223,21 +223,6 @@ public class Productos implements Serializable {
         this.ivaProducto = ivaProducto;
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public int getVersion() {
-        return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
-    }
 
     public List<Proveedores> getProveedoresList() {
         return proveedoresList;
@@ -294,6 +279,26 @@ public class Productos implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Productos[ idProducto=" + idProducto + " ]";
+    }
+
+    public void setIvaProducto(Float ivaProducto) {
+        this.ivaProducto = ivaProducto;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
     
 }

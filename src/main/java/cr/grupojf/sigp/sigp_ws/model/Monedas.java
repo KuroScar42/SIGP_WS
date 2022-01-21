@@ -49,6 +49,8 @@ public class Monedas implements Serializable {
     @Column(name = "ESTADO_MONEDA")
     private String estadoMoneda;
     @OneToMany(mappedBy = "idMoneda")
+    private List<TipoCambio> tipoCambioList;
+    @OneToMany(mappedBy = "idMoneda")
     private List<DenominacionEfectivo> denominacionEfectivoList;
 
     private static final long serialVersionUID = 1L;
@@ -145,6 +147,14 @@ public class Monedas implements Serializable {
 
     public void setDenominacionEfectivoList(List<DenominacionEfectivo> denominacionEfectivoList) {
         this.denominacionEfectivoList = denominacionEfectivoList;
+    }
+
+    public List<TipoCambio> getTipoCambioList() {
+        return tipoCambioList;
+    }
+
+    public void setTipoCambioList(List<TipoCambio> tipoCambioList) {
+        this.tipoCambioList = tipoCambioList;
     }
     
 }

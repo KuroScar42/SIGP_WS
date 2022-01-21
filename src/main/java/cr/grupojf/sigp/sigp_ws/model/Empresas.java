@@ -35,6 +35,12 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Empresas.findByVersion", query = "SELECT e FROM Empresas e WHERE e.version = :version")})
 public class Empresas implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID_EMPRESA")
+    private Integer idEmpresa;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -59,13 +65,6 @@ public class Empresas implements Serializable {
     @Version
     @Column(name = "VERSION")
     private int version;
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "ID_EMPRESA")
-    private Integer idEmpresa;
     @OneToMany(mappedBy = "idEmpresa")
     private List<Clientes> clientesList;
 

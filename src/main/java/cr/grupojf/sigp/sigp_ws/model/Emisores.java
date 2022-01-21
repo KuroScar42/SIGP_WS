@@ -36,12 +36,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Emisores.findByEstadoEmisor", query = "SELECT e FROM Emisores e WHERE e.estadoEmisor = :estadoEmisor"),
     @NamedQuery(name = "Emisores.findByVersionEstado", query = "SELECT e FROM Emisores e WHERE e.versionEstado = :versionEstado")})
 public class Emisores implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "ID_EMISOR")
-    private Integer idEmisor;
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
@@ -71,6 +66,12 @@ public class Emisores implements Serializable {
     @NotNull
     @Column(name = "VERSION_ESTADO")
     private int versionEstado;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID_EMISOR")
+    private Integer idEmisor;
 
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEmisor")
@@ -181,6 +182,5 @@ public class Emisores implements Serializable {
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Emisores[ idEmisor=" + idEmisor + " ]";
     }
-
     
 }

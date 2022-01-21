@@ -35,14 +35,13 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Personas.findByVersionPersona", query = "SELECT p FROM Personas p WHERE p.versionPersona = :versionPersona")})
 public class Personas implements Serializable {
     
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ID_PRESONA")
-    private Integer idPresona;
+    @Column(name = "ID_PERSONA")
+    private Integer idPersona;
     @Basic(optional = false)
-    @NotNull
+    @NotNull()
     @Size(min = 1, max = 20)
     @Column(name = "NOMBRE_PERSONA")
     private String nombrePersona;
@@ -60,7 +59,7 @@ public class Personas implements Serializable {
     @Column(name = "APELLIDO2_PERSONA")
     private String apellido2Persona;
     @Basic(optional = false)
-    @NotNull
+    @NotNull()
     @Size(min = 1, max = 1)
     @Column(name = "ESTADO_PERSONA")
     private String estadoPersona;
@@ -68,6 +67,9 @@ public class Personas implements Serializable {
     @NotNull
     @Column(name = "VERSION_PERSONA")
     private int versionPersona;
+    @OneToMany(mappedBy = "idPersona")
+    private List<Clientes> clientesList;
+    private static final long serialVersionUID = 1L;
     @OneToMany(mappedBy = "idPresona")
     private List<Usuarios> usuariosList;
 
@@ -75,11 +77,11 @@ public class Personas implements Serializable {
     }
 
     public Personas(Integer idPresona) {
-        this.idPresona = idPresona;
+        this.idPersona = idPresona;
     }
 
     public Personas(Integer idPresona, String nombrePersona, String apellidoPersona, String estadoPersona, int versionPersona) {
-        this.idPresona = idPresona;
+        this.idPersona = idPresona;
         this.nombrePersona = nombrePersona;
         this.apellidoPersona = apellidoPersona;
         this.estadoPersona = estadoPersona;
@@ -87,16 +89,16 @@ public class Personas implements Serializable {
     }
 
     public Personas(PersonasDto personaDto) {
-        this.idPresona = personaDto.getId();
+        this.idPersona = personaDto.getId();
         this.actualizarPedido(personaDto);
     }
 
     public Integer getIdPresona() {
-        return idPresona;
+        return idPersona;
     }
 
     public void setIdPresona(Integer idPresona) {
-        this.idPresona = idPresona;
+        this.idPersona = idPresona;
     }
 
     public String getCedulaPersona() {
@@ -147,31 +149,6 @@ public class Personas implements Serializable {
         this.usuariosList = usuariosList;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idPresona != null ? idPresona.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Personas)) {
-            return false;
-        }
-        Personas other = (Personas) object;
-        if ((this.idPresona == null && other.idPresona != null) || (this.idPresona != null && !this.idPresona.equals(other.idPresona))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "cr.grupojf.sigp.sigp_ws.model.Personas[ idPresona=" + idPresona + " ]";
-    }
-
     public void actualizarPedido(PersonasDto personaDto) {
         this.apellido2Persona = personaDto.getApellido2();
         this.apellidoPersona = personaDto.getApellido();
@@ -186,6 +163,56 @@ public class Personas implements Serializable {
 
     public void setNombrePersona(String nombrePersona) {
         this.nombrePersona = nombrePersona;
+    }
+
+    public Personas(Integer idPersona, String nombrePersona, String apellidoPersona, String cedulaPersona, String estadoPersona, int versionPersona) {
+        this.idPersona = idPersona;
+        this.nombrePersona = nombrePersona;
+        this.apellidoPersona = apellidoPersona;
+        this.cedulaPersona = cedulaPersona;
+        this.estadoPersona = estadoPersona;
+        this.versionPersona = versionPersona;
+    }
+
+    public Integer getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(Integer idPersona) {
+        this.idPersona = idPersona;
+    }
+
+    public List<Clientes> getClientesList() {
+        return clientesList;
+    }
+
+    public void setClientesList(List<Clientes> clientesList) {
+        this.clientesList = clientesList;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idPersona != null ? idPersona.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Personas)) {
+            return false;
+        }
+        Personas other = (Personas) object;
+        if ((this.idPersona == null && other.idPersona != null) || (this.idPersona != null && !this.idPersona.equals(other.idPersona))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "cr.grupojf.sigp.sigp_ws.model.Personas[ idPersona=" + idPersona + " ]";
     }
     
 }

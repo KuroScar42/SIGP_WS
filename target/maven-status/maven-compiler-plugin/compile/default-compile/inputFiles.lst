@@ -54,6 +54,7 @@
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/CuentasPagarDto.java
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Inseminacion.java
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/controller/UsuariosController.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/PermisoDto.java
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/CreditosDto.java
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Pedidos.java
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/EmbarazosDto.java

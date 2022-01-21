@@ -37,12 +37,6 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "MetodosPago.findByVersionPago", query = "SELECT m FROM MetodosPago m WHERE m.versionPago = :versionPago")})
 public class MetodosPago implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "ID_METODO")
-    private Integer idMetodo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2)
@@ -60,6 +54,13 @@ public class MetodosPago implements Serializable {
     @NotNull
     @Column(name = "VERSION_PAGO")
     private int versionPago;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID_METODO")
+    private Integer idMetodo;
     @JoinColumn(name = "ID_MONEDA", referencedColumnName = "ID_MONEDA")
     @ManyToOne
     private Monedas idMoneda;

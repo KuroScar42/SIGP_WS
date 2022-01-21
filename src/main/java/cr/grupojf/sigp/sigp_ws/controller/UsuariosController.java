@@ -4,6 +4,7 @@
  */
 package cr.grupojf.sigp.sigp_ws.controller;
 
+import cr.grupojf.sigp.sigp_ws.model.PermisoDto;
 import cr.grupojf.sigp.sigp_ws.model.PersonasDto;
 import cr.grupojf.sigp.sigp_ws.model.UsuarioDto;
 import cr.grupojf.sigp.sigp_ws.service.UsuariosService;
@@ -83,8 +84,8 @@ public class UsuariosController {
             return Response.ok(new GenericEntity<List<PermisoDto>>(resultado) {
             }).build();
         } catch (Exception ex) {
-            Logger.getLogger(ProductosController.class.getName()).log(Level.SEVERE, null, ex);
-            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar los usuarios").build();
+            Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar los permisos").build();
         }
     }
     

@@ -44,13 +44,28 @@ public class Inseminacion implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 16)
-    @Column(name = "CODIGO_ENSIMINACION")
-    private String codigoEnsiminacion;
+    @Column(name = "CODIGO_INSIMINACION")
+    private String codigoInsiminacion;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHA_INSEMINACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaInseminacion;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2)
+    @Column(name = "ESTADO_INSIMINACION")
+    private String estadoInsiminacion;
+    @Size(max = 750)
+    @Column(name = "DETALLE_INSIMINACION")
+    private String detalleInsiminacion;
+
+    
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 16)
+    @Column(name = "CODIGO_ENSIMINACION")
+    private String codigoEnsiminacion;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2)
@@ -151,6 +166,30 @@ public class Inseminacion implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Inseminacion[ idInseminacion=" + idInseminacion + " ]";
+    }
+
+    public String getCodigoInsiminacion() {
+        return codigoInsiminacion;
+    }
+
+    public void setCodigoInsiminacion(String codigoInsiminacion) {
+        this.codigoInsiminacion = codigoInsiminacion;
+    }
+
+    public String getEstadoInsiminacion() {
+        return estadoInsiminacion;
+    }
+
+    public void setEstadoInsiminacion(String estadoInsiminacion) {
+        this.estadoInsiminacion = estadoInsiminacion;
+    }
+
+    public String getDetalleInsiminacion() {
+        return detalleInsiminacion;
+    }
+
+    public void setDetalleInsiminacion(String detalleInsiminacion) {
+        this.detalleInsiminacion = detalleInsiminacion;
     }
     
 }
