@@ -73,7 +73,7 @@ public class Productos implements Serializable {
     @Column(name = "DESCRIPCION_PRODUCTO")
     private String descripcionProducto;
     @Basic(optional = false)
-    @NotNull
+    @NotNull()
     @Column(name = "UNIDAD_EMBALAGE")
     private float unidadEmbalage;
     @Basic(optional = false)
@@ -85,11 +85,8 @@ public class Productos implements Serializable {
     @Size(min = 1, max = 16)
     @Column(name = "CODIGO_CABYS")
     private String codigoCabys;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "IVA_PRODUCTO")
-    private Float ivaProducto;
     @Basic(optional = false)
-    @NotNull
+    @NotNull()
     @Size(min = 1, max = 1)
     @Column(name = "ESTADO")
     private String estado;
@@ -97,6 +94,10 @@ public class Productos implements Serializable {
     @NotNull
     @Column(name = "VERSION")
     private int version;
+    
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "IVA_PRODUCTO")
+    private Float ivaProducto;
     @Column(name = "CADUCIDAD")
     @Temporal(TemporalType.TIMESTAMP)
     private Date caducidad;

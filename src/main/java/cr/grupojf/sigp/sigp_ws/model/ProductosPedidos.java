@@ -44,6 +44,7 @@ public class ProductosPedidos implements Serializable {
     @JoinColumn(name = "ID_PEDIDOS", referencedColumnName = "ID_PEDIDOS")
     @ManyToOne(optional = false)
     private Pedidos idPedidos;
+    @Basic(optional = false)
     @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO")
     @ManyToOne(optional = false)
     private Productos idProducto;

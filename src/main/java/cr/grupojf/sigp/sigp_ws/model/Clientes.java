@@ -40,13 +40,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Clientes.findByEstadoCliente", query = "SELECT c FROM Clientes c WHERE c.estadoCliente = :estadoCliente"),
     @NamedQuery(name = "Clientes.findByVersion", query = "SELECT c FROM Clientes c WHERE c.version = :version")})
 public class Clientes implements Serializable {
-    
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "ID_CLIENTE")
-    private Integer idCliente;
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -67,7 +61,14 @@ public class Clientes implements Serializable {
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "ESTADO_CLIENTE")
-    private String estadoCliente;
+    private String estadoCliente;;
+    
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID_CLIENTE")
+    private Integer idCliente;
     @OneToMany(mappedBy = "idCliente")
     private List<Creditos> creditosList;
     @Basic(optional = false)
