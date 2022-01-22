@@ -6,6 +6,7 @@ package cr.grupojf.sigp.sigp_ws.controller;
 
 import cr.grupojf.sigp.sigp_ws.model.PermisoDto;
 import cr.grupojf.sigp.sigp_ws.model.PersonasDto;
+import cr.grupojf.sigp.sigp_ws.model.RolesDto;
 import cr.grupojf.sigp.sigp_ws.model.UsuarioDto;
 import cr.grupojf.sigp.sigp_ws.service.UsuariosService;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
@@ -89,4 +90,22 @@ public class UsuariosController {
         }
     }
     
+    
+    @POST
+    @Path("/guardarRoles")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response guardarRoles(RolesDto rolDto) {
+        try {
+            Respuesta respuesta = service.guardarRoles(rolDto);
+            if (!respuesta.getEstado()) {
+                return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
+            }
+            UsuarioDto usuario = (UsuarioDto) respuesta.getResultado("rol");
+            return Response.ok(usuario).build();
+        } catch (Exception ex) {
+            Logger.getLogger(ProductosController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar el Rol").build();
+        }
+    }
 }
