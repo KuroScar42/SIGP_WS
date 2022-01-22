@@ -12,8 +12,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -57,11 +55,11 @@ public class Roles implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "NOMBRE_ROL")
     private String nombreRol;
-    @OneToMany(mappedBy = "idRol")
-    private List<Usuarios> usuariosList;
     @ManyToMany(mappedBy = "rolesList")
     private List<Permisos> permisosList;
-    
+    @OneToMany(mappedBy = "idRol")
+    private List<Usuarios> usuariosList;
+
     public Roles() {
     }
 
@@ -108,6 +106,14 @@ public class Roles implements Serializable {
         this.nombreRol = nombreRol;
     }
 
+    public List<Permisos> getPermisosList() {
+        return permisosList;
+    }
+
+    public void setPermisosList(List<Permisos> permisosList) {
+        this.permisosList = permisosList;
+    }
+
     public List<Usuarios> getUsuariosList() {
         return usuariosList;
     }
@@ -139,14 +145,6 @@ public class Roles implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Roles[ idRol=" + idRol + " ]";
-    }
-
-    public List<Permisos> getPermisosList() {
-        return permisosList;
-    }
-
-    public void setPermisosList(List<Permisos> permisosList) {
-        this.permisosList = permisosList;
     }
     
 }

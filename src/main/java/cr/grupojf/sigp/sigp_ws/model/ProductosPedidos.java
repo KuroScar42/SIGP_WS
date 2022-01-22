@@ -30,21 +30,19 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "ProductosPedidos.findByCantidad", query = "SELECT p FROM ProductosPedidos p WHERE p.cantidad = :cantidad")})
 public class ProductosPedidos implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID_PRODUCTOS_PEDIDOS")
+    private Integer idProductosPedidos;
     @Basic(optional = false)
     @NotNull
     @Column(name = "CANTIDAD")
     private int cantidad;
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_PRODUCTOS_PEDIDOS")
-    private Integer idProductosPedidos;
     @JoinColumn(name = "ID_PEDIDOS", referencedColumnName = "ID_PEDIDOS")
     @ManyToOne(optional = false)
     private Pedidos idPedidos;
-    @Basic(optional = false)
     @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO")
     @ManyToOne(optional = false)
     private Productos idProducto;
@@ -80,6 +78,13 @@ public class ProductosPedidos implements Serializable {
         this.idProductosPedidos = idProductosPedidos;
     }
 
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
 
     public Pedidos getIdPedidos() {
         return idPedidos;
@@ -121,15 +126,5 @@ public class ProductosPedidos implements Serializable {
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.ProductosPedidos[ idProductosPedidos=" + idProductosPedidos + " ]";
     }
-
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    
     
 }

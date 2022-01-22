@@ -33,6 +33,12 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "OtrosValores.findByMontoTotal", query = "SELECT o FROM OtrosValores o WHERE o.montoTotal = :montoTotal")})
 public class OtrosValores implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID_VALORES")
+    private Integer idValores;
     @Basic(optional = false)
     @NotNull
     @Column(name = "MONTO_MONEDA")
@@ -41,13 +47,6 @@ public class OtrosValores implements Serializable {
     @NotNull
     @Column(name = "MONTO_TOTAL")
     private float montoTotal;
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "ID_VALORES")
-    private Integer idValores;
     @OneToMany(mappedBy = "idValores")
     private List<CierresCajas> cierresCajasList;
     @JoinColumn(name = "ID_METODO", referencedColumnName = "ID_METODO")

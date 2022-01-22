@@ -171,5 +171,5 @@ public class MetodosPago implements Serializable {
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.MetodosPago[ idMetodo=" + idMetodo + " ]";
     }
-    
+
 }

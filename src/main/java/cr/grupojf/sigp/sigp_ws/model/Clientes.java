@@ -7,7 +7,6 @@ package cr.grupojf.sigp.sigp_ws.model;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +18,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -41,6 +39,12 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Clientes.findByVersion", query = "SELECT c FROM Clientes c WHERE c.version = :version")})
 public class Clientes implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID_CLIENTE")
+    private Integer idCliente;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -61,21 +65,12 @@ public class Clientes implements Serializable {
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "ESTADO_CLIENTE")
-    private String estadoCliente;;
-    
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String estadoCliente;
     @Basic(optional = false)
-    @Column(name = "ID_CLIENTE")
-    private Integer idCliente;
-    @OneToMany(mappedBy = "idCliente")
-    private List<Creditos> creditosList;
-    @Basic(optional = false)
-    @Version
+    @NotNull
     @Column(name = "VERSION")
     private int version;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCliente")
+    @OneToMany(mappedBy = "idCliente")
     private List<Facturas> facturasList;
     @JoinColumn(name = "ID_EMPRESA", referencedColumnName = "ID_EMPRESA")
     @ManyToOne
@@ -83,6 +78,8 @@ public class Clientes implements Serializable {
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
     @ManyToOne
     private Personas idPersona;
+    @OneToMany(mappedBy = "idCliente")
+    private List<Creditos> creditosList;
 
     public Clientes() {
     }
@@ -91,11 +88,10 @@ public class Clientes implements Serializable {
         this.idCliente = idCliente;
     }
 
-    public Clientes(Integer idCliente, String emailCliente, String telefonoCliente, String telefono2Cliente, String estadoCliente, int version) {
+    public Clientes(Integer idCliente, String emailCliente, String telefonoCliente, String estadoCliente, int version) {
         this.idCliente = idCliente;
         this.emailCliente = emailCliente;
         this.telefonoCliente = telefonoCliente;
-        this.telefono2Cliente = telefono2Cliente;
         this.estadoCliente = estadoCliente;
         this.version = version;
     }
@@ -169,14 +165,6 @@ public class Clientes implements Serializable {
         this.facturasList = facturasList;
     }
 
-//    public Facturas getIdFactura() {
-//        return idFactura;
-//    }
-//
-//    public void setIdFactura(Facturas idFactura) {
-//        this.idFactura = idFactura;
-//    }
-
     public Empresas getIdEmpresa() {
         return idEmpresa;
     }
@@ -191,6 +179,14 @@ public class Clientes implements Serializable {
 
     public void setIdPersona(Personas idPersona) {
         this.idPersona = idPersona;
+    }
+
+    public List<Creditos> getCreditosList() {
+        return creditosList;
+    }
+
+    public void setCreditosList(List<Creditos> creditosList) {
+        this.creditosList = creditosList;
     }
 
     @Override
@@ -217,7 +213,7 @@ public class Clientes implements Serializable {
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Clientes[ idCliente=" + idCliente + " ]";
     }
-
+    
     public void actualizarCliente(ClientesDto c) {
         this.direccionCliente = c.getDireccion();
         this.emailCliente = c.getEmail();
@@ -225,15 +221,4 @@ public class Clientes implements Serializable {
         this.telefono2Cliente = c.getTelefono2();
         this.telefonoCliente = c.getTelefono();
     }
-
-    
-
-    public List<Creditos> getCreditosList() {
-        return creditosList;
-    }
-
-    public void setCreditosList(List<Creditos> creditosList) {
-        this.creditosList = creditosList;
-    }
-    
 }

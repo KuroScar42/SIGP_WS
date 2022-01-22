@@ -96,7 +96,7 @@ public class ClienteService {
                 if (persona == null) {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encontro la persona en especifico", "guardarPersona NoResultException");
                 }
-                persona.actualizarPedido(personaDto);
+                persona.actualizarPersona(personaDto);
                 persona = em.merge(persona);
             } else {
                 persona = new Personas(personaDto);

@@ -38,6 +38,12 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Usuarios.findByVersionUsuario", query = "SELECT u FROM Usuarios u WHERE u.versionUsuario = :versionUsuario")})
 public class Usuarios implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID_USUARIO")
+    private Integer idUsuario;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 8)
@@ -63,6 +69,12 @@ public class Usuarios implements Serializable {
     private List<Facturas> facturasList;
     @OneToMany(mappedBy = "idUsuario")
     private List<CuentasPagar> cuentasPagarList;
+    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
+    @ManyToOne
+    private Personas idPersona;
+    @JoinColumn(name = "ID_ROL", referencedColumnName = "ID_ROL")
+    @ManyToOne
+    private Roles idRol;
     @OneToMany(mappedBy = "idUsuario")
     private List<AperturaCajas> aperturaCajasList;
     @OneToMany(mappedBy = "idUsuario")
@@ -71,19 +83,6 @@ public class Usuarios implements Serializable {
     private List<Partos> partosList1;
     @OneToMany(mappedBy = "idUsuario")
     private List<Creditos> creditosList;
-    
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "ID_USUARIO")
-    private Integer idUsuario;
-    @JoinColumn(name = "ID_ROL", referencedColumnName = "ID_ROL")
-    @ManyToOne
-    private Roles idRol;
-    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
-    @ManyToOne
-    private Personas idPersona;
 
     public Usuarios() {
     }
@@ -140,47 +139,6 @@ public class Usuarios implements Serializable {
         this.versionUsuario = versionUsuario;
     }
 
-    public Personas getIdPersona() {
-        return idPersona;
-    }
-
-    public void setIdPersona(Personas idPersona) {
-        this.idPersona = idPersona;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idUsuario != null ? idUsuario.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Usuarios)) {
-            return false;
-        }
-        Usuarios other = (Usuarios) object;
-        if ((this.idUsuario == null && other.idUsuario != null) || (this.idUsuario != null && !this.idUsuario.equals(other.idUsuario))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "cr.grupojf.sigp.sigp_ws.model.Usuarios[ idUsuario=" + idUsuario + " ]";
-    }
-
-    public Roles getIdRol() {
-        return idRol;
-    }
-
-    public void setIdRol(Roles idRol) {
-        this.idRol = idRol;
-    }
-
     public List<Partos> getPartosList() {
         return partosList;
     }
@@ -203,6 +161,22 @@ public class Usuarios implements Serializable {
 
     public void setCuentasPagarList(List<CuentasPagar> cuentasPagarList) {
         this.cuentasPagarList = cuentasPagarList;
+    }
+
+    public Personas getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(Personas idPersona) {
+        this.idPersona = idPersona;
+    }
+
+    public Roles getIdRol() {
+        return idRol;
+    }
+
+    public void setIdRol(Roles idRol) {
+        this.idRol = idRol;
     }
 
     public List<AperturaCajas> getAperturaCajasList() {
@@ -235,6 +209,31 @@ public class Usuarios implements Serializable {
 
     public void setCreditosList(List<Creditos> creditosList) {
         this.creditosList = creditosList;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idUsuario != null ? idUsuario.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Usuarios)) {
+            return false;
+        }
+        Usuarios other = (Usuarios) object;
+        if ((this.idUsuario == null && other.idUsuario != null) || (this.idUsuario != null && !this.idUsuario.equals(other.idUsuario))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "cr.grupojf.sigp.sigp_ws.model.Usuarios[ idUsuario=" + idUsuario + " ]";
     }
     
 }

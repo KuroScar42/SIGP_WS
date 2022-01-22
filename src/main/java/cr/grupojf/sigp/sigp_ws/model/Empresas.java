@@ -16,7 +16,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -30,6 +29,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Empresas.findAll", query = "SELECT e FROM Empresas e"),
     @NamedQuery(name = "Empresas.findByIdEmpresa", query = "SELECT e FROM Empresas e WHERE e.idEmpresa = :idEmpresa"),
     @NamedQuery(name = "Empresas.findByNombreEmpresa", query = "SELECT e FROM Empresas e WHERE e.nombreEmpresa = :nombreEmpresa"),
+    @NamedQuery(name = "Empresas.findByCedulaEmpresa", query = "SELECT e FROM Empresas e WHERE e.cedulaEmpresa = :cedulaEmpresa"),
     @NamedQuery(name = "Empresas.findByRazonSocial", query = "SELECT e FROM Empresas e WHERE e.razonSocial = :razonSocial"),
     @NamedQuery(name = "Empresas.findByEstadoEmrpresa", query = "SELECT e FROM Empresas e WHERE e.estadoEmrpresa = :estadoEmrpresa"),
     @NamedQuery(name = "Empresas.findByVersion", query = "SELECT e FROM Empresas e WHERE e.version = :version")})
@@ -62,7 +62,7 @@ public class Empresas implements Serializable {
     @Column(name = "ESTADO_EMRPRESA")
     private String estadoEmrpresa;
     @Basic(optional = false)
-    @Version
+    @NotNull
     @Column(name = "VERSION")
     private int version;
     @OneToMany(mappedBy = "idEmpresa")
@@ -75,9 +75,10 @@ public class Empresas implements Serializable {
         this.idEmpresa = idEmpresa;
     }
 
-    public Empresas(Integer idEmpresa, String nombreEmpresa, String razonSocial, String estadoEmrpresa, int version) {
+    public Empresas(Integer idEmpresa, String nombreEmpresa, String cedulaEmpresa, String razonSocial, String estadoEmrpresa, int version) {
         this.idEmpresa = idEmpresa;
         this.nombreEmpresa = nombreEmpresa;
+        this.cedulaEmpresa = cedulaEmpresa;
         this.razonSocial = razonSocial;
         this.estadoEmrpresa = estadoEmrpresa;
         this.version = version;
@@ -128,6 +129,13 @@ public class Empresas implements Serializable {
         this.estadoEmrpresa = estadoEmrpresa;
     }
 
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
 
     public List<Clientes> getClientesList() {
         return clientesList;
@@ -161,16 +169,7 @@ public class Empresas implements Serializable {
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Empresas[ idEmpresa=" + idEmpresa + " ]";
     }
-
-
-    public int getVersion() {
-        return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
-    }
-
+    
     public void actualizarPedido(EmpresasDto empresaDto) {
         this.cedulaEmpresa = empresaDto.getCedula();
         this.estadoEmrpresa = empresaDto.getEstado();

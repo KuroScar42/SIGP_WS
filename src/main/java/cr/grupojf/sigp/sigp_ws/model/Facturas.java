@@ -34,6 +34,7 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Facturas.findAll", query = "SELECT f FROM Facturas f"),
     @NamedQuery(name = "Facturas.findByIdFactura", query = "SELECT f FROM Facturas f WHERE f.idFactura = :idFactura"),
+    @NamedQuery(name = "Facturas.findByTipoFactura", query = "SELECT f FROM Facturas f WHERE f.tipoFactura = :tipoFactura"),
     @NamedQuery(name = "Facturas.findByReferenciaFactura", query = "SELECT f FROM Facturas f WHERE f.referenciaFactura = :referenciaFactura"),
     @NamedQuery(name = "Facturas.findByClaveFactura", query = "SELECT f FROM Facturas f WHERE f.claveFactura = :claveFactura"),
     @NamedQuery(name = "Facturas.findByElectronicaFactura", query = "SELECT f FROM Facturas f WHERE f.electronicaFactura = :electronicaFactura"),
@@ -113,9 +114,6 @@ public class Facturas implements Serializable {
     @Size(min = 1, max = 500)
     @Column(name = "OBSERVACIONES_FACTURA")
     private String observacionesFactura;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFactura")
-    private List<FacturasProductos> facturasProductosList;
-    
     @JoinColumn(name = "ID_APERTURA", referencedColumnName = "ID_APERTURA")
     @ManyToOne
     private AperturaCajas idApertura;
@@ -123,7 +121,7 @@ public class Facturas implements Serializable {
     @ManyToOne(optional = false)
     private Emisores idEmisor;
     @JoinColumn(name = "ID_CLIENTE", referencedColumnName = "ID_CLIENTE")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Clientes idCliente;
     @JoinColumn(name = "ID_METODO", referencedColumnName = "ID_METODO")
     @ManyToOne(optional = false)
@@ -131,6 +129,8 @@ public class Facturas implements Serializable {
     @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")
     @ManyToOne
     private Usuarios idUsuario;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFactura")
+    private List<FacturasProductos> facturasProductosList;
 
     public Facturas() {
     }
@@ -308,13 +308,13 @@ public class Facturas implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-//    public List<Clientes> getClientesList() {
-//        return clientesList;
-//    }
-//
-//    public void setClientesList(List<Clientes> clientesList) {
-//        this.clientesList = clientesList;
-//    }
+    public List<FacturasProductos> getFacturasProductosList() {
+        return facturasProductosList;
+    }
+
+    public void setFacturasProductosList(List<FacturasProductos> facturasProductosList) {
+        this.facturasProductosList = facturasProductosList;
+    }
 
     @Override
     public int hashCode() {
@@ -339,14 +339,6 @@ public class Facturas implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Facturas[ idFactura=" + idFactura + " ]";
-    }
-
-    public List<FacturasProductos> getFacturasProductosList() {
-        return facturasProductosList;
-    }
-
-    public void setFacturasProductosList(List<FacturasProductos> facturasProductosList) {
-        this.facturasProductosList = facturasProductosList;
     }
     
 }

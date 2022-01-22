@@ -31,6 +31,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Proveedores.findByNombreProveedor", query = "SELECT p FROM Proveedores p WHERE p.nombreProveedor = :nombreProveedor"),
     @NamedQuery(name = "Proveedores.findByTipoCedula", query = "SELECT p FROM Proveedores p WHERE p.tipoCedula = :tipoCedula"),
     @NamedQuery(name = "Proveedores.findByCedula", query = "SELECT p FROM Proveedores p WHERE p.cedula = :cedula"),
+    @NamedQuery(name = "Proveedores.findByTelefono", query = "SELECT p FROM Proveedores p WHERE p.telefono = :telefono"),
+    @NamedQuery(name = "Proveedores.findByEmail", query = "SELECT p FROM Proveedores p WHERE p.email = :email"),
     @NamedQuery(name = "Proveedores.findByEstado", query = "SELECT p FROM Proveedores p WHERE p.estado = :estado"),
     @NamedQuery(name = "Proveedores.findByVersion", query = "SELECT p FROM Proveedores p WHERE p.version = :version")})
 public class Proveedores implements Serializable {
@@ -82,7 +84,7 @@ public class Proveedores implements Serializable {
         this.idProveedor = idProveedor;
     }
 
-    public Proveedores(Integer idProveedor, String nombreProveedor, String tipoCedula, String estado, int version) {
+    public Proveedores(Integer idProveedor, String nombreProveedor, String tipoCedula, String cedula, String estado, int version) {
         this.idProveedor = idProveedor;
         this.nombreProveedor = nombreProveedor;
         this.tipoCedula = tipoCedula;
@@ -113,39 +115,6 @@ public class Proveedores implements Serializable {
 
     public void setTipoCedula(String tipoCedula) {
         this.tipoCedula = tipoCedula;
-    }
-
-    public List<Productos> getProductosList() {
-        return productosList;
-    }
-
-    public void setProductosList(List<Productos> productosList) {
-        this.productosList = productosList;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idProveedor != null ? idProveedor.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Proveedores)) {
-            return false;
-        }
-        Proveedores other = (Proveedores) object;
-        if ((this.idProveedor == null && other.idProveedor != null) || (this.idProveedor != null && !this.idProveedor.equals(other.idProveedor))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "cr.grupojf.sigp.sigp_ws.model.Proveedores[ idProveedor=" + idProveedor + " ]";
     }
 
     public String getCedula() {
@@ -186,6 +155,39 @@ public class Proveedores implements Serializable {
 
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    public List<Productos> getProductosList() {
+        return productosList;
+    }
+
+    public void setProductosList(List<Productos> productosList) {
+        this.productosList = productosList;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idProveedor != null ? idProveedor.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Proveedores)) {
+            return false;
+        }
+        Proveedores other = (Proveedores) object;
+        if ((this.idProveedor == null && other.idProveedor != null) || (this.idProveedor != null && !this.idProveedor.equals(other.idProveedor))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "cr.grupojf.sigp.sigp_ws.model.Proveedores[ idProveedor=" + idProveedor + " ]";
     }
     
 }

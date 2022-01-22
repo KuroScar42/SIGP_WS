@@ -30,18 +30,20 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Personas.findByIdPersona", query = "SELECT p FROM Personas p WHERE p.idPersona = :idPersona"),
     @NamedQuery(name = "Personas.findByNombrePersona", query = "SELECT p FROM Personas p WHERE p.nombrePersona = :nombrePersona"),
     @NamedQuery(name = "Personas.findByApellidoPersona", query = "SELECT p FROM Personas p WHERE p.apellidoPersona = :apellidoPersona"),
+    @NamedQuery(name = "Personas.findByCedulaPersona", query = "SELECT p FROM Personas p WHERE p.cedulaPersona = :cedulaPersona"),
     @NamedQuery(name = "Personas.findByApellido2Persona", query = "SELECT p FROM Personas p WHERE p.apellido2Persona = :apellido2Persona"),
     @NamedQuery(name = "Personas.findByEstadoPersona", query = "SELECT p FROM Personas p WHERE p.estadoPersona = :estadoPersona"),
     @NamedQuery(name = "Personas.findByVersionPersona", query = "SELECT p FROM Personas p WHERE p.versionPersona = :versionPersona")})
 public class Personas implements Serializable {
-    
+
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID_PERSONA")
     private Integer idPersona;
     @Basic(optional = false)
-    @NotNull()
+    @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "NOMBRE_PERSONA")
     private String nombrePersona;
@@ -59,7 +61,7 @@ public class Personas implements Serializable {
     @Column(name = "APELLIDO2_PERSONA")
     private String apellido2Persona;
     @Basic(optional = false)
-    @NotNull()
+    @NotNull
     @Size(min = 1, max = 1)
     @Column(name = "ESTADO_PERSONA")
     private String estadoPersona;
@@ -68,10 +70,9 @@ public class Personas implements Serializable {
     @Column(name = "VERSION_PERSONA")
     private int versionPersona;
     @OneToMany(mappedBy = "idPersona")
-    private List<Clientes> clientesList;
-    private static final long serialVersionUID = 1L;
-    @OneToMany(mappedBy = "idPersona")
     private List<Usuarios> usuariosList;
+    @OneToMany(mappedBy = "idPersona")
+    private List<Clientes> clientesList;
 
     public Personas() {
     }
@@ -80,25 +81,34 @@ public class Personas implements Serializable {
         this.idPersona = idPersona;
     }
 
-    public Personas(Integer idPersona, String nombrePersona, String apellidoPersona, String estadoPersona, int versionPersona) {
+    public Personas(Integer idPersona, String nombrePersona, String apellidoPersona, String cedulaPersona, String estadoPersona, int versionPersona) {
         this.idPersona = idPersona;
         this.nombrePersona = nombrePersona;
         this.apellidoPersona = apellidoPersona;
+        this.cedulaPersona = cedulaPersona;
         this.estadoPersona = estadoPersona;
         this.versionPersona = versionPersona;
     }
-
+    
     public Personas(PersonasDto personaDto) {
         this.idPersona = personaDto.getId();
-        this.actualizarPedido(personaDto);
-    }
-    
-    public String getCedulaPersona() {
-        return cedulaPersona;
+        this.actualizarPersona(personaDto);
     }
 
-    public void setCedulaPersona(String cedulaPersona) {
-        this.cedulaPersona = cedulaPersona;
+    public Integer getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(Integer idPersona) {
+        this.idPersona = idPersona;
+    }
+
+    public String getNombrePersona() {
+        return nombrePersona;
+    }
+
+    public void setNombrePersona(String nombrePersona) {
+        this.nombrePersona = nombrePersona;
     }
 
     public String getApellidoPersona() {
@@ -107,6 +117,14 @@ public class Personas implements Serializable {
 
     public void setApellidoPersona(String apellidoPersona) {
         this.apellidoPersona = apellidoPersona;
+    }
+
+    public String getCedulaPersona() {
+        return cedulaPersona;
+    }
+
+    public void setCedulaPersona(String cedulaPersona) {
+        this.cedulaPersona = cedulaPersona;
     }
 
     public String getApellido2Persona() {
@@ -141,39 +159,6 @@ public class Personas implements Serializable {
         this.usuariosList = usuariosList;
     }
 
-    public void actualizarPedido(PersonasDto personaDto) {
-        this.apellido2Persona = personaDto.getApellido2();
-        this.apellidoPersona = personaDto.getApellido();
-        this.cedulaPersona = personaDto.getCedula();
-        this.estadoPersona = personaDto.getEstado();
-        this.nombrePersona = personaDto.getNombre();
-    }
-
-    public String getNombrePersona() {
-        return nombrePersona;
-    }
-
-    public void setNombrePersona(String nombrePersona) {
-        this.nombrePersona = nombrePersona;
-    }
-
-    public Personas(Integer idPersona, String nombrePersona, String apellidoPersona, String cedulaPersona, String estadoPersona, int versionPersona) {
-        this.idPersona = idPersona;
-        this.nombrePersona = nombrePersona;
-        this.apellidoPersona = apellidoPersona;
-        this.cedulaPersona = cedulaPersona;
-        this.estadoPersona = estadoPersona;
-        this.versionPersona = versionPersona;
-    }
-
-    public Integer getIdPersona() {
-        return idPersona;
-    }
-
-    public void setIdPersona(Integer idPersona) {
-        this.idPersona = idPersona;
-    }
-
     public List<Clientes> getClientesList() {
         return clientesList;
     }
@@ -205,6 +190,14 @@ public class Personas implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Personas[ idPersona=" + idPersona + " ]";
+    }
+    
+    public void actualizarPersona(PersonasDto personaDto) {
+        this.apellido2Persona = personaDto.getApellido2();
+        this.apellidoPersona = personaDto.getApellido();
+        this.cedulaPersona = personaDto.getCedula();
+        this.estadoPersona = personaDto.getEstado();
+        this.nombrePersona = personaDto.getNombre();
     }
     
 }

@@ -64,7 +64,7 @@ public class PedidosServices {
 
             for (Object[] producto : productos) {
                 ProductosPedidosDto pp = new ProductosPedidosDto((ProductosPedidos) producto[1], (Productos) producto[0], (Pedidos) producto[2]);
-                pp.asignarBodega(((Productos) producto[0]).getBodegasProductosList());
+//                pp.asignarBodega(((Productos) producto[0]).getBodegasProductosList());
                 productosDtoList.add(pp);
             }
 

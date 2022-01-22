@@ -60,8 +60,6 @@ public class TipoCuentaPagar implements Serializable {
     @Size(min = 1, max = 1)
     @Column(name = "ESTADO_TIPO")
     private String estadoTipo;
-
-    
     @OneToMany(mappedBy = "idTipo")
     private List<CuentasPagar> cuentasPagarList;
 

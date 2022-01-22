@@ -78,7 +78,6 @@ cr/grupojf/sigp/sigp_ws/model/TipoCuentaPagar.class
 cr/grupojf/sigp/sigp_ws/controller/UsuariosController.class
 cr/grupojf/sigp/sigp_ws/model/Cerdos.class
 cr/grupojf/sigp/sigp_ws/controller/ClienteController$1.class
-cr/grupojf/sigp/sigp_ws/model/Lechones.class
 cr/grupojf/sigp/sigp_ws/service/MetodoPagoService.class
 cr/grupojf/sigp/sigp_ws/service/PedidosServices.class
 cr/grupojf/sigp/sigp_ws/model/ProductosPedidos.class

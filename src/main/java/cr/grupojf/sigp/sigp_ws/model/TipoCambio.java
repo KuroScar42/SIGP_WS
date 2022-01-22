@@ -31,6 +31,12 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "TipoCambio.findByVentaCambio", query = "SELECT t FROM TipoCambio t WHERE t.ventaCambio = :ventaCambio")})
 public class TipoCambio implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID_CAMBIO")
+    private Integer idCambio;
     @Basic(optional = false)
     @NotNull
     @Column(name = "COMPRA_CAMBIO")
@@ -39,13 +45,6 @@ public class TipoCambio implements Serializable {
     @NotNull
     @Column(name = "VENTA_CAMBIO")
     private float ventaCambio;
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "ID_CAMBIO")
-    private Integer idCambio;
     @JoinColumn(name = "ID_MONEDA", referencedColumnName = "ID_MONEDA")
     @ManyToOne
     private Monedas idMoneda;

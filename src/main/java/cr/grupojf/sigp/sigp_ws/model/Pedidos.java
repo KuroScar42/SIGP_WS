@@ -38,8 +38,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Pedidos.findByFechaEntrega", query = "SELECT p FROM Pedidos p WHERE p.fechaEntrega = :fechaEntrega"),
     @NamedQuery(name = "Pedidos.findByFechaPedido", query = "SELECT p FROM Pedidos p WHERE p.fechaPedido = :fechaPedido"),
     @NamedQuery(name = "Pedidos.findByEstadoPedido", query = "SELECT p FROM Pedidos p WHERE p.estadoPedido = :estadoPedido"),
-    @NamedQuery(name = "Pedidos.findByDescripcionPedido", query = "SELECT p FROM Pedidos p WHERE p.descripcionPedido = :descripcionPedido"),
-    @NamedQuery(name = "Pedidos.findByCliente", query = "SELECT p FROM Pedidos p WHERE p.cliente = :cliente")})
+    @NamedQuery(name = "Pedidos.findByCliente", query = "SELECT p FROM Pedidos p WHERE p.cliente = :cliente"),
+    @NamedQuery(name = "Pedidos.findByDescripcionPedido", query = "SELECT p FROM Pedidos p WHERE p.descripcionPedido = :descripcionPedido")})
 public class Pedidos implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -58,6 +58,9 @@ public class Pedidos implements Serializable {
     @Column(name = "FECHA_ENTREGA")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaEntrega;
+    @Column(name = "FECHA_PEDIDO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaPedido;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1)
@@ -73,11 +76,6 @@ public class Pedidos implements Serializable {
     private String descripcionPedido;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPedidos")
     private List<ProductosPedidos> productosPedidosList;
-
-    
-    @Column(name = "FECHA_PEDIDO")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaPedido;
     @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")
     @ManyToOne
     private Usuarios idUsuario;
@@ -151,6 +149,14 @@ public class Pedidos implements Serializable {
         this.estadoPedido = estadoPedido;
     }
 
+    public String getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
+    }
+
     public String getDescripcionPedido() {
         return descripcionPedido;
     }
@@ -159,6 +165,13 @@ public class Pedidos implements Serializable {
         this.descripcionPedido = descripcionPedido;
     }
 
+    public List<ProductosPedidos> getProductosPedidosList() {
+        return productosPedidosList;
+    }
+
+    public void setProductosPedidosList(List<ProductosPedidos> productosPedidosList) {
+        this.productosPedidosList = productosPedidosList;
+    }
 
     public Usuarios getIdUsuario() {
         return idUsuario;
@@ -191,22 +204,6 @@ public class Pedidos implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Pedidos[ idPedidos=" + idPedidos + " ]";
-    }
-
-    public String getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(String cliente) {
-        this.cliente = cliente;
-    }
-
-    public List<ProductosPedidos> getProductosPedidosList() {
-        return productosPedidosList;
-    }
-
-    public void setProductosPedidosList(List<ProductosPedidos> productosPedidosList) {
-        this.productosPedidosList = productosPedidosList;
     }
     
 }

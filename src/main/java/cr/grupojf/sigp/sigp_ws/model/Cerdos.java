@@ -76,11 +76,10 @@ public class Cerdos implements Serializable {
         this.idCerdo = idCerdo;
     }
 
-    public Cerdos(Integer idCerdo, String codigoCerdo, String sexoCerdo, String estadoCerdo, String descripcionCerdo, Date fechaNacimiento, Float pesoCerdo) {
+    public Cerdos(Integer idCerdo, String codigoCerdo, String estadoCerdo, Date fechaNacimiento, float pesoCerdo) {
         this.idCerdo = idCerdo;
         this.codigoCerdo = codigoCerdo;
         this.estadoCerdo = estadoCerdo;
-        this.descripcionCerdo = descripcionCerdo;
         this.fechaNacimiento = fechaNacimiento;
         this.pesoCerdo = pesoCerdo;
     }
@@ -178,14 +177,13 @@ public class Cerdos implements Serializable {
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Cerdos[ idCerdo=" + idCerdo + " ]";
     }
-
+    
     public void actualizarPedido(CerdosDto cerdoDto) {
         this.codigoCerdo = cerdoDto.getCodigo();
         this.estadoCerdo = cerdoDto.getEstado();
         this.descripcionCerdo = cerdoDto.getDescripcion();
         this.fechaNacimiento = cerdoDto.getNacimiento();
         this.pesoCerdo = cerdoDto.getPeso();
-
     }
-    
+
 }

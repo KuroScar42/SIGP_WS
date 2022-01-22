@@ -18,8 +18,9 @@ public class PermisoDto {
         this.permiso = p.getPermiso();
         this.estado = p.getEstado();
     }
-    
-    
+
+    public PermisoDto() {
+    }
 
     public Integer getId() {
         return id;

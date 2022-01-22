@@ -33,6 +33,12 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "Efectivo.findByTotalEfectivo", query = "SELECT e FROM Efectivo e WHERE e.totalEfectivo = :totalEfectivo")})
 public class Efectivo implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID_EFECTIVO")
+    private Integer idEfectivo;
     @Basic(optional = false)
     @NotNull
     @Column(name = "CANTIDAD_EFECTIVO")
@@ -41,13 +47,6 @@ public class Efectivo implements Serializable {
     @NotNull
     @Column(name = "TOTAL_EFECTIVO")
     private int totalEfectivo;
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "ID_EFECTIVO")
-    private Integer idEfectivo;
     @OneToMany(mappedBy = "idEfectivo")
     private List<CierresCajas> cierresCajasList;
     @JoinColumn(name = "ID_DENOMINACION", referencedColumnName = "ID_DENOMINACION")
