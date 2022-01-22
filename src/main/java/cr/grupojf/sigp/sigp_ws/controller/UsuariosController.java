@@ -101,8 +101,8 @@ public class UsuariosController {
             if (!respuesta.getEstado()) {
                 return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
             }
-            UsuarioDto usuario = (UsuarioDto) respuesta.getResultado("rol");
-            return Response.ok(usuario).build();
+            RolesDto rol = (RolesDto) respuesta.getResultado("rol");
+            return Response.ok(rol).build();
         } catch (Exception ex) {
             Logger.getLogger(ProductosController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar el Rol").build();

@@ -54,13 +54,14 @@ cr/grupojf/sigp/sigp_ws/model/UsuarioDto.class
 cr/grupojf/sigp/sigp_ws/model/PersonasDto.class
 cr/grupojf/sigp/sigp_ws/model/Usuarios.class
 cr/grupojf/sigp/sigp_ws/controller/MetodoPagoController$1.class
-cr/grupojf/sigp/sigp_ws/controller/ProveedoresService.class
 cr/grupojf/sigp/sigp_ws/model/PermisoDto.class
 cr/grupojf/sigp/sigp_ws/model/ClientesDto.class
 cr/grupojf/sigp/sigp_ws/model/PedidosDto.class
 cr/grupojf/sigp/sigp_ws/model/CuentasPagar.class
 cr/grupojf/sigp/sigp_ws/util/CodigoRespuesta.class
+cr/grupojf/sigp/sigp_ws/service/ProveedoresService.class
 cr/grupojf/sigp/sigp_ws/model/Bodegas.class
+cr/grupojf/sigp/sigp_ws/controller/ProveedoresController$1.class
 cr/grupojf/sigp/sigp_ws/model/Embarazos.class
 cr/grupojf/sigp/sigp_ws/util/Respuesta.class
 cr/grupojf/sigp/sigp_ws/service/ProductosService.class
