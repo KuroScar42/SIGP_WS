@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -72,6 +73,7 @@ public class Proveedores implements Serializable {
     private String estado;
     @Basic(optional = false)
     @NotNull
+    @Version
     @Column(name = "VERSION")
     private int version;
     @ManyToMany(mappedBy = "proveedoresList")
@@ -91,6 +93,11 @@ public class Proveedores implements Serializable {
         this.cedula = cedula;
         this.estado = estado;
         this.version = version;
+    }
+    
+    public Proveedores(ProveedoresDto p) {
+        this.idProveedor = p.getId();
+        actualizarProveedor(p);
     }
 
     public Integer getIdProveedor() {
@@ -188,6 +195,15 @@ public class Proveedores implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Proveedores[ idProveedor=" + idProveedor + " ]";
+    }
+
+    public void actualizarProveedor(ProveedoresDto p) {
+        this.cedula = p.getCedula();
+        this.email = p.getEmail();
+        this.estado = p.getEstado();
+        this.nombreProveedor = p.getNombre();
+        this.telefono = p.getTelefono();
+        this.tipoCedula = p.getTipoCedula();
     }
     
 }

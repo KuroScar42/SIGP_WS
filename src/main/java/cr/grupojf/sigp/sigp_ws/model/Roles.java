@@ -74,6 +74,11 @@ public class Roles implements Serializable {
         this.nombreRol = nombreRol;
     }
 
+    public Roles(RolesDto rolDto) {
+        this.idRol = rolDto.getId();
+        this.actualizar(rolDto);
+    }
+
     public Integer getIdRol() {
         return idRol;
     }
@@ -145,6 +150,12 @@ public class Roles implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Roles[ idRol=" + idRol + " ]";
+    }
+
+    public void actualizar(RolesDto rolDto) {
+        this.nombreRol = rolDto.getNombre();
+        this.tipoRol = rolDto.getTipo();
+        this.estadoRol = rolDto.getEstado();
     }
     
 }

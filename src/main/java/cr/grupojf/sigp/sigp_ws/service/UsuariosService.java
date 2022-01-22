@@ -7,6 +7,8 @@ package cr.grupojf.sigp.sigp_ws.service;
 import cr.grupojf.sigp.sigp_ws.model.PermisoDto;
 import cr.grupojf.sigp.sigp_ws.model.Permisos;
 import cr.grupojf.sigp.sigp_ws.model.PersonasDto;
+import cr.grupojf.sigp.sigp_ws.model.Roles;
+import cr.grupojf.sigp.sigp_ws.model.RolesDto;
 import cr.grupojf.sigp.sigp_ws.model.UsuarioDto;
 import cr.grupojf.sigp.sigp_ws.model.Usuarios;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
@@ -82,6 +84,29 @@ public class UsuariosService {
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al consultar los usuarios del sistema", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los usuarios del sistema.", "getAllUsuarios " + ex.getMessage());
+        }
+    }
+    
+    public Respuesta guardarPedido(RolesDto rolDto) {
+        try {
+            Roles rol;
+            if (rolDto.getId() != null && rolDto.getId() > 0) {
+                rol = em.find(Roles.class, rolDto.getId());
+                if (rol == null) {
+                    return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encontro el pedido especificado", "Pedidos NoResultException");
+                }
+                rol.actualizar(rolDto);
+                rol = em.merge(rol);
+            } else {
+                rol = new Roles(rolDto);
+//                pedido.setAreaId(em.getReference(Area.class, pedidoDto.getArea().getId()));
+                em.persist(rol);
+            }
+            em.flush();
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Pedido", new RolesDto(rol));
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al guardar los pedidos.", e);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar los pedidos.", "guardarPedido " + e.getMessage());
         }
     }
     

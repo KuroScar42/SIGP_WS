@@ -14,6 +14,7 @@ public class RolesDto {
     private String tipo;
     private String estado;
     private String nombre;
+    private PermisoDto permisos;
 
     public RolesDto() {
     }
@@ -56,4 +57,13 @@ public class RolesDto {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public PermisoDto getPermisos() {
+        return permisos;
+    }
+
+    public void setPermisos(PermisoDto permisos) {
+        this.permisos = permisos;
+    }
+    
 }

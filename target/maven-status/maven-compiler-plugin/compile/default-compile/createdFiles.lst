@@ -22,6 +22,7 @@ cr/grupojf/sigp/sigp_ws/model/CierresCajas.class
 cr/grupojf/sigp/sigp_ws/model/Clientes.class
 cr/grupojf/sigp/sigp_ws/model/BodegasProductosDto.class
 cr/grupojf/sigp/sigp_ws/model/CerdosDto.class
+cr/grupojf/sigp/sigp_ws/controller/ProveedoresController.class
 cr/grupojf/sigp/sigp_ws/model/OtrosValoresDto.class
 cr/grupojf/sigp/sigp_ws/model/InseminacionDto.class
 cr/grupojf/sigp/sigp_ws/model/TipoCambioDto.class
@@ -53,6 +54,7 @@ cr/grupojf/sigp/sigp_ws/model/UsuarioDto.class
 cr/grupojf/sigp/sigp_ws/model/PersonasDto.class
 cr/grupojf/sigp/sigp_ws/model/Usuarios.class
 cr/grupojf/sigp/sigp_ws/controller/MetodoPagoController$1.class
+cr/grupojf/sigp/sigp_ws/controller/ProveedoresService.class
 cr/grupojf/sigp/sigp_ws/model/PermisoDto.class
 cr/grupojf/sigp/sigp_ws/model/ClientesDto.class
 cr/grupojf/sigp/sigp_ws/model/PedidosDto.class

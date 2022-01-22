@@ -15,6 +15,8 @@ public class ProveedoresDto {
     private String tipoCedula;
     private String cedula;
     private String estado;
+    private String telefono;
+    private String email;
 
     public ProveedoresDto() {
     }
@@ -25,6 +27,8 @@ public class ProveedoresDto {
         this.tipoCedula = p.getTipoCedula();
         this.cedula = p.getCedula();
         this.estado = p.getEstado();
+        this.email = p.getEmail();
+        this.telefono = p.getTelefono();
     }
 
     public Integer getId() {
@@ -66,9 +70,21 @@ public class ProveedoresDto {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
-    
-    
-    
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
     
 }
