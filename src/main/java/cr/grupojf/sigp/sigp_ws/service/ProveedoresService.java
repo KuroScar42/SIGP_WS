@@ -8,6 +8,8 @@ import cr.grupojf.sigp.sigp_ws.model.Proveedores;
 import cr.grupojf.sigp.sigp_ws.model.ProveedoresDto;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
 import cr.grupojf.sigp.sigp_ws.util.Respuesta;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -62,9 +64,19 @@ public class ProveedoresService {
             }
             em.flush();
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "proveedor", new ProveedoresDto(proveedor));
-        } catch (Exception e) {
-            LOG.log(Level.SEVERE, "Ocurrio un error al guardar el proveedor", e);
-            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el proveedor", "guardarProveedor " + e.getMessage());
+        } catch (Exception ex) {
+            if (ex.getCause() != null && ex.getCause().getCause().getClass() == SQLIntegrityConstraintViolationException.class) {
+                if (((SQLException)ex.getCause().getCause()).getErrorCode() == 1062) {
+                    
+                    if (((SQLException)ex.getCause().getCause()).getMessage().contains("CEDULA")) {
+                        LOG.log(Level.SEVERE, "La cedula" + p.getCedula() + " ya esta ingresada.", ex);
+                        return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "La cedula " + p.getCedula() + " ya esta ingresada.", "guardarProveedor " + ex.getMessage());
+                    }
+                  }
+                return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Violacion a la integridad de los datos", "guardarPersona " + ex.getMessage());
+            }
+            LOG.log(Level.SEVERE, "Ocurrio un error al guardar el proveedor", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el proveedor", "guardarProveedor " + ex.getMessage());
         }
     }
 }

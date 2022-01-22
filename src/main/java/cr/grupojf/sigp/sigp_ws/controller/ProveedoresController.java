@@ -49,17 +49,18 @@ public class ProveedoresController {
     }
     
     @POST
-    @Path("/guardarPedido")
+    @Path("/guardarProveedor")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response guardarPedidos(ProveedoresDto pro) {
+    public Response guardarProveedor(ProveedoresDto pro) {
         try {
             Respuesta respuesta = service.guardarProveedor(pro);
             if (!respuesta.getEstado()) {
                 return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
             }
             return Response.ok((ProveedoresDto) respuesta.getResultado("proveedor")).build();
-        }catch (Exception ex) {
+        }
+        catch (Exception ex) {
             Logger.getLogger(ProveedoresController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al guardar el proveedor").build();
         }
