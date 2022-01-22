@@ -87,7 +87,7 @@ public class UsuariosService {
         }
     }
     
-    public Respuesta guardarPedido(RolesDto rolDto) {
+    public Respuesta guardarRoles(RolesDto rolDto) {
         try {
             Roles rol;
             if (rolDto.getId() != null && rolDto.getId() > 0) {
@@ -96,17 +96,30 @@ public class UsuariosService {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encontro el pedido especificado", "Pedidos NoResultException");
                 }
                 rol.actualizar(rolDto);
+                if (rolDto.getPermisos() != null) {
+                    rol.getPermisosList().clear();
+                    for (PermisoDto permisoDto : rolDto.getPermisos()) {
+                        Permisos p = em.find(Permisos.class, permisoDto.getId());
+                        rol.getPermisosList().add(p);
+                    }
+                }
                 rol = em.merge(rol);
             } else {
                 rol = new Roles(rolDto);
-//                pedido.setAreaId(em.getReference(Area.class, pedidoDto.getArea().getId()));
+                if (rolDto.getPermisos() != null) {
+                    rol.getPermisosList().clear();
+                    for (PermisoDto permisoDto : rolDto.getPermisos()) {
+                        Permisos p = em.find(Permisos.class, permisoDto.getId());
+                        rol.getPermisosList().add(p);
+                    }
+                }
                 em.persist(rol);
             }
             em.flush();
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Pedido", new RolesDto(rol));
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "rol", new RolesDto(rol));
         } catch (Exception e) {
-            LOG.log(Level.SEVERE, "Ocurrio un error al guardar los pedidos.", e);
-            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar los pedidos.", "guardarPedido " + e.getMessage());
+            LOG.log(Level.SEVERE, "Ocurrio un error al guardar los Roles.", e);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar los Roles.", "guardarRoles " + e.getMessage());
         }
     }
     

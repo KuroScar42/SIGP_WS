@@ -5,6 +5,8 @@
  */
 package cr.grupojf.sigp.sigp_ws.model;
 
+import java.util.List;
+
 /**
  *
  * @author herna
@@ -14,7 +16,7 @@ public class RolesDto {
     private String tipo;
     private String estado;
     private String nombre;
-    private PermisoDto permisos;
+    private List<PermisoDto> permisos;
 
     public RolesDto() {
     }
@@ -58,12 +60,14 @@ public class RolesDto {
         this.nombre = nombre;
     }
 
-    public PermisoDto getPermisos() {
+    public List<PermisoDto> getPermisos() {
         return permisos;
     }
 
-    public void setPermisos(PermisoDto permisos) {
+    public void setPermisos(List<PermisoDto> permisos) {
         this.permisos = permisos;
     }
+
+    
     
 }
