@@ -15,6 +15,7 @@ import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
 import cr.grupojf.sigp.sigp_ws.util.Respuesta;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.LocalBean;
@@ -96,24 +97,45 @@ public class UsuariosService {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encontro el pedido especificado", "Pedidos NoResultException");
                 }
                 rol.actualizar(rolDto);
-                if (rolDto.getPermisos() != null) {
-                    rol.getPermisosList().clear();
-                    for (PermisoDto permisoDto : rolDto.getPermisos()) {
-                        Permisos p = em.find(Permisos.class, permisoDto.getId());
-                        rol.getPermisosList().add(p);
-                    }
-                }
+//                if (rolDto.getPermisos() != null) {
+//                    rol.getPermisosList().clear();
+//                    for (PermisoDto permisoDto : rolDto.getPermisos()) {
+//                        Permisos p = em.find(Permisos.class, permisoDto.getId());
+//                        rol.getPermisosList().add(p);
+//                    }
+//                }
                 rol = em.merge(rol);
             } else {
                 rol = new Roles(rolDto);
-                if (rolDto.getPermisos() != null) {
-                    rol.getPermisosList().clear();
-                    for (PermisoDto permisoDto : rolDto.getPermisos()) {
-                        Permisos p = em.find(Permisos.class, permisoDto.getId());
-                        rol.getPermisosList().add(p);
-                    }
-                }
+//                rol.setPermisosList(new ArrayList<>());
+//                if (rolDto.getPermisos() != null) {
+//                    rol.getPermisosList().clear();
+//                    for (PermisoDto permisoDto : rolDto.getPermisos()) {
+//                        Permisos p = em.find(Permisos.class, permisoDto.getId());
+//                        rol.getPermisosList().add(p);
+//                    }
+//                }
                 em.persist(rol);
+            }
+            em.flush();
+            List<Permisos> permisos = new ArrayList<>();
+            rol.getPermisosList().clear();
+            // eliminando los registros para volver a guardarlos
+            eliminarAllPermisosForOneRol(rol.getIdRol());
+            for (PermisoDto permisoDto : rolDto.getPermisos()) {
+                Permisos p = em.find(Permisos.class, permisoDto.getId());
+                em.refresh(p);
+                rol.getPermisosList().add(p);
+                // consultar todos los registros con el rolId en PermisosRoles y eliminarlos y luego guardarlos de nuevo
+                final Integer rolId = rol.getIdRol();
+                if (!p.getRolesList().stream().filter(e->Objects.equals(e.getIdRol(), rolId)).findAny().isPresent()) {
+                    p.getRolesList().add(rol);
+                }
+                permisos.add(p);
+            }
+            
+            for (Permisos permiso : permisos) {
+                em.merge(permiso);
             }
             em.flush();
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "rol", new RolesDto(rol));
@@ -121,6 +143,14 @@ public class UsuariosService {
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar los Roles.", e);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar los Roles.", "guardarRoles " + e.getMessage());
         }
+    }
+    
+    private void eliminarAllPermisosForOneRol(Integer rolId){
+        // hacer consulta y eliminar 
+        em
+       .createNativeQuery("DELETE FROM Role_Permiso WHERE ID_ROL = " + rolId)
+       .executeUpdate();
+        em.flush();
     }
     
 }

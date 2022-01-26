@@ -7,6 +7,7 @@ package cr.grupojf.sigp.sigp_ws.model;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -55,7 +56,7 @@ public class Roles implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "NOMBRE_ROL")
     private String nombreRol;
-    @ManyToMany(mappedBy = "rolesList")
+    @ManyToMany(mappedBy = "rolesList", cascade = CascadeType.PERSIST)
     private List<Permisos> permisosList;
     @OneToMany(mappedBy = "idRol")
     private List<Usuarios> usuariosList;
