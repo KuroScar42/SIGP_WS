@@ -108,4 +108,77 @@ public class UsuariosController {
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar el Rol").build();
         }
     }
+    
+    @GET
+    @Path("/getAllRoles")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getAllRoles() {
+        try {
+            Respuesta respuesta = service.getAllRoles();
+            if (!respuesta.getEstado()) {
+                return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
+            }
+            List resultado = (List) respuesta.getResultado("roles");
+            return Response.ok(new GenericEntity<List<RolesDto>>(resultado) {
+            }).build();
+        } catch (Exception ex) {
+            Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar los roles").build();
+        }
+    }
+    @GET
+    @Path("/getAllRolesActivos")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getAllRolesActivos() {
+        try {
+            Respuesta respuesta = service.getAllRolesActivos();
+            if (!respuesta.getEstado()) {
+                return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
+            }
+            List resultado = (List) respuesta.getResultado("roles");
+            return Response.ok(new GenericEntity<List<RolesDto>>(resultado) {
+            }).build();
+        } catch (Exception ex) {
+            Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar los roles").build();
+        }
+    }
+    
+    @POST
+    @Path("/guardarUsuario")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response guardarUsuario(UsuarioDto usuarioDto) {
+        try {
+            Respuesta respuesta = service.guardarUsuario(usuarioDto);
+            if (!respuesta.getEstado()) {
+                return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
+            }
+            UsuarioDto usu = (UsuarioDto) respuesta.getResultado("usuario");
+            return Response.ok(usu).build();
+        } catch (Exception ex) {
+            Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al guardar el usuario").build();
+        }
+    }
+    
+    @GET
+    @Path("/getPersonaByCedula/{cedula}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getProductoByBodega(@PathParam("cedula")String cedula) {
+        try {
+            Respuesta respuesta = service.getPersonaByCedula(cedula);
+            if (!respuesta.getEstado()) {
+                return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
+            }
+            PersonasDto persona = (PersonasDto) respuesta.getResultado("persona");
+            return Response.ok(persona).build();
+        } catch (Exception ex) {
+            Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar la persona").build();
+        }
+    }
 }

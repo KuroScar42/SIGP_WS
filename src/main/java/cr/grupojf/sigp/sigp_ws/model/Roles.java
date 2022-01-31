@@ -29,6 +29,7 @@ import javax.validation.constraints.Size;
 @Table(name = "Roles")
 @NamedQueries({
     @NamedQuery(name = "Roles.findAll", query = "SELECT r FROM Roles r"),
+    @NamedQuery(name = "Roles.findAllActivos", query = "SELECT r FROM Roles r where r.estadoRol = 'A'"),
     @NamedQuery(name = "Roles.findByIdRol", query = "SELECT r FROM Roles r WHERE r.idRol = :idRol"),
     @NamedQuery(name = "Roles.findByTipoRol", query = "SELECT r FROM Roles r WHERE r.tipoRol = :tipoRol"),
     @NamedQuery(name = "Roles.findByEstadoRol", query = "SELECT r FROM Roles r WHERE r.estadoRol = :estadoRol"),

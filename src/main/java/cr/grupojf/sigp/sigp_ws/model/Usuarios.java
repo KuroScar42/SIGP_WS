@@ -99,6 +99,11 @@ public class Usuarios implements Serializable {
         this.versionUsuario = versionUsuario;
     }
 
+    public Usuarios(UsuarioDto usuarioDto) {
+        this.idUsuario = usuarioDto.getId();
+        actualizarUsuario(usuarioDto);
+    }
+
     public Integer getIdUsuario() {
         return idUsuario;
     }
@@ -235,5 +240,14 @@ public class Usuarios implements Serializable {
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Usuarios[ idUsuario=" + idUsuario + " ]";
     }
-    
+
+    public void actualizarUsuario(UsuarioDto u) {
+        this.contrasennaUsuario = u.getContrasena();
+        this.nombreUsuario = u.getNombreUsuario();
+        this.estadoUsuario = u.getEstado();
+        if (u.getRol() != null) {
+            this.idRol = new Roles(u.getRol());
+        }
+    }
+
 }

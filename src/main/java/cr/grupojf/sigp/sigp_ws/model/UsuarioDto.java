@@ -14,6 +14,7 @@ public class UsuarioDto {
     private String contrasena;
     private String estado;
     private PersonasDto persona;
+    private RolesDto rol;
 
     public UsuarioDto(Usuarios u) {
         this.id = u.getIdUsuario();
@@ -22,6 +23,9 @@ public class UsuarioDto {
         this.estado = u.getEstadoUsuario();
         if (u.getIdPersona() != null) {
             this.persona = new PersonasDto(u.getIdPersona());
+        }
+        if (u.getIdRol()!= null) {
+            this.rol = new RolesDto(u.getIdRol());
         }
     }
 
@@ -33,6 +37,15 @@ public class UsuarioDto {
     public UsuarioDto() {
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    
     public String getNombreUsuario() {
         return nombreUsuario;
     }
@@ -63,6 +76,14 @@ public class UsuarioDto {
 
     public void setPersona(PersonasDto persona) {
         this.persona = persona;
+    }
+
+    public RolesDto getRol() {
+        return rol;
+    }
+
+    public void setRol(RolesDto rol) {
+        this.rol = rol;
     }
     
     

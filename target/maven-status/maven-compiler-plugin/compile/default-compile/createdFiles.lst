@@ -60,6 +60,7 @@ cr/grupojf/sigp/sigp_ws/model/PedidosDto.class
 cr/grupojf/sigp/sigp_ws/model/CuentasPagar.class
 cr/grupojf/sigp/sigp_ws/util/CodigoRespuesta.class
 cr/grupojf/sigp/sigp_ws/service/ProveedoresService.class
+cr/grupojf/sigp/sigp_ws/controller/UsuariosController$3.class
 cr/grupojf/sigp/sigp_ws/model/Bodegas.class
 cr/grupojf/sigp/sigp_ws/controller/ProveedoresController$1.class
 cr/grupojf/sigp/sigp_ws/model/Embarazos.class
@@ -88,4 +89,5 @@ cr/grupojf/sigp/sigp_ws/controller/PedidosController$1.class
 cr/grupojf/sigp/sigp_ws/controller/GranjaController.class
 cr/grupojf/sigp/sigp_ws/model/Creditos.class
 cr/grupojf/sigp/sigp_ws/model/DenominacionEfectivo.class
+cr/grupojf/sigp/sigp_ws/controller/UsuariosController$4.class
 cr/grupojf/sigp/sigp_ws/controller/ProductosController$3.class

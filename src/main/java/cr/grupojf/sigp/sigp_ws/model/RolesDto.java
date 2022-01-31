@@ -5,6 +5,7 @@
  */
 package cr.grupojf.sigp.sigp_ws.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +27,12 @@ public class RolesDto {
         this.tipo = r.getTipoRol();
         this.estado = r.getEstadoRol();
         this.nombre = r.getNombreRol();
+        permisos = new ArrayList<>();
+        if (r.getPermisosList() != null) {
+            for (Permisos p : r.getPermisosList()) {
+                permisos.add(new PermisoDto(p));
+            }
+        }
     }
 
     public Integer getId() {
