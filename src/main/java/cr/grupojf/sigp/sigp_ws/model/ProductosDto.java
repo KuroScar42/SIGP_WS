@@ -25,6 +25,7 @@ public class ProductosDto {
 //    private Float precio;
 //    private String unidadMedida;
     private BodegasProductosDto detalles;
+    private BodegaDto bodega;
 
     public ProductosDto(Productos p) {
         this.id = p.getIdProducto();
@@ -141,6 +142,14 @@ public class ProductosDto {
 
     public void setDetalles(BodegasProductosDto detalles) {
         this.detalles = detalles;
+    }
+
+    public BodegaDto getBodega() {
+        return bodega;
+    }
+
+    public void setBodega(BodegaDto bodega) {
+        this.bodega = bodega;
     }
 
     

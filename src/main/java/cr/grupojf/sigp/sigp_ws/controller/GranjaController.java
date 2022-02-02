@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
@@ -45,6 +46,23 @@ public class GranjaController {
         } catch (Exception ex) {
             Logger.getLogger(GranjaController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar los cerdos").build();
+        }
+    }
+    
+    @POST
+    @Path("/guardarCerdo")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response guardarCerdos(CerdosDto ped) {
+        try {
+            Respuesta respuesta = service.guardarCerdo(ped);
+            if (!respuesta.getEstado()) {
+                return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
+            }
+            return Response.ok((CerdosDto) respuesta.getResultado("cerdo")).build();
+        }catch (Exception ex) {
+            Logger.getLogger(GranjaController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al guardar el cerdo").build();
         }
     }
 }

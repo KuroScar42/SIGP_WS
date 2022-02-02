@@ -132,10 +132,10 @@ public class Productos implements Serializable {
 
     public Productos(ProductosDto p) {
         this.idProducto = p.getId();
-        actualizarProducto(p);
+        actualizar(p);
     }
     
-    public void actualizarProducto(ProductosDto p) {
+    public void actualizar(ProductosDto p) {
         this.nombreProducto = p.getNombre();
         this.codigoInterno =p.getCodigoInterno();
         this.unidadEmbalage = p.getUnidadEmbalage();
