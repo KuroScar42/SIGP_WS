@@ -3,7 +3,6 @@
   <!-- Define Persistence Unit -->
   <persistence-unit name="sigp_PU" transaction-type="JTA">
     <jta-data-source>jdbc/sigp</jta-data-source>
-    <class>cr.grupojf.sigp.sigp_ws.model.PruebaTabla1</class>
     <class>cr.grupojf.sigp.sigp_ws.model.CuentasPagar</class>
     <class>cr.grupojf.sigp.sigp_ws.model.Personas</class>
     <class>cr.grupojf.sigp.sigp_ws.model.Usuarios</class>
@@ -13,7 +12,6 @@
     <class>cr.grupojf.sigp.sigp_ws.model.DenominacionEfectivo</class>
     <class>cr.grupojf.sigp.sigp_ws.model.Proveedores</class>
     <class>cr.grupojf.sigp.sigp_ws.model.Efectivo</class>
-    <class>cr.grupojf.sigp.sigp_ws.model.AperturaCaja</class>
     <class>cr.grupojf.sigp.sigp_ws.model.Empresas</class>
     <class>cr.grupojf.sigp.sigp_ws.model.OtrosValores</class>
     <class>cr.grupojf.sigp.sigp_ws.model.Creditos</class>

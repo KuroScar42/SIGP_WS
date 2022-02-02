@@ -54,14 +54,14 @@ public class GranjaService {
                 if (cerdos == null) {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encontro el cerdo especificado", "Cerdos NoResultException");
                 }
-                cerdos.actualizarPedido(cerdoDto);
+                cerdos.actualizar(cerdoDto);
                 cerdos = em.merge(cerdos);
             } else {
                 cerdos = new Cerdos(cerdoDto);
                 em.persist(cerdos);
             }
             em.flush();
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Pedido", new CerdosDto(cerdos));
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "cerdo", new CerdosDto(cerdos));
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar el cerdo.", e);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar cerdo.", "guardarCerdo " + e.getMessage());

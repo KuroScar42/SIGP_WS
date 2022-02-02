@@ -27,6 +27,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "BodegasProductos.findAll", query = "SELECT b FROM BodegasProductos b"),
     @NamedQuery(name = "BodegasProductos.findByIdBodegaProductos", query = "SELECT b FROM BodegasProductos b WHERE b.idBodegaProductos = :idBodegaProductos"),
     @NamedQuery(name = "BodegasProductos.findByCantidadProducto", query = "SELECT b FROM BodegasProductos b WHERE b.cantidadProducto = :cantidadProducto"),
+    @NamedQuery(name = "BodegasProductos.findByBodProd", query = "SELECT b FROM BodegasProductos b WHERE b.idBodega = :bodega and b.idProducto = :producto"),
     @NamedQuery(name = "BodegasProductos.findByPrecioProducto", query = "SELECT b FROM BodegasProductos b WHERE b.precioProducto = :precioProducto"),
     @NamedQuery(name = "BodegasProductos.findByUnidadMedida", query = "SELECT b FROM BodegasProductos b WHERE b.unidadMedida = :unidadMedida")})
 public class BodegasProductos implements Serializable {
@@ -69,6 +70,11 @@ public class BodegasProductos implements Serializable {
         this.cantidadProducto = cantidadProducto;
         this.precioProducto = precioProducto;
         this.unidadMedida = unidadMedida;
+    }
+
+    public BodegasProductos(BodegasProductosDto bp) {
+        this.idBodegaProductos = bp.getId();
+        this.actualizar(bp);
     }
 
     public Integer getIdBodegaProductos() {
@@ -142,6 +148,19 @@ public class BodegasProductos implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.BodegasProductos[ idBodegaProductos=" + idBodegaProductos + " ]";
+    }
+
+    public void actualizar(BodegasProductosDto bp) {
+        if (bp.getBodega() != null) {
+            this.idBodega = new Bodegas(bp.getBodega());
+        }
+        if (bp.getProducto() != null) {
+            this.idProducto = new Productos(bp.getProducto());
+        }
+        this.cantidadProducto = bp.getCantidad();
+        this.precioProducto = bp.getPrecio();
+        this.unidadMedida = bp.getUnidadMedida();
+//        this.idBodega = bp.getBodega();
     }
     
 }
