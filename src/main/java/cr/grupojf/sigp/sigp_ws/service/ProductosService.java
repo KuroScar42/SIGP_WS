@@ -11,6 +11,7 @@ import cr.grupojf.sigp.sigp_ws.model.BodegasProductosDto;
 import cr.grupojf.sigp.sigp_ws.model.MoveProductDto;
 import cr.grupojf.sigp.sigp_ws.model.ProductosDto;
 import cr.grupojf.sigp.sigp_ws.model.Productos;
+import cr.grupojf.sigp.sigp_ws.model.Proveedores;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
 import cr.grupojf.sigp.sigp_ws.util.Respuesta;
 import java.util.ArrayList;
@@ -207,9 +208,13 @@ public class ProductosService {
 
             List<Object[]> productos = query.getResultList();
             List<ProductosDto> productosDtoList = new ArrayList<>();
+            
+//            Query q = em.createNamedQuery("Proveedores.AllProvOfProductInBodega",Proveedores.class);
+//            q.setParameter("idBodega", bodegaId);
+//            q.setParameter("idProducto", bodegaId);
 
             for (Object[] producto : productos) {
-                productosDtoList.add(new ProductosDto((Productos) producto[0], (BodegasProductos) producto[1]));
+                productosDtoList.add(new ProductosDto((Productos) producto[0], (BodegasProductos) producto[1],((Productos) producto[0]).getProveedoresList()));
             }
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "productos", productosDtoList);
         } catch (Exception ex) {
@@ -227,7 +232,7 @@ public class ProductosService {
             List<ProductosDto> productosDtoList = new ArrayList<>();
 
             for (Object[] producto : productos) {
-                productosDtoList.add(new ProductosDto((Productos) producto[0], (BodegasProductos) producto[1]));
+                productosDtoList.add(new ProductosDto((Productos) producto[0], (BodegasProductos) producto[1],((Productos) producto[0]).getProveedoresList()));
             }
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "productos", productosDtoList);
         } catch (Exception ex) {
@@ -242,7 +247,7 @@ public class ProductosService {
             query.setParameter("idBodega", bodegaId);
             query.setParameter("codigo", codigoProd);
             Object[] resultado = (Object[]) query.getSingleResult();
-            ProductosDto productoDto = new ProductosDto((Productos) resultado[0], (BodegasProductos) resultado[1]);
+            ProductosDto productoDto = new ProductosDto((Productos) resultado[0], (BodegasProductos) resultado[1],((Productos) resultado[0]).getProveedoresList());
 
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "producto", productoDto);
 //return null;

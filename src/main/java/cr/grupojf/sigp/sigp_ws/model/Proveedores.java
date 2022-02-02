@@ -33,6 +33,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Proveedores.findByTipoCedula", query = "SELECT p FROM Proveedores p WHERE p.tipoCedula = :tipoCedula"),
     @NamedQuery(name = "Proveedores.findByCedula", query = "SELECT p FROM Proveedores p WHERE p.cedula = :cedula"),
     @NamedQuery(name = "Proveedores.findByTelefono", query = "SELECT p FROM Proveedores p WHERE p.telefono = :telefono"),
+    @NamedQuery(name = "Proveedores.AllProvOfProductInBodega", query = "SELECT p FROM Proveedores p JOIN p.productosList pro join pro.bodegasProductosList b WHERE pro.idProducto = :idProducto and b.idBodega = :idBodega"),
     @NamedQuery(name = "Proveedores.findByEmail", query = "SELECT p FROM Proveedores p WHERE p.email = :email"),
     @NamedQuery(name = "Proveedores.findByEstado", query = "SELECT p FROM Proveedores p WHERE p.estado = :estado"),
     @NamedQuery(name = "Proveedores.findByVersion", query = "SELECT p FROM Proveedores p WHERE p.version = :version")})

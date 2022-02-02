@@ -4,6 +4,9 @@
  */
 package cr.grupojf.sigp.sigp_ws.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author sigp
@@ -26,9 +29,15 @@ public class ProductosDto {
 //    private String unidadMedida;
     private BodegasProductosDto detalles;
     private BodegaDto bodega;
-    private ProveedoresDto proveedor;
+    private List<ProveedoresDto> proveedores;
 
+    
+    public ProductosDto() {
+        this.proveedores = new ArrayList<>();
+    }
+    
     public ProductosDto(Productos p) {
+        this();
         this.id = p.getIdProducto();
         this.codigoInterno = p.getCodigoInterno();
         this.nombre = p.getNombreProducto();
@@ -39,20 +48,25 @@ public class ProductosDto {
         this.ivaProducto = p.getIvaProducto();
         this.estado = p.getEstado();
     }
-
-    public ProductosDto(Productos p, BodegasProductos bp,Proveedores pr) {
+    
+    public ProductosDto(Productos p, BodegasProductos bp) {
         this(p);
         this.detalles = new BodegasProductosDto(bp);
-        this.proveedor = new ProveedoresDto(pr);
+        
+    }
+    
+    public ProductosDto(Productos p, BodegasProductos bp,List<Proveedores> pr) {
+        this(p,bp);
+        if (pr != null) {
+            for (Proveedores proveedor : pr) {
+                this.proveedores.add(new ProveedoresDto(proveedor));
+            }
+        }
     }
 
     public Integer getId() {
         return id;
     }
-
-    public ProductosDto() {
-    }
-    
 
     public void setId(Integer id) {
         this.id = id;
@@ -154,12 +168,12 @@ public class ProductosDto {
         this.bodega = bodega;
     }
 
-    public ProveedoresDto getProveedor() {
-        return proveedor;
+    public List<ProveedoresDto> getProveedores() {
+        return proveedores;
     }
 
-    public void setProveedor(ProveedoresDto proveedor) {
-        this.proveedor = proveedor;
+    public void setProveedores(List<ProveedoresDto> proveedor) {
+        this.proveedores = proveedor;
     }
 
     

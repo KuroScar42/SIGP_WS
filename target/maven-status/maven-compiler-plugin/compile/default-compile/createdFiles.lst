@@ -48,6 +48,7 @@ cr/grupojf/sigp/sigp_ws/model/Pedidos.class
 cr/grupojf/sigp/sigp_ws/model/FacturasProductosDto.class
 cr/grupojf/sigp/sigp_ws/model/AperturaCajas.class
 cr/grupojf/sigp/sigp_ws/model/DenominacionEfectivoDto.class
+cr/grupojf/sigp/sigp_ws/model/MoveProductDto.class
 cr/grupojf/sigp/sigp_ws/model/CuentasCobrarDto.class
 cr/grupojf/sigp/sigp_ws/model/Permisos.class
 cr/grupojf/sigp/sigp_ws/model/UsuarioDto.class
