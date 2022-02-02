@@ -29,10 +29,10 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Inseminacion.findAll", query = "SELECT i FROM Inseminacion i"),
     @NamedQuery(name = "Inseminacion.findByIdInseminacion", query = "SELECT i FROM Inseminacion i WHERE i.idInseminacion = :idInseminacion"),
-    @NamedQuery(name = "Inseminacion.findByCodigoEnsiminacion", query = "SELECT i FROM Inseminacion i WHERE i.codigoEnsiminacion = :codigoEnsiminacion"),
+    @NamedQuery(name = "Inseminacion.findByCodigoInsiminacion", query = "SELECT i FROM Inseminacion i WHERE i.codigoInsiminacion = :codigoInsiminacion"),
     @NamedQuery(name = "Inseminacion.findByFechaInseminacion", query = "SELECT i FROM Inseminacion i WHERE i.fechaInseminacion = :fechaInseminacion"),
-    @NamedQuery(name = "Inseminacion.findByEstadoEnsiminacion", query = "SELECT i FROM Inseminacion i WHERE i.estadoEnsiminacion = :estadoEnsiminacion"),
-    @NamedQuery(name = "Inseminacion.findByDetalleEnsiminacion", query = "SELECT i FROM Inseminacion i WHERE i.detalleEnsiminacion = :detalleEnsiminacion")})
+    @NamedQuery(name = "Inseminacion.findByEstadoInsiminacion", query = "SELECT i FROM Inseminacion i WHERE i.estadoInsiminacion = :estadoInsiminacion"),
+    @NamedQuery(name = "Inseminacion.findByDetalleInsiminacion", query = "SELECT i FROM Inseminacion i WHERE i.detalleInsiminacion = :detalleInsiminacion")})
 public class Inseminacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,8 +44,8 @@ public class Inseminacion implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 16)
-    @Column(name = "CODIGO_ENSIMINACION")
-    private String codigoEnsiminacion;
+    @Column(name = "CODIGO_INSIMINACION")
+    private String codigoInsiminacion;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHA_INSEMINACION")
@@ -54,13 +54,11 @@ public class Inseminacion implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2)
-    @Column(name = "ESTADO_ENSIMINACION")
-    private String estadoEnsiminacion;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 750)
-    @Column(name = "DETALLE_ENSIMINACION")
-    private String detalleEnsiminacion;
+    @Column(name = "ESTADO_INSIMINACION")
+    private String estadoInsiminacion;
+    @Size(max = 750)
+    @Column(name = "DETALLE_INSIMINACION")
+    private String detalleInsiminacion;
     @JoinColumn(name = "ID_CERDO", referencedColumnName = "ID_CERDO")
     @ManyToOne
     private Cerdos idCerdo;
@@ -72,12 +70,11 @@ public class Inseminacion implements Serializable {
         this.idInseminacion = idInseminacion;
     }
 
-    public Inseminacion(Integer idInseminacion, String codigoEnsiminacion, Date fechaInseminacion, String estadoEnsiminacion, String detalleEnsiminacion) {
+    public Inseminacion(Integer idInseminacion, String codigoInsiminacion, Date fechaInseminacion, String estadoInsiminacion) {
         this.idInseminacion = idInseminacion;
-        this.codigoEnsiminacion = codigoEnsiminacion;
+        this.codigoInsiminacion = codigoInsiminacion;
         this.fechaInseminacion = fechaInseminacion;
-        this.estadoEnsiminacion = estadoEnsiminacion;
-        this.detalleEnsiminacion = detalleEnsiminacion;
+        this.estadoInsiminacion = estadoInsiminacion;
     }
 
     public Integer getIdInseminacion() {
@@ -88,12 +85,12 @@ public class Inseminacion implements Serializable {
         this.idInseminacion = idInseminacion;
     }
 
-    public String getCodigoEnsiminacion() {
-        return codigoEnsiminacion;
+    public String getCodigoInsiminacion() {
+        return codigoInsiminacion;
     }
 
-    public void setCodigoEnsiminacion(String codigoEnsiminacion) {
-        this.codigoEnsiminacion = codigoEnsiminacion;
+    public void setCodigoInsiminacion(String codigoInsiminacion) {
+        this.codigoInsiminacion = codigoInsiminacion;
     }
 
     public Date getFechaInseminacion() {
@@ -104,20 +101,20 @@ public class Inseminacion implements Serializable {
         this.fechaInseminacion = fechaInseminacion;
     }
 
-    public String getEstadoEnsiminacion() {
-        return estadoEnsiminacion;
+    public String getEstadoInsiminacion() {
+        return estadoInsiminacion;
     }
 
-    public void setEstadoEnsiminacion(String estadoEnsiminacion) {
-        this.estadoEnsiminacion = estadoEnsiminacion;
+    public void setEstadoInsiminacion(String estadoInsiminacion) {
+        this.estadoInsiminacion = estadoInsiminacion;
     }
 
-    public String getDetalleEnsiminacion() {
-        return detalleEnsiminacion;
+    public String getDetalleInsiminacion() {
+        return detalleInsiminacion;
     }
 
-    public void setDetalleEnsiminacion(String detalleEnsiminacion) {
-        this.detalleEnsiminacion = detalleEnsiminacion;
+    public void setDetalleInsiminacion(String detalleInsiminacion) {
+        this.detalleInsiminacion = detalleInsiminacion;
     }
 
     public Cerdos getIdCerdo() {

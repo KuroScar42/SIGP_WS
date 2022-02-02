@@ -5,6 +5,9 @@
  */
 package cr.grupojf.sigp.sigp_ws.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author herna
@@ -14,6 +17,7 @@ public class RolesDto {
     private String tipo;
     private String estado;
     private String nombre;
+    private List<PermisoDto> permisos;
 
     public RolesDto() {
     }
@@ -23,6 +27,12 @@ public class RolesDto {
         this.tipo = r.getTipoRol();
         this.estado = r.getEstadoRol();
         this.nombre = r.getNombreRol();
+        permisos = new ArrayList<>();
+        if (r.getPermisosList() != null) {
+            for (Permisos p : r.getPermisosList()) {
+                permisos.add(new PermisoDto(p));
+            }
+        }
     }
 
     public Integer getId() {
@@ -56,4 +66,15 @@ public class RolesDto {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public List<PermisoDto> getPermisos() {
+        return permisos;
+    }
+
+    public void setPermisos(List<PermisoDto> permisos) {
+        this.permisos = permisos;
+    }
+
+    
+    
 }

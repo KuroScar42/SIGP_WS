@@ -34,8 +34,6 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "DenominacionEfectivo.findByEstadoDenominacion", query = "SELECT d FROM DenominacionEfectivo d WHERE d.estadoDenominacion = :estadoDenominacion")})
 public class DenominacionEfectivo implements Serializable {
 
-    
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

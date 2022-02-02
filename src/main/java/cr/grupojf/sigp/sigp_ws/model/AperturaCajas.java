@@ -54,12 +54,12 @@ public class AperturaCajas implements Serializable {
     @Column(name = "ESTADO_CAJA")
     private String estadoCaja;
     @OneToMany(mappedBy = "idApertura")
-    private List<CierresCajas> cierresCajasList;
-    @OneToMany(mappedBy = "idApertura")
     private List<Facturas> facturasList;
     @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")
     @ManyToOne
     private Usuarios idUsuario;
+    @OneToMany(mappedBy = "idApertura")
+    private List<CierresCajas> cierresCajasList;
 
     public AperturaCajas() {
     }
@@ -98,14 +98,6 @@ public class AperturaCajas implements Serializable {
         this.estadoCaja = estadoCaja;
     }
 
-    public List<CierresCajas> getCierresCajasList() {
-        return cierresCajasList;
-    }
-
-    public void setCierresCajasList(List<CierresCajas> cierresCajasList) {
-        this.cierresCajasList = cierresCajasList;
-    }
-
     public List<Facturas> getFacturasList() {
         return facturasList;
     }
@@ -120,6 +112,14 @@ public class AperturaCajas implements Serializable {
 
     public void setIdUsuario(Usuarios idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    public List<CierresCajas> getCierresCajasList() {
+        return cierresCajasList;
+    }
+
+    public void setCierresCajasList(List<CierresCajas> cierresCajasList) {
+        this.cierresCajasList = cierresCajasList;
     }
 
     @Override

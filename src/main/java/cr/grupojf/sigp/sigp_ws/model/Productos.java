@@ -48,6 +48,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Productos.findByPrecioCosto", query = "SELECT p FROM Productos p WHERE p.precioCosto = :precioCosto"),
     @NamedQuery(name = "Productos.findByCodigoCabys", query = "SELECT p FROM Productos p WHERE p.codigoCabys = :codigoCabys"),
     @NamedQuery(name = "Productos.findByCaducidad", query = "SELECT p FROM Productos p WHERE p.caducidad = :caducidad"),
+    @NamedQuery(name = "Productos.findByIvaProducto", query = "SELECT p FROM Productos p WHERE p.ivaProducto = :ivaProducto"),
     @NamedQuery(name = "Productos.findByEstado", query = "SELECT p FROM Productos p WHERE p.estado = :estado"),
     @NamedQuery(name = "Productos.findByVersion", query = "SELECT p FROM Productos p WHERE p.version = :version")})
 public class Productos implements Serializable {
@@ -88,9 +89,9 @@ public class Productos implements Serializable {
     @Column(name = "CADUCIDAD")
     @Temporal(TemporalType.TIMESTAMP)
     private Date caducidad;
-    @NotNull
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "IVA_PRODUCTO")
-    private float ivaProducto;
+    private Float ivaProducto;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1)
@@ -128,7 +129,7 @@ public class Productos implements Serializable {
         this.estado = estado;
         this.version = version;
     }
-    
+
     public Productos(ProductosDto p) {
         this.idProducto = p.getId();
         actualizar(p);
@@ -215,11 +216,11 @@ public class Productos implements Serializable {
         this.caducidad = caducidad;
     }
 
-    public float getIvaProducto() {
+    public Float getIvaProducto() {
         return ivaProducto;
     }
 
-    public void setIvaProducto(float ivaProducto) {
+    public void setIvaProducto(Float ivaProducto) {
         this.ivaProducto = ivaProducto;
     }
 

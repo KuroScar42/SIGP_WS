@@ -7,7 +7,6 @@ package cr.grupojf.sigp.sigp_ws.model;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,7 +30,7 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Clientes.findAll", query = "SELECT c FROM Clientes c"),
     @NamedQuery(name = "Clientes.findByIdCliente", query = "SELECT c FROM Clientes c WHERE c.idCliente = :idCliente"),
-    @NamedQuery(name = "Clientes.findByCedulaCliente", query = "SELECT c FROM Clientes c WHERE c.cedulaCliente = :cedulaCliente"),
+    @NamedQuery(name = "Clientes.findByCedulaCliente", query = "SELECT c FROM Clientes c LEFT JOIN c.idEmpresa e LEFT JOIN c.idPersona p WHERE e.cedulaEmpresa = :cedula OR p.cedulaPersona = :cedula and c.estadoCliente = 'A'"),
     @NamedQuery(name = "Clientes.findByEmailCliente", query = "SELECT c FROM Clientes c WHERE c.emailCliente = :emailCliente"),
     @NamedQuery(name = "Clientes.findByTelefonoCliente", query = "SELECT c FROM Clientes c WHERE c.telefonoCliente = :telefonoCliente"),
     @NamedQuery(name = "Clientes.findByTelefono2Cliente", query = "SELECT c FROM Clientes c WHERE c.telefono2Cliente = :telefono2Cliente"),
@@ -48,11 +47,6 @@ public class Clientes implements Serializable {
     private Integer idCliente;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 13)
-    @Column(name = "CEDULA_CLIENTE")
-    private String cedulaCliente;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "EMAIL_CLIENTE")
     private String emailCliente;
@@ -61,9 +55,7 @@ public class Clientes implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "TELEFONO_CLIENTE")
     private String telefonoCliente;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
+    @Size(max = 20)
     @Column(name = "TELEFONO2_CLIENTE")
     private String telefono2Cliente;
     @Size(max = 500)
@@ -78,17 +70,16 @@ public class Clientes implements Serializable {
     @NotNull
     @Column(name = "VERSION")
     private int version;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCliente")
+    @OneToMany(mappedBy = "idCliente")
     private List<Facturas> facturasList;
-    @JoinColumn(name = "ID_FACTURA", referencedColumnName = "ID_FACTURA")
-    @ManyToOne(optional = false)
-    private Facturas idFactura;
     @JoinColumn(name = "ID_EMPRESA", referencedColumnName = "ID_EMPRESA")
     @ManyToOne
     private Empresas idEmpresa;
-    @JoinColumn(name = "ID_PRESONA", referencedColumnName = "ID_PRESONA")
+    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
     @ManyToOne
-    private Personas idPresona;
+    private Personas idPersona;
+    @OneToMany(mappedBy = "idCliente")
+    private List<Creditos> creditosList;
 
     public Clientes() {
     }
@@ -97,14 +88,17 @@ public class Clientes implements Serializable {
         this.idCliente = idCliente;
     }
 
-    public Clientes(Integer idCliente, String cedulaCliente, String emailCliente, String telefonoCliente, String telefono2Cliente, String estadoCliente, int version) {
+    public Clientes(Integer idCliente, String emailCliente, String telefonoCliente, String estadoCliente, int version) {
         this.idCliente = idCliente;
-        this.cedulaCliente = cedulaCliente;
         this.emailCliente = emailCliente;
         this.telefonoCliente = telefonoCliente;
-        this.telefono2Cliente = telefono2Cliente;
         this.estadoCliente = estadoCliente;
         this.version = version;
+    }
+
+    public Clientes(ClientesDto clienteDto) {
+        this.idCliente = clienteDto.getId();
+        this.actualizarCliente(clienteDto);
     }
 
     public Integer getIdCliente() {
@@ -113,14 +107,6 @@ public class Clientes implements Serializable {
 
     public void setIdCliente(Integer idCliente) {
         this.idCliente = idCliente;
-    }
-
-    public String getCedulaCliente() {
-        return cedulaCliente;
-    }
-
-    public void setCedulaCliente(String cedulaCliente) {
-        this.cedulaCliente = cedulaCliente;
     }
 
     public String getEmailCliente() {
@@ -179,14 +165,6 @@ public class Clientes implements Serializable {
         this.facturasList = facturasList;
     }
 
-    public Facturas getIdFactura() {
-        return idFactura;
-    }
-
-    public void setIdFactura(Facturas idFactura) {
-        this.idFactura = idFactura;
-    }
-
     public Empresas getIdEmpresa() {
         return idEmpresa;
     }
@@ -195,12 +173,20 @@ public class Clientes implements Serializable {
         this.idEmpresa = idEmpresa;
     }
 
-    public Personas getIdPresona() {
-        return idPresona;
+    public Personas getIdPersona() {
+        return idPersona;
     }
 
-    public void setIdPresona(Personas idPresona) {
-        this.idPresona = idPresona;
+    public void setIdPersona(Personas idPersona) {
+        this.idPersona = idPersona;
+    }
+
+    public List<Creditos> getCreditosList() {
+        return creditosList;
+    }
+
+    public void setCreditosList(List<Creditos> creditosList) {
+        this.creditosList = creditosList;
     }
 
     @Override
@@ -228,4 +214,11 @@ public class Clientes implements Serializable {
         return "cr.grupojf.sigp.sigp_ws.model.Clientes[ idCliente=" + idCliente + " ]";
     }
     
+    public void actualizarCliente(ClientesDto c) {
+        this.direccionCliente = c.getDireccion();
+        this.emailCliente = c.getEmail();
+        this.estadoCliente = c.getEstado();
+        this.telefono2Cliente = c.getTelefono2();
+        this.telefonoCliente = c.getTelefono();
+    }
 }

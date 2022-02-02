@@ -10,16 +10,19 @@ package cr.grupojf.sigp.sigp_ws.model;
  */
 public class PersonasDto {
     private Integer id;
+    private String cedula;
     private String nombre;
     private String apellido;
     private String apellido2;
     private String estado;
 
     public PersonasDto(Personas p) {
-        this.id = p.getIdPresona();
-        this.nombre = p.getNomrePersona();
+        this.id = p.getIdPersona();
+        this.cedula = p.getCedulaPersona();
+        this.nombre = p.getNombrePersona();
         this.apellido = p.getApellidoPersona();
         this.apellido2 =p.getApellido2Persona();
+        this.cedula = p.getCedulaPersona();
         this.estado = p.getEstadoPersona();
     }
 
@@ -34,6 +37,14 @@ public class PersonasDto {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
     }
 
     public String getNombre() {

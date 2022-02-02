@@ -29,16 +29,28 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Empresas.findAll", query = "SELECT e FROM Empresas e"),
     @NamedQuery(name = "Empresas.findByIdEmpresa", query = "SELECT e FROM Empresas e WHERE e.idEmpresa = :idEmpresa"),
     @NamedQuery(name = "Empresas.findByNombreEmpresa", query = "SELECT e FROM Empresas e WHERE e.nombreEmpresa = :nombreEmpresa"),
+    @NamedQuery(name = "Empresas.findByCedulaEmpresa", query = "SELECT e FROM Empresas e WHERE e.cedulaEmpresa = :cedulaEmpresa"),
     @NamedQuery(name = "Empresas.findByRazonSocial", query = "SELECT e FROM Empresas e WHERE e.razonSocial = :razonSocial"),
     @NamedQuery(name = "Empresas.findByEstadoEmrpresa", query = "SELECT e FROM Empresas e WHERE e.estadoEmrpresa = :estadoEmrpresa"),
     @NamedQuery(name = "Empresas.findByVersion", query = "SELECT e FROM Empresas e WHERE e.version = :version")})
 public class Empresas implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID_EMPRESA")
+    private Integer idEmpresa;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "NOMBRE_EMPRESA")
     private String nombreEmpresa;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 30)
+    @Column(name = "CEDULA_EMPRESA")
+    private String cedulaEmpresa;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 16)
@@ -53,13 +65,6 @@ public class Empresas implements Serializable {
     @NotNull
     @Column(name = "VERSION")
     private int version;
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "ID_EMPRESA")
-    private Integer idEmpresa;
     @OneToMany(mappedBy = "idEmpresa")
     private List<Clientes> clientesList;
 
@@ -70,12 +75,18 @@ public class Empresas implements Serializable {
         this.idEmpresa = idEmpresa;
     }
 
-    public Empresas(Integer idEmpresa, String nombreEmpresa, String razonSocial, String estadoEmrpresa, int version) {
+    public Empresas(Integer idEmpresa, String nombreEmpresa, String cedulaEmpresa, String razonSocial, String estadoEmrpresa, int version) {
         this.idEmpresa = idEmpresa;
         this.nombreEmpresa = nombreEmpresa;
+        this.cedulaEmpresa = cedulaEmpresa;
         this.razonSocial = razonSocial;
         this.estadoEmrpresa = estadoEmrpresa;
         this.version = version;
+    }
+
+    public Empresas(EmpresasDto empresaDto) {
+        this.idEmpresa = empresaDto.getId();
+        this.actualizarPedido(empresaDto);
     }
 
     public Integer getIdEmpresa() {
@@ -94,6 +105,14 @@ public class Empresas implements Serializable {
         this.nombreEmpresa = nombreEmpresa;
     }
 
+    public String getCedulaEmpresa() {
+        return cedulaEmpresa;
+    }
+
+    public void setCedulaEmpresa(String cedulaEmpresa) {
+        this.cedulaEmpresa = cedulaEmpresa;
+    }
+
     public String getRazonSocial() {
         return razonSocial;
     }
@@ -110,6 +129,13 @@ public class Empresas implements Serializable {
         this.estadoEmrpresa = estadoEmrpresa;
     }
 
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
 
     public List<Clientes> getClientesList() {
         return clientesList;
@@ -143,14 +169,12 @@ public class Empresas implements Serializable {
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Empresas[ idEmpresa=" + idEmpresa + " ]";
     }
-
-
-    public int getVersion() {
-        return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
+    
+    public void actualizarPedido(EmpresasDto empresaDto) {
+        this.cedulaEmpresa = empresaDto.getCedula();
+        this.estadoEmrpresa = empresaDto.getEstado();
+        this.nombreEmpresa = empresaDto.getNombre();
+        this.razonSocial = empresaDto.getRazonSocial();
     }
     
 }

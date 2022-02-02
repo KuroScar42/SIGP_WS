@@ -23,10 +23,10 @@ public class InseminacionDto {
     
     public InseminacionDto(Inseminacion i) {
         this.id = i.getIdInseminacion();
-        this.codigo = i.getCodigoEnsiminacion();
+        this.codigo = i.getCodigoInsiminacion();
         this.fecha = i.getFechaInseminacion();
-        this.estado = i.getEstadoEnsiminacion();
-        this.detalle = i.getDetalleEnsiminacion();
+        this.estado = i.getEstadoInsiminacion();
+        this.detalle = i.getDetalleInsiminacion();
     }
 
     public Integer getId() {

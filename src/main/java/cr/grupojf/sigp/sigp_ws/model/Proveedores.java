@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -31,12 +32,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Proveedores.findByNombreProveedor", query = "SELECT p FROM Proveedores p WHERE p.nombreProveedor = :nombreProveedor"),
     @NamedQuery(name = "Proveedores.findByTipoCedula", query = "SELECT p FROM Proveedores p WHERE p.tipoCedula = :tipoCedula"),
     @NamedQuery(name = "Proveedores.findByCedula", query = "SELECT p FROM Proveedores p WHERE p.cedula = :cedula"),
-    @NamedQuery(name = "Proveedores.findByRazonSocial", query = "SELECT p FROM Proveedores p WHERE p.razonSocial = :razonSocial"),
-    @NamedQuery(name = "Proveedores.findByInteresMoratorio", query = "SELECT p FROM Proveedores p WHERE p.interesMoratorio = :interesMoratorio"),
-    @NamedQuery(name = "Proveedores.findByDescuento", query = "SELECT p FROM Proveedores p WHERE p.descuento = :descuento"),
-    @NamedQuery(name = "Proveedores.findByPlazoCredito", query = "SELECT p FROM Proveedores p WHERE p.plazoCredito = :plazoCredito"),
-    @NamedQuery(name = "Proveedores.findByTipoDevoluciones", query = "SELECT p FROM Proveedores p WHERE p.tipoDevoluciones = :tipoDevoluciones"),
-    @NamedQuery(name = "Proveedores.findByCuentaPago", query = "SELECT p FROM Proveedores p WHERE p.cuentaPago = :cuentaPago"),
+    @NamedQuery(name = "Proveedores.findByTelefono", query = "SELECT p FROM Proveedores p WHERE p.telefono = :telefono"),
+    @NamedQuery(name = "Proveedores.findByEmail", query = "SELECT p FROM Proveedores p WHERE p.email = :email"),
     @NamedQuery(name = "Proveedores.findByEstado", query = "SELECT p FROM Proveedores p WHERE p.estado = :estado"),
     @NamedQuery(name = "Proveedores.findByVersion", query = "SELECT p FROM Proveedores p WHERE p.version = :version")})
 public class Proveedores implements Serializable {
@@ -59,34 +56,16 @@ public class Proveedores implements Serializable {
     private String tipoCedula;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 12)
+    @Size(min = 1, max = 30)
     @Column(name = "CEDULA")
     private String cedula;
-    @Size(max = 30)
-    @Column(name = "RAZON_SOCIAL")
-    private String razonSocial;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "INTERES_MORATORIO")
-    private float interesMoratorio;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "DESCUENTO")
-    private float descuento;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "PLAZO_CREDITO")
-    private int plazoCredito;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2)
-    @Column(name = "TIPO_DEVOLUCIONES")
-    private String tipoDevoluciones;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 30)
-    @Column(name = "CUENTA_PAGO")
-    private String cuentaPago;
+    @Size(max = 20)
+    @Column(name = "TELEFONO")
+    private String telefono;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 50)
+    @Column(name = "EMAIL")
+    private String email;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1)
@@ -94,6 +73,7 @@ public class Proveedores implements Serializable {
     private String estado;
     @Basic(optional = false)
     @NotNull
+    @Version
     @Column(name = "VERSION")
     private int version;
     @ManyToMany(mappedBy = "proveedoresList")
@@ -106,18 +86,18 @@ public class Proveedores implements Serializable {
         this.idProveedor = idProveedor;
     }
 
-    public Proveedores(Integer idProveedor, String nombreProveedor, String tipoCedula, String cedula, float interesMoratorio, float descuento, int plazoCredito, String tipoDevoluciones, String cuentaPago, String estado, int version) {
+    public Proveedores(Integer idProveedor, String nombreProveedor, String tipoCedula, String cedula, String estado, int version) {
         this.idProveedor = idProveedor;
         this.nombreProveedor = nombreProveedor;
         this.tipoCedula = tipoCedula;
         this.cedula = cedula;
-        this.interesMoratorio = interesMoratorio;
-        this.descuento = descuento;
-        this.plazoCredito = plazoCredito;
-        this.tipoDevoluciones = tipoDevoluciones;
-        this.cuentaPago = cuentaPago;
         this.estado = estado;
         this.version = version;
+    }
+    
+    public Proveedores(ProveedoresDto p) {
+        this.idProveedor = p.getId();
+        actualizarProveedor(p);
     }
 
     public Integer getIdProveedor() {
@@ -152,52 +132,20 @@ public class Proveedores implements Serializable {
         this.cedula = cedula;
     }
 
-    public String getRazonSocial() {
-        return razonSocial;
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setRazonSocial(String razonSocial) {
-        this.razonSocial = razonSocial;
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
-    public float getInteresMoratorio() {
-        return interesMoratorio;
+    public String getEmail() {
+        return email;
     }
 
-    public void setInteresMoratorio(float interesMoratorio) {
-        this.interesMoratorio = interesMoratorio;
-    }
-
-    public float getDescuento() {
-        return descuento;
-    }
-
-    public void setDescuento(float descuento) {
-        this.descuento = descuento;
-    }
-
-    public int getPlazoCredito() {
-        return plazoCredito;
-    }
-
-    public void setPlazoCredito(int plazoCredito) {
-        this.plazoCredito = plazoCredito;
-    }
-
-    public String getTipoDevoluciones() {
-        return tipoDevoluciones;
-    }
-
-    public void setTipoDevoluciones(String tipoDevoluciones) {
-        this.tipoDevoluciones = tipoDevoluciones;
-    }
-
-    public String getCuentaPago() {
-        return cuentaPago;
-    }
-
-    public void setCuentaPago(String cuentaPago) {
-        this.cuentaPago = cuentaPago;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getEstado() {
@@ -247,6 +195,15 @@ public class Proveedores implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Proveedores[ idProveedor=" + idProveedor + " ]";
+    }
+
+    public void actualizarProveedor(ProveedoresDto p) {
+        this.cedula = p.getCedula();
+        this.email = p.getEmail();
+        this.estado = p.getEstado();
+        this.nombreProveedor = p.getNombre();
+        this.telefono = p.getTelefono();
+        this.tipoCedula = p.getTipoCedula();
     }
     
 }

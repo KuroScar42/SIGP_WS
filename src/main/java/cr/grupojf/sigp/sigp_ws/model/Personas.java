@@ -27,9 +27,10 @@ import javax.validation.constraints.Size;
 @Table(name = "Personas")
 @NamedQueries({
     @NamedQuery(name = "Personas.findAll", query = "SELECT p FROM Personas p"),
-    @NamedQuery(name = "Personas.findByIdPresona", query = "SELECT p FROM Personas p WHERE p.idPresona = :idPresona"),
-    @NamedQuery(name = "Personas.findByNomrePersona", query = "SELECT p FROM Personas p WHERE p.nomrePersona = :nomrePersona"),
+    @NamedQuery(name = "Personas.findByIdPersona", query = "SELECT p FROM Personas p WHERE p.idPersona = :idPersona"),
+    @NamedQuery(name = "Personas.findByNombrePersona", query = "SELECT p FROM Personas p WHERE p.nombrePersona = :nombrePersona"),
     @NamedQuery(name = "Personas.findByApellidoPersona", query = "SELECT p FROM Personas p WHERE p.apellidoPersona = :apellidoPersona"),
+    @NamedQuery(name = "Personas.findByCedulaPersona", query = "SELECT p FROM Personas p WHERE p.cedulaPersona = :cedulaPersona"),
     @NamedQuery(name = "Personas.findByApellido2Persona", query = "SELECT p FROM Personas p WHERE p.apellido2Persona = :apellido2Persona"),
     @NamedQuery(name = "Personas.findByEstadoPersona", query = "SELECT p FROM Personas p WHERE p.estadoPersona = :estadoPersona"),
     @NamedQuery(name = "Personas.findByVersionPersona", query = "SELECT p FROM Personas p WHERE p.versionPersona = :versionPersona")})
@@ -39,18 +40,23 @@ public class Personas implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ID_PRESONA")
-    private Integer idPresona;
+    @Column(name = "ID_PERSONA")
+    private Integer idPersona;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "NOMRE_PERSONA")
-    private String nomrePersona;
+    @Column(name = "NOMBRE_PERSONA")
+    private String nombrePersona;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "APELLIDO_PERSONA")
     private String apellidoPersona;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 30)
+    @Column(name = "CEDULA_PERSONA")
+    private String cedulaPersona;
     @Size(max = 20)
     @Column(name = "APELLIDO2_PERSONA")
     private String apellido2Persona;
@@ -63,38 +69,46 @@ public class Personas implements Serializable {
     @NotNull
     @Column(name = "VERSION_PERSONA")
     private int versionPersona;
-    @OneToMany(mappedBy = "idPresona")
+    @OneToMany(mappedBy = "idPersona")
     private List<Usuarios> usuariosList;
+    @OneToMany(mappedBy = "idPersona")
+    private List<Clientes> clientesList;
 
     public Personas() {
     }
 
-    public Personas(Integer idPresona) {
-        this.idPresona = idPresona;
+    public Personas(Integer idPersona) {
+        this.idPersona = idPersona;
     }
 
-    public Personas(Integer idPresona, String nomrePersona, String apellidoPersona, String estadoPersona, int versionPersona) {
-        this.idPresona = idPresona;
-        this.nomrePersona = nomrePersona;
+    public Personas(Integer idPersona, String nombrePersona, String apellidoPersona, String cedulaPersona, String estadoPersona, int versionPersona) {
+        this.idPersona = idPersona;
+        this.nombrePersona = nombrePersona;
         this.apellidoPersona = apellidoPersona;
+        this.cedulaPersona = cedulaPersona;
         this.estadoPersona = estadoPersona;
         this.versionPersona = versionPersona;
     }
-
-    public Integer getIdPresona() {
-        return idPresona;
+    
+    public Personas(PersonasDto personaDto) {
+        this.idPersona = personaDto.getId();
+        this.actualizarPersona(personaDto);
     }
 
-    public void setIdPresona(Integer idPresona) {
-        this.idPresona = idPresona;
+    public Integer getIdPersona() {
+        return idPersona;
     }
 
-    public String getNomrePersona() {
-        return nomrePersona;
+    public void setIdPersona(Integer idPersona) {
+        this.idPersona = idPersona;
     }
 
-    public void setNomrePersona(String nomrePersona) {
-        this.nomrePersona = nomrePersona;
+    public String getNombrePersona() {
+        return nombrePersona;
+    }
+
+    public void setNombrePersona(String nombrePersona) {
+        this.nombrePersona = nombrePersona;
     }
 
     public String getApellidoPersona() {
@@ -103,6 +117,14 @@ public class Personas implements Serializable {
 
     public void setApellidoPersona(String apellidoPersona) {
         this.apellidoPersona = apellidoPersona;
+    }
+
+    public String getCedulaPersona() {
+        return cedulaPersona;
+    }
+
+    public void setCedulaPersona(String cedulaPersona) {
+        this.cedulaPersona = cedulaPersona;
     }
 
     public String getApellido2Persona() {
@@ -137,10 +159,18 @@ public class Personas implements Serializable {
         this.usuariosList = usuariosList;
     }
 
+    public List<Clientes> getClientesList() {
+        return clientesList;
+    }
+
+    public void setClientesList(List<Clientes> clientesList) {
+        this.clientesList = clientesList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idPresona != null ? idPresona.hashCode() : 0);
+        hash += (idPersona != null ? idPersona.hashCode() : 0);
         return hash;
     }
 
@@ -151,7 +181,7 @@ public class Personas implements Serializable {
             return false;
         }
         Personas other = (Personas) object;
-        if ((this.idPresona == null && other.idPresona != null) || (this.idPresona != null && !this.idPresona.equals(other.idPresona))) {
+        if ((this.idPersona == null && other.idPersona != null) || (this.idPersona != null && !this.idPersona.equals(other.idPersona))) {
             return false;
         }
         return true;
@@ -159,7 +189,15 @@ public class Personas implements Serializable {
 
     @Override
     public String toString() {
-        return "cr.grupojf.sigp.sigp_ws.model.Personas[ idPresona=" + idPresona + " ]";
+        return "cr.grupojf.sigp.sigp_ws.model.Personas[ idPersona=" + idPersona + " ]";
+    }
+    
+    public void actualizarPersona(PersonasDto personaDto) {
+        this.apellido2Persona = personaDto.getApellido2();
+        this.apellidoPersona = personaDto.getApellido();
+        this.cedulaPersona = personaDto.getCedula();
+        this.estadoPersona = personaDto.getEstado();
+        this.nombrePersona = personaDto.getNombre();
     }
     
 }

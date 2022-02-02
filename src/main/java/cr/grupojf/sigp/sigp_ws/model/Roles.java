@@ -7,16 +7,16 @@ package cr.grupojf.sigp.sigp_ws.model;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -29,6 +29,7 @@ import javax.validation.constraints.Size;
 @Table(name = "Roles")
 @NamedQueries({
     @NamedQuery(name = "Roles.findAll", query = "SELECT r FROM Roles r"),
+    @NamedQuery(name = "Roles.findAllActivos", query = "SELECT r FROM Roles r where r.estadoRol = 'A'"),
     @NamedQuery(name = "Roles.findByIdRol", query = "SELECT r FROM Roles r WHERE r.idRol = :idRol"),
     @NamedQuery(name = "Roles.findByTipoRol", query = "SELECT r FROM Roles r WHERE r.tipoRol = :tipoRol"),
     @NamedQuery(name = "Roles.findByEstadoRol", query = "SELECT r FROM Roles r WHERE r.estadoRol = :estadoRol"),
@@ -56,10 +57,9 @@ public class Roles implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "NOMBRE_ROL")
     private String nombreRol;
-    @JoinTable(name = "Usuarios_Permisos", joinColumns = {
-        @JoinColumn(name = "ID_ROL", referencedColumnName = "ID_ROL")}, inverseJoinColumns = {
-        @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")})
-    @ManyToMany
+    @ManyToMany(mappedBy = "rolesList", cascade = CascadeType.PERSIST)
+    private List<Permisos> permisosList;
+    @OneToMany(mappedBy = "idRol")
     private List<Usuarios> usuariosList;
 
     public Roles() {
@@ -74,6 +74,11 @@ public class Roles implements Serializable {
         this.tipoRol = tipoRol;
         this.estadoRol = estadoRol;
         this.nombreRol = nombreRol;
+    }
+
+    public Roles(RolesDto rolDto) {
+        this.idRol = rolDto.getId();
+        this.actualizar(rolDto);
     }
 
     public Integer getIdRol() {
@@ -108,6 +113,14 @@ public class Roles implements Serializable {
         this.nombreRol = nombreRol;
     }
 
+    public List<Permisos> getPermisosList() {
+        return permisosList;
+    }
+
+    public void setPermisosList(List<Permisos> permisosList) {
+        this.permisosList = permisosList;
+    }
+
     public List<Usuarios> getUsuariosList() {
         return usuariosList;
     }
@@ -139,6 +152,12 @@ public class Roles implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Roles[ idRol=" + idRol + " ]";
+    }
+
+    public void actualizar(RolesDto rolDto) {
+        this.nombreRol = rolDto.getNombre();
+        this.tipoRol = rolDto.getTipo();
+        this.estadoRol = rolDto.getEstado();
     }
     
 }

@@ -15,7 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -35,6 +34,7 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Facturas.findAll", query = "SELECT f FROM Facturas f"),
     @NamedQuery(name = "Facturas.findByIdFactura", query = "SELECT f FROM Facturas f WHERE f.idFactura = :idFactura"),
+    @NamedQuery(name = "Facturas.findByTipoFactura", query = "SELECT f FROM Facturas f WHERE f.tipoFactura = :tipoFactura"),
     @NamedQuery(name = "Facturas.findByReferenciaFactura", query = "SELECT f FROM Facturas f WHERE f.referenciaFactura = :referenciaFactura"),
     @NamedQuery(name = "Facturas.findByClaveFactura", query = "SELECT f FROM Facturas f WHERE f.claveFactura = :claveFactura"),
     @NamedQuery(name = "Facturas.findByElectronicaFactura", query = "SELECT f FROM Facturas f WHERE f.electronicaFactura = :electronicaFactura"),
@@ -57,7 +57,7 @@ public class Facturas implements Serializable {
     private Integer idFactura;
     @Basic(optional = false)
     @NotNull
-    @Lob
+    @Size(min = 1, max = 2)
     @Column(name = "TIPO_FACTURA")
     private String tipoFactura;
     @Basic(optional = false)
@@ -121,7 +121,7 @@ public class Facturas implements Serializable {
     @ManyToOne(optional = false)
     private Emisores idEmisor;
     @JoinColumn(name = "ID_CLIENTE", referencedColumnName = "ID_CLIENTE")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Clientes idCliente;
     @JoinColumn(name = "ID_METODO", referencedColumnName = "ID_METODO")
     @ManyToOne(optional = false)
@@ -130,7 +130,7 @@ public class Facturas implements Serializable {
     @ManyToOne
     private Usuarios idUsuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFactura")
-    private List<Clientes> clientesList;
+    private List<FacturasProductos> facturasProductosList;
 
     public Facturas() {
     }
@@ -308,12 +308,12 @@ public class Facturas implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public List<Clientes> getClientesList() {
-        return clientesList;
+    public List<FacturasProductos> getFacturasProductosList() {
+        return facturasProductosList;
     }
 
-    public void setClientesList(List<Clientes> clientesList) {
-        this.clientesList = clientesList;
+    public void setFacturasProductosList(List<FacturasProductos> facturasProductosList) {
+        this.facturasProductosList = facturasProductosList;
     }
 
     @Override

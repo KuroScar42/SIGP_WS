@@ -36,6 +36,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Emisores.findByEstadoEmisor", query = "SELECT e FROM Emisores e WHERE e.estadoEmisor = :estadoEmisor"),
     @NamedQuery(name = "Emisores.findByVersionEstado", query = "SELECT e FROM Emisores e WHERE e.versionEstado = :versionEstado")})
 public class Emisores implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,8 +72,6 @@ public class Emisores implements Serializable {
     @NotNull
     @Column(name = "VERSION_ESTADO")
     private int versionEstado;
-
-    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEmisor")
     private List<Facturas> facturasList;
 
@@ -181,6 +180,5 @@ public class Emisores implements Serializable {
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Emisores[ idEmisor=" + idEmisor + " ]";
     }
-
     
 }

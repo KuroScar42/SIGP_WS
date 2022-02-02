@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class PedidosDto {
 
-    private Integer Id;
+    private Integer id;
     private String codigoPedido;
     private Date fechaEntrega;
     private Date fechaPedido;
@@ -26,7 +26,7 @@ public class PedidosDto {
     private PersonasDto persona;
 
     public PedidosDto(Pedidos p) {
-        this.Id = p.getIdPedidos();
+        this.id = p.getIdPedidos();
         this.codigoPedido = p.getCodigoPedido();
         this.fechaEntrega = p.getFechaEntrega();
         this.fechaPedido = p.getFechaPedido();
@@ -34,7 +34,7 @@ public class PedidosDto {
         this.descripcion = p.getDescripcionPedido();
         this.cliente = p.getCliente();
         if (p.getIdUsuario() != null) {
-            this.persona = new PersonasDto(p.getIdUsuario().getIdPresona());
+            this.persona = new PersonasDto(p.getIdUsuario().getIdPersona());
         }
     }
 
@@ -44,11 +44,11 @@ public class PedidosDto {
     
 
     public Integer getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Integer Id) {
-        this.Id = Id;
+        this.id = Id;
     }
 
     public String getCodigoPedido() {

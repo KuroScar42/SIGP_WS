@@ -31,8 +31,8 @@ public class PartosDto {
         this.fecha = p.getFechaParto();
         this.tipo = p.getTipoParto();
         this.cantVivos = p.getCantidadVivos();
-        this.cantNacMuertos = p.getCantidaNacidosMuertos();
-        this.cantMomias = p.getCantidaMomias();
+        this.cantNacMuertos = p.getCantidadNacidosMuertos();
+        this.cantMomias = p.getCantidadMomias();
         this.cantEstripados = p.getCantidadEstripados();
         this.estadoCerda = p.getEstadoCerda();
         this.cantTotalNacidos = p.getCantidadTodalNacidos();

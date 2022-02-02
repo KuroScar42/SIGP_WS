@@ -8,6 +8,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -27,16 +29,15 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "FacturasProductos.findByIdFacturasProductos", query = "SELECT f FROM FacturasProductos f WHERE f.idFacturasProductos = :idFacturasProductos"),
     @NamedQuery(name = "FacturasProductos.findByCantidadProducto", query = "SELECT f FROM FacturasProductos f WHERE f.cantidadProducto = :cantidadProducto"),
     @NamedQuery(name = "FacturasProductos.findByDescuentoProducto", query = "SELECT f FROM FacturasProductos f WHERE f.descuentoProducto = :descuentoProducto"),
-    @NamedQuery(name = "FacturasProductos.findByIvaProcucto", query = "SELECT f FROM FacturasProductos f WHERE f.ivaProcucto = :ivaProcucto"),
-//    @NamedQuery(name = "FacturasProductos.findByPRECIOsIVA", query = "SELECT f FROM FacturasProductos f WHERE f.pRECIOsIVA = :pRECIOsIVA"),
-//    @NamedQuery(name = "FacturasProductos.findByPRECIOcIVA", query = "SELECT f FROM FacturasProductos f WHERE f.pRECIOcIVA = :pRECIOcIVA")
-})
+    @NamedQuery(name = "FacturasProductos.findByIvaProducto", query = "SELECT f FROM FacturasProductos f WHERE f.ivaProducto = :ivaProducto"),
+    @NamedQuery(name = "FacturasProductos.findByPrecio", query = "SELECT f FROM FacturasProductos f WHERE f.precio = :precio"),
+    @NamedQuery(name = "FacturasProductos.findByPrecioIva", query = "SELECT f FROM FacturasProductos f WHERE f.precioIva = :precioIva")})
 public class FacturasProductos implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ID_FACTURAS_PRODUCTOS")
     private Integer idFacturasProductos;
     @Basic(optional = false)
@@ -49,16 +50,16 @@ public class FacturasProductos implements Serializable {
     private float descuentoProducto;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "IVA_PROCUCTO")
-    private float ivaProcucto;
+    @Column(name = "IVA_PRODUCTO")
+    private float ivaProducto;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "PRECIO_sIVA")
-    private float preciosIva;
+    @Column(name = "PRECIO")
+    private float precio;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "PRECIO_cIVA")
-    private float preciocIva;
+    @Column(name = "PRECIO_IVA")
+    private float precioIva;
     @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO")
     @ManyToOne(optional = false)
     private Productos idProducto;
@@ -73,13 +74,13 @@ public class FacturasProductos implements Serializable {
         this.idFacturasProductos = idFacturasProductos;
     }
 
-    public FacturasProductos(Integer idFacturasProductos, float cantidadProducto, float descuentoProducto, float ivaProcucto, float pRECIOsIVA, float pRECIOcIVA) {
+    public FacturasProductos(Integer idFacturasProductos, float cantidadProducto, float descuentoProducto, float ivaProducto, float precio, float precioIva) {
         this.idFacturasProductos = idFacturasProductos;
         this.cantidadProducto = cantidadProducto;
         this.descuentoProducto = descuentoProducto;
-        this.ivaProcucto = ivaProcucto;
-        this.preciosIva = pRECIOsIVA;
-        this.preciocIva = pRECIOcIVA;
+        this.ivaProducto = ivaProducto;
+        this.precio = precio;
+        this.precioIva = precioIva;
     }
 
     public Integer getIdFacturasProductos() {
@@ -106,28 +107,28 @@ public class FacturasProductos implements Serializable {
         this.descuentoProducto = descuentoProducto;
     }
 
-    public float getIvaProcucto() {
-        return ivaProcucto;
+    public float getIvaProducto() {
+        return ivaProducto;
     }
 
-    public void setIvaProcucto(float ivaProcucto) {
-        this.ivaProcucto = ivaProcucto;
+    public void setIvaProducto(float ivaProducto) {
+        this.ivaProducto = ivaProducto;
     }
 
-    public float getPreciosIva() {
-        return preciosIva;
+    public float getPrecio() {
+        return precio;
     }
 
-    public void setPreciosIva(float preciosIva) {
-        this.preciosIva = preciosIva;
+    public void setPrecio(float precio) {
+        this.precio = precio;
     }
 
-    public float getPreciocIva() {
-        return preciocIva;
+    public float getPrecioIva() {
+        return precioIva;
     }
 
-    public void setPreciocIva(float preciocIva) {
-        this.preciocIva = preciocIva;
+    public void setPrecioIva(float precioIva) {
+        this.precioIva = precioIva;
     }
 
     public Productos getIdProducto() {

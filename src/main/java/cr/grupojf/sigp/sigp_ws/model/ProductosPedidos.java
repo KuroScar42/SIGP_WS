@@ -32,8 +32,8 @@ public class ProductosPedidos implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
     @Column(name = "ID_PRODUCTOS_PEDIDOS")
     private Integer idProductosPedidos;
     @Basic(optional = false)
@@ -126,7 +126,5 @@ public class ProductosPedidos implements Serializable {
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.ProductosPedidos[ idProductosPedidos=" + idProductosPedidos + " ]";
     }
-
-    
     
 }

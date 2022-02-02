@@ -36,8 +36,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Partos.findByFechaParto", query = "SELECT p FROM Partos p WHERE p.fechaParto = :fechaParto"),
     @NamedQuery(name = "Partos.findByTipoParto", query = "SELECT p FROM Partos p WHERE p.tipoParto = :tipoParto"),
     @NamedQuery(name = "Partos.findByCantidadVivos", query = "SELECT p FROM Partos p WHERE p.cantidadVivos = :cantidadVivos"),
-    @NamedQuery(name = "Partos.findByCantidaNacidosMuertos", query = "SELECT p FROM Partos p WHERE p.cantidaNacidosMuertos = :cantidaNacidosMuertos"),
-    @NamedQuery(name = "Partos.findByCantidaMomias", query = "SELECT p FROM Partos p WHERE p.cantidaMomias = :cantidaMomias"),
+    @NamedQuery(name = "Partos.findByCantidadNacidosMuertos", query = "SELECT p FROM Partos p WHERE p.cantidadNacidosMuertos = :cantidadNacidosMuertos"),
+    @NamedQuery(name = "Partos.findByCantidadMomias", query = "SELECT p FROM Partos p WHERE p.cantidadMomias = :cantidadMomias"),
     @NamedQuery(name = "Partos.findByCantidadEstripados", query = "SELECT p FROM Partos p WHERE p.cantidadEstripados = :cantidadEstripados"),
     @NamedQuery(name = "Partos.findByEstadoCerda", query = "SELECT p FROM Partos p WHERE p.estadoCerda = :estadoCerda"),
     @NamedQuery(name = "Partos.findByCantidadTodalNacidos", query = "SELECT p FROM Partos p WHERE p.cantidadTodalNacidos = :cantidadTodalNacidos"),
@@ -64,12 +64,12 @@ public class Partos implements Serializable {
     private int cantidadVivos;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "CANTIDA_NACIDOS_MUERTOS")
-    private int cantidaNacidosMuertos;
+    @Column(name = "CANTIDAD_NACIDOS_MUERTOS")
+    private int cantidadNacidosMuertos;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "CANTIDA_MOMIAS")
-    private int cantidaMomias;
+    @Column(name = "CANTIDAD_MOMIAS")
+    private int cantidadMomias;
     @Basic(optional = false)
     @NotNull
     @Column(name = "CANTIDAD_ESTRIPADOS")
@@ -93,8 +93,6 @@ public class Partos implements Serializable {
     private List<Usuarios> usuariosList;
     @OneToMany(mappedBy = "idParto")
     private List<Embarazos> embarazosList;
-    @OneToMany(mappedBy = "idParto")
-    private List<Lechones> lechonesList;
     @JoinColumn(name = "ID_EMBARAZO", referencedColumnName = "ID_EMBARAZO")
     @ManyToOne
     private Embarazos idEmbarazo;
@@ -109,12 +107,12 @@ public class Partos implements Serializable {
         this.idParto = idParto;
     }
 
-    public Partos(Integer idParto, Date fechaParto, int cantidadVivos, int cantidaNacidosMuertos, int cantidaMomias, int cantidadEstripados, String estadoCerda, int cantidadTodalNacidos) {
+    public Partos(Integer idParto, Date fechaParto, int cantidadVivos, int cantidadNacidosMuertos, int cantidadMomias, int cantidadEstripados, String estadoCerda, int cantidadTodalNacidos) {
         this.idParto = idParto;
         this.fechaParto = fechaParto;
         this.cantidadVivos = cantidadVivos;
-        this.cantidaNacidosMuertos = cantidaNacidosMuertos;
-        this.cantidaMomias = cantidaMomias;
+        this.cantidadNacidosMuertos = cantidadNacidosMuertos;
+        this.cantidadMomias = cantidadMomias;
         this.cantidadEstripados = cantidadEstripados;
         this.estadoCerda = estadoCerda;
         this.cantidadTodalNacidos = cantidadTodalNacidos;
@@ -152,20 +150,20 @@ public class Partos implements Serializable {
         this.cantidadVivos = cantidadVivos;
     }
 
-    public int getCantidaNacidosMuertos() {
-        return cantidaNacidosMuertos;
+    public int getCantidadNacidosMuertos() {
+        return cantidadNacidosMuertos;
     }
 
-    public void setCantidaNacidosMuertos(int cantidaNacidosMuertos) {
-        this.cantidaNacidosMuertos = cantidaNacidosMuertos;
+    public void setCantidadNacidosMuertos(int cantidadNacidosMuertos) {
+        this.cantidadNacidosMuertos = cantidadNacidosMuertos;
     }
 
-    public int getCantidaMomias() {
-        return cantidaMomias;
+    public int getCantidadMomias() {
+        return cantidadMomias;
     }
 
-    public void setCantidaMomias(int cantidaMomias) {
-        this.cantidaMomias = cantidaMomias;
+    public void setCantidadMomias(int cantidadMomias) {
+        this.cantidadMomias = cantidadMomias;
     }
 
     public int getCantidadEstripados() {
@@ -214,14 +212,6 @@ public class Partos implements Serializable {
 
     public void setEmbarazosList(List<Embarazos> embarazosList) {
         this.embarazosList = embarazosList;
-    }
-
-    public List<Lechones> getLechonesList() {
-        return lechonesList;
-    }
-
-    public void setLechonesList(List<Lechones> lechonesList) {
-        this.lechonesList = lechonesList;
     }
 
     public Embarazos getIdEmbarazo() {

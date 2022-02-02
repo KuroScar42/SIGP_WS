@@ -5,6 +5,7 @@
 package cr.grupojf.sigp.sigp_ws.model;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,9 +13,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -60,9 +63,26 @@ public class Usuarios implements Serializable {
     @NotNull
     @Column(name = "VERSION_USUARIO")
     private int versionUsuario;
-    @JoinColumn(name = "ID_PRESONA", referencedColumnName = "ID_PRESONA")
+    @ManyToMany(mappedBy = "usuariosList")
+    private List<Partos> partosList;
+    @OneToMany(mappedBy = "idUsuario")
+    private List<Facturas> facturasList;
+    @OneToMany(mappedBy = "idUsuario")
+    private List<CuentasPagar> cuentasPagarList;
+    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
     @ManyToOne
-    private Personas idPresona;
+    private Personas idPersona;
+    @JoinColumn(name = "ID_ROL", referencedColumnName = "ID_ROL")
+    @ManyToOne
+    private Roles idRol;
+    @OneToMany(mappedBy = "idUsuario")
+    private List<AperturaCajas> aperturaCajasList;
+    @OneToMany(mappedBy = "idUsuario")
+    private List<Pedidos> pedidosList;
+    @OneToMany(mappedBy = "idUsuario")
+    private List<Partos> partosList1;
+    @OneToMany(mappedBy = "idUsuario")
+    private List<Creditos> creditosList;
 
     public Usuarios() {
     }
@@ -77,6 +97,11 @@ public class Usuarios implements Serializable {
         this.contrasennaUsuario = contrasennaUsuario;
         this.estadoUsuario = estadoUsuario;
         this.versionUsuario = versionUsuario;
+    }
+
+    public Usuarios(UsuarioDto usuarioDto) {
+        this.idUsuario = usuarioDto.getId();
+        actualizarUsuario(usuarioDto);
     }
 
     public Integer getIdUsuario() {
@@ -119,12 +144,76 @@ public class Usuarios implements Serializable {
         this.versionUsuario = versionUsuario;
     }
 
-    public Personas getIdPresona() {
-        return idPresona;
+    public List<Partos> getPartosList() {
+        return partosList;
     }
 
-    public void setIdPresona(Personas idPresona) {
-        this.idPresona = idPresona;
+    public void setPartosList(List<Partos> partosList) {
+        this.partosList = partosList;
+    }
+
+    public List<Facturas> getFacturasList() {
+        return facturasList;
+    }
+
+    public void setFacturasList(List<Facturas> facturasList) {
+        this.facturasList = facturasList;
+    }
+
+    public List<CuentasPagar> getCuentasPagarList() {
+        return cuentasPagarList;
+    }
+
+    public void setCuentasPagarList(List<CuentasPagar> cuentasPagarList) {
+        this.cuentasPagarList = cuentasPagarList;
+    }
+
+    public Personas getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(Personas idPersona) {
+        this.idPersona = idPersona;
+    }
+
+    public Roles getIdRol() {
+        return idRol;
+    }
+
+    public void setIdRol(Roles idRol) {
+        this.idRol = idRol;
+    }
+
+    public List<AperturaCajas> getAperturaCajasList() {
+        return aperturaCajasList;
+    }
+
+    public void setAperturaCajasList(List<AperturaCajas> aperturaCajasList) {
+        this.aperturaCajasList = aperturaCajasList;
+    }
+
+    public List<Pedidos> getPedidosList() {
+        return pedidosList;
+    }
+
+    public void setPedidosList(List<Pedidos> pedidosList) {
+        this.pedidosList = pedidosList;
+    }
+
+    public List<Partos> getPartosList1() {
+        return partosList1;
+    }
+
+    public void setPartosList1(List<Partos> partosList1) {
+        this.partosList1 = partosList1;
+    }
+
+    public List<Creditos> getCreditosList() {
+        return creditosList;
+    }
+
+    public void setCreditosList(List<Creditos> creditosList) {
+        this.creditosList = creditosList;
     }
 
     @Override
@@ -151,5 +240,14 @@ public class Usuarios implements Serializable {
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Usuarios[ idUsuario=" + idUsuario + " ]";
     }
-    
+
+    public void actualizarUsuario(UsuarioDto u) {
+        this.contrasennaUsuario = u.getContrasena();
+        this.nombreUsuario = u.getNombreUsuario();
+        this.estadoUsuario = u.getEstado();
+        if (u.getRol() != null) {
+            this.idRol = new Roles(u.getRol());
+        }
+    }
+
 }

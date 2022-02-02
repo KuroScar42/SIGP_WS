@@ -14,8 +14,8 @@ public class FacturasProductosDto {
     private Float cantidad;
     private Float descuento;
     private Float iva;
-    private Float preciosIva;
-    private Float preciocIva;
+    private Float precio;
+    private Float precioIva;
 
     public FacturasProductosDto() {
     }
@@ -24,9 +24,9 @@ public class FacturasProductosDto {
         this.id = f.getIdFacturasProductos();
         this.cantidad = f.getCantidadProducto();
         this.descuento = f.getDescuentoProducto();
-        this.iva = f.getIvaProcucto();
-        this.preciosIva = f.getPreciosIva();
-        this.preciocIva = f.getPreciocIva();
+        this.iva = f.getIvaProducto();
+        this.precio = f.getPrecio();
+        this.precioIva = f.getPrecioIva();
     }
 
     public Integer getId() {
@@ -61,20 +61,20 @@ public class FacturasProductosDto {
         this.iva = iva;
     }
 
-    public Float getPreciosIva() {
-        return preciosIva;
+    public Float getPrecio() {
+        return precio;
     }
 
-    public void setPreciosIva(Float preciosIva) {
-        this.preciosIva = preciosIva;
+    public void setPrecio(Float precio) {
+        this.precio = precio;
     }
 
-    public Float getPreciocIva() {
-        return preciocIva;
+    public Float getPrecioIva() {
+        return precioIva;
     }
 
-    public void setPreciocIva(Float preciocIva) {
-        this.preciocIva = preciocIva;
+    public void setPrecioIva(Float precio) {
+        this.precioIva = precio;
     }
     
     
