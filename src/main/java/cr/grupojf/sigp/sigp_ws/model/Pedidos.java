@@ -4,6 +4,7 @@
  */
 package cr.grupojf.sigp.sigp_ws.model;
 
+import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -99,14 +100,20 @@ public class Pedidos implements Serializable {
         this.idPedidos = pedidoDto.getId();
         actualizarPedido(pedidoDto);
     }
-    
+
     public void actualizarPedido(PedidosDto p) {
         this.codigoPedido = p.getCodigoPedido();
         this.descripcionPedido = p.getDescripcion();
         this.estadoPedido = p.getEstado();
-        this.fechaEntrega = p.getFechaEntrega();
-        this.fechaPedido = p.getFechaPedido();
-        this.cliente=p.getCliente();
+//        this.fechaEntrega = p.fechaEntrega;
+//        this.fechaPedido = p.fechaPedido;
+        try {
+            this.fechaEntrega = LocalDateAdapter.adaptFromJson(p.getFechaEntrega());
+            this.fechaPedido = LocalDateAdapter.adaptFromJson(p.getFechaPedido());
+        } catch (Exception e) {
+        }
+
+        this.cliente = p.getCliente();
     }
 
     public Integer getIdPedidos() {
@@ -205,5 +212,5 @@ public class Pedidos implements Serializable {
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Pedidos[ idPedidos=" + idPedidos + " ]";
     }
-    
+
 }

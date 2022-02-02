@@ -4,9 +4,13 @@
  */
 package cr.grupojf.sigp.sigp_ws.model;
 
+import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,32 +20,37 @@ public class PedidosDto {
 
     private Integer id;
     private String codigoPedido;
-    private Date fechaEntrega;
-    private Date fechaPedido;
+    public String fechaEntrega;
+    public String fechaPedido;
     private String estado;
     private String descripcion;
     private String cliente;
     private List<ProductosPedidosDto> productosPedido;
     private List<ProductosPedidosDto> eliminados;
-    private PersonasDto persona;
+    private Integer idUsuario;
 
     public PedidosDto(Pedidos p) {
         this.id = p.getIdPedidos();
         this.codigoPedido = p.getCodigoPedido();
-        this.fechaEntrega = p.getFechaEntrega();
-        this.fechaPedido = p.getFechaPedido();
+        try {
+//        this.fechaEntrega = p.getFechaEntrega();
+//        this.fechaPedido = p.getFechaPedido();
+            this.fechaEntrega = LocalDateAdapter.adaptToJson(p.getFechaEntrega());
+            this.fechaPedido = LocalDateAdapter.adaptToJson(p.getFechaPedido());
+        } catch (Exception ex) {
+            Logger.getLogger(PedidosDto.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.estado = p.getEstadoPedido();
         this.descripcion = p.getDescripcionPedido();
         this.cliente = p.getCliente();
-        if (p.getIdUsuario() != null) {
-            this.persona = new PersonasDto(p.getIdUsuario().getIdPersona());
-        }
+//        if (p.getIdUsuario() != null) {
+//            this.persona = new PersonasDto(p.getIdUsuario().getIdPersona());
+//        }
     }
 
     public PedidosDto() {
         eliminados = new ArrayList<>();
     }
-    
 
     public Integer getId() {
         return id;
@@ -59,23 +68,21 @@ public class PedidosDto {
         this.codigoPedido = codigoPedido;
     }
 
-    public Date getFechaEntrega() {
+    public String getFechaEntrega() {
         return fechaEntrega;
     }
 
-    public void setFechaEntrega(Date fechaEntrega) {
-        this.fechaEntrega = fechaEntrega;
+    public void setFechaEntrega(String fechaEntrega) {
+            this.fechaEntrega = fechaEntrega;
     }
 
-    public Date getFechaPedido() {
+    public String getFechaPedido() {
         return fechaPedido;
     }
 
-    public void setFechaPedido(Date fechaPedido) {
+    public void setFechaPedido(String fechaPedido) {
         this.fechaPedido = fechaPedido;
     }
-    
-    
 
     public String getEstado() {
         return estado;
@@ -109,13 +116,13 @@ public class PedidosDto {
         this.productosPedido = productosPedido;
     }
 
-    public PersonasDto getPersona() {
-        return persona;
-    }
-
-    public void setPersona(PersonasDto persona) {
-        this.persona = persona;
-    }
+//    public PersonasDto getPersona() {
+//        return persona;
+//    }
+//
+//    public void setPersona(PersonasDto persona) {
+//        this.persona = persona;
+//    }
 
     public List<ProductosPedidosDto> getEliminados() {
         return eliminados;
@@ -124,8 +131,14 @@ public class PedidosDto {
     public void setEliminados(List<ProductosPedidosDto> eliminados) {
         this.eliminados = eliminados;
     }
-    
-    
+
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
+    }
     
     
 

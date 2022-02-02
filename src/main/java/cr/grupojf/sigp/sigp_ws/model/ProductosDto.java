@@ -25,6 +25,7 @@ public class ProductosDto {
 //    private Float precio;
 //    private String unidadMedida;
     private BodegasProductosDto detalles;
+    private ProveedoresDto proveedor;
 
     public ProductosDto(Productos p) {
         this.id = p.getIdProducto();
@@ -38,9 +39,10 @@ public class ProductosDto {
         this.estado = p.getEstado();
     }
 
-    public ProductosDto(Productos p, BodegasProductos bp) {
+    public ProductosDto(Productos p, BodegasProductos bp,Proveedores pr) {
         this(p);
         this.detalles = new BodegasProductosDto(bp);
+        this.proveedor = new ProveedoresDto(pr);
     }
 
     public Integer getId() {
@@ -141,6 +143,14 @@ public class ProductosDto {
 
     public void setDetalles(BodegasProductosDto detalles) {
         this.detalles = detalles;
+    }
+
+    public ProveedoresDto getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(ProveedoresDto proveedor) {
+        this.proveedor = proveedor;
     }
 
     

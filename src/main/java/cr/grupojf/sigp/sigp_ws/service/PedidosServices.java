@@ -10,6 +10,7 @@ import cr.grupojf.sigp.sigp_ws.model.Productos;
 import cr.grupojf.sigp.sigp_ws.model.ProductosDto;
 import cr.grupojf.sigp.sigp_ws.model.ProductosPedidos;
 import cr.grupojf.sigp.sigp_ws.model.ProductosPedidosDto;
+import cr.grupojf.sigp.sigp_ws.model.Usuarios;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
 import cr.grupojf.sigp.sigp_ws.util.Respuesta;
 import java.util.ArrayList;
@@ -88,6 +89,7 @@ public class PedidosServices {
             } else {
                 pedido = new Pedidos(pedidoDto);
 //                pedido.setAreaId(em.getReference(Area.class, pedidoDto.getArea().getId()));
+                pedido.setIdUsuario(em.find(Usuarios.class, pedidoDto.getIdUsuario()));
                 em.persist(pedido);
             }
             em.flush();
