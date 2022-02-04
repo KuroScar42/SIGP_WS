@@ -136,7 +136,7 @@ public class ProductosService {
                             query.setParameter("producto", producto);
                             BodegasProductos d = (BodegasProductos) query.getSingleResult();
                             o.setCantidadProducto(o.getCantidadProducto() - m.getCantidad());
-                            d.setCantidadProducto(m.getCantidad());
+                            d.setCantidadProducto(d.getCantidadProducto() + m.getCantidad());
                             // Se actualiza ambas entidades
                             em.merge(o);
                             em.merge(d);
@@ -147,10 +147,16 @@ public class ProductosService {
                             BodegasProductos d = new BodegasProductos();
                             d.setIdBodega(destino);
                             d.setIdProducto(producto);
+                            d.setUnidadMedida(o.getUnidadMedida());
+                            d.setPrecioProducto(o.getPrecioProducto());
                             d.setCantidadProducto(m.getCantidad());
+                            
+                            o.setCantidadProducto(o.getCantidadProducto() - m.getCantidad());
+                            em.merge(o);
                             em.persist(d);
                             em.flush();
                         } catch (Exception e) {
+                            em.getTransaction().rollback();
                             throw new Exception(e);
                         }
                     }
@@ -176,8 +182,7 @@ public class ProductosService {
 //                em.persist(producto);
 //            }
 //            em.flush();
-//            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "producto", new ProductosDto(producto));
-            return null;
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "");
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "Ocurrio un error al mover producto de bodega.", e);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al mover el producto.", "moveProduct " + e.getMessage());
