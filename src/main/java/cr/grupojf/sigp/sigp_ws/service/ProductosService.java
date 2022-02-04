@@ -151,7 +151,7 @@ public class ProductosService {
                             em.persist(d);
                             em.flush();
                         } catch (Exception e) {
-                            throw new Exception();
+                            throw new Exception(e);
                         }
                     }
                     
@@ -161,7 +161,7 @@ public class ProductosService {
                     
                 }
             } else {
-                // respuesta negativa
+                throw new Exception("Bodega de origen o destino no existe");
             }
 //            if (productoDto.getId() != null && productoDto.getId() > 0) {
 //                producto = em.find(Productos.class, productoDto.getId());
