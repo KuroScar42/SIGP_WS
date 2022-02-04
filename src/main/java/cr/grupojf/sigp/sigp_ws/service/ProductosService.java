@@ -64,8 +64,8 @@ public class ProductosService {
 //                    return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, res.getMensaje(), res.getMensajeInterno());
 //                }
 //            } else 
-            if (productoDto.getBodega() != null) {
-                bodegaProducto = new BodegasProductosDto();
+            if (productoDto.getBodega() != null && productoDto.getDetalles() != null) {
+                bodegaProducto = new BodegasProductosDto(new BodegasProductos(productoDto.getDetalles()));
                 bodegaProducto.setBodega(productoDto.getBodega());
                 bodegaProducto.setProducto(productoDto);
                 Respuesta res = this.guardarProductoBodega(bodegaProducto);
