@@ -81,7 +81,7 @@ public class ProductosService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el producto.", "guardarCerdo " + e.getMessage());
         }
     }
-    
+
     public Respuesta guardarProductoBodega(BodegasProductosDto bodegaProductoDto) {
         try {
             BodegasProductos bodegaProducto;
@@ -114,9 +114,9 @@ public class ProductosService {
                     origen = em.find(Bodegas.class, m.getOrigen().getId());
                 }
             }
-            if (m.getDestino()!= null) {
+            if (m.getDestino() != null) {
                 if (m.getDestino().getId() != null && m.getDestino().getId() > 0) {
-                    origen = em.find(Bodegas.class, m.getDestino().getId());
+                    destino = em.find(Bodegas.class, m.getDestino().getId());
                 }
             }
             if (m.getProducto() != null) {
@@ -140,7 +140,7 @@ public class ProductosService {
                             // Se actualiza ambas entidades
                             em.merge(o);
                             em.merge(d);
-                            
+
                             em.flush();
                         } catch (NoResultException e) {
                             // en caso de que no se encuentre se crea nuevo y se guarda
@@ -154,11 +154,12 @@ public class ProductosService {
                             throw new Exception(e);
                         }
                     }
-                    
+
                 } catch (NonUniqueResultException | NoResultException e) {
                     // nunca deberia de estar aqui pero no se sabe
                 } catch (Exception e) {
-                    
+                    LOG.log(Level.SEVERE, "Ocurrio un error al mover producto de bodega.", e);
+                    return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al mover el producto.", "moveProduct " + e.getMessage());
                 }
             } else {
                 throw new Exception("Bodega de origen o destino no existe");
@@ -208,13 +209,12 @@ public class ProductosService {
 
             List<Object[]> productos = query.getResultList();
             List<ProductosDto> productosDtoList = new ArrayList<>();
-            
+
 //            Query q = em.createNamedQuery("Proveedores.AllProvOfProductInBodega",Proveedores.class);
 //            q.setParameter("idBodega", bodegaId);
 //            q.setParameter("idProducto", bodegaId);
-
             for (Object[] producto : productos) {
-                productosDtoList.add(new ProductosDto((Productos) producto[0], (BodegasProductos) producto[1],((Productos) producto[0]).getProveedoresList()));
+                productosDtoList.add(new ProductosDto((Productos) producto[0], (BodegasProductos) producto[1], ((Productos) producto[0]).getProveedoresList()));
             }
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "productos", productosDtoList);
         } catch (Exception ex) {
@@ -232,7 +232,7 @@ public class ProductosService {
             List<ProductosDto> productosDtoList = new ArrayList<>();
 
             for (Object[] producto : productos) {
-                productosDtoList.add(new ProductosDto((Productos) producto[0], (BodegasProductos) producto[1],((Productos) producto[0]).getProveedoresList()));
+                productosDtoList.add(new ProductosDto((Productos) producto[0], (BodegasProductos) producto[1], ((Productos) producto[0]).getProveedoresList()));
             }
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "productos", productosDtoList);
         } catch (Exception ex) {
@@ -247,7 +247,7 @@ public class ProductosService {
             query.setParameter("idBodega", bodegaId);
             query.setParameter("codigo", codigoProd);
             Object[] resultado = (Object[]) query.getSingleResult();
-            ProductosDto productoDto = new ProductosDto((Productos) resultado[0], (BodegasProductos) resultado[1],((Productos) resultado[0]).getProveedoresList());
+            ProductosDto productoDto = new ProductosDto((Productos) resultado[0], (BodegasProductos) resultado[1], ((Productos) resultado[0]).getProveedoresList());
 
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "producto", productoDto);
 //return null;

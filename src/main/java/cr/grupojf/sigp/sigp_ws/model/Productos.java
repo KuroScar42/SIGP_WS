@@ -20,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.QueryHint;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,7 +40,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Productos.findByCodigoBarras", query = "SELECT p FROM Productos p WHERE p.codigoBarras = :codigoBarras"),
     @NamedQuery(name = "Productos.findProductosByBodega", query = "SELECT p FROM Bodegas b join b.bodegasProductosList bp join bp.idProducto p WHERE p.estado = 'A' and b.idBodega = :idBodega"),
     @NamedQuery(name = "Productos.findProductosByBodegaComplete", query = "SELECT p,bp FROM Bodegas b join b.bodegasProductosList bp join bp.idProducto p WHERE b.idBodega = :idBodega and p.estado = 'A'"),
-    @NamedQuery(name = "Productos.findProductosByBodegaCompleteSR", query = "SELECT p,bp FROM Bodegas b join b.bodegasProductosList bp join bp.idProducto p WHERE b.idBodega = :idBodega"),
+    @NamedQuery(name = "Productos.findProductosByBodegaCompleteSR", query = "SELECT p,bp FROM Bodegas b join b.bodegasProductosList bp join bp.idProducto p WHERE b.idBodega = :idBodega", hints = @QueryHint(name = "eclipselink.refresh", value = "true")),
     @NamedQuery(name = "Productos.findProductoByBodega", query = "SELECT p,bp FROM Bodegas b join b.bodegasProductosList bp join bp.idProducto p WHERE p.estado = 'A' and b.idBodega = :idBodega and p.codigoInterno = :codigo"),
     @NamedQuery(name = "Productos.findProductoByPedido", query = "SELECT p,pl,pe FROM Productos p join p.productosPedidosList pl join pl.idPedidos pe where pe.idPedidos = :pedidoId"),
     @NamedQuery(name = "Productos.findByNombreProducto", query = "SELECT p FROM Productos p WHERE p.nombreProducto = :nombreProducto"),
