@@ -47,6 +47,23 @@ public class ProveedoresController {
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar los proveedores").build();
         }
     }
+    @GET
+    @Path("/getProveedoresActivos")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getProveedoresActivos() {
+        try {
+            Respuesta respuesta = service.getProveedoresActivos();
+            if (!respuesta.getEstado()) {
+                return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
+            }
+            List resultado = (List) respuesta.getResultado("proveedores");
+            return Response.ok(new GenericEntity<List<ProveedoresDto>>(resultado) {}).build();
+        } catch (Exception ex) {
+            Logger.getLogger(ProveedoresController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar los proveedores").build();
+        }
+    }
     
     @POST
     @Path("/guardarProveedor")

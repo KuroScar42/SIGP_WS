@@ -47,6 +47,22 @@ public class ProveedoresService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los proveedores.", "getProveedores " + ex.getMessage());
         }
     }
+    public Respuesta getProveedoresActivos() {
+        try {
+            Query query = em.createNamedQuery("Proveedores.findAllActivos", Proveedores.class);
+            List<Proveedores> proveedores = query.getResultList();
+            List<ProveedoresDto> proveedoresDtoList = new ArrayList<>();
+
+            for (Proveedores proveedor : proveedores) {
+                proveedoresDtoList.add(new ProveedoresDto(proveedor));
+            }
+
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "proveedores", proveedoresDtoList);
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar los proveedores.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los proveedores.", "getProveedores " + ex.getMessage());
+        }
+    }
     
     public Respuesta guardarProveedor(ProveedoresDto p) {
         try {
