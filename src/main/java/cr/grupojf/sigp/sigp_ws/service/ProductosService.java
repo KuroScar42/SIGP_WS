@@ -12,6 +12,7 @@ import cr.grupojf.sigp.sigp_ws.model.MoveProductDto;
 import cr.grupojf.sigp.sigp_ws.model.ProductosDto;
 import cr.grupojf.sigp.sigp_ws.model.Productos;
 import cr.grupojf.sigp.sigp_ws.model.Proveedores;
+import cr.grupojf.sigp.sigp_ws.model.SaveProducto;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
 import cr.grupojf.sigp.sigp_ws.util.Respuesta;
 import java.util.ArrayList;
@@ -38,42 +39,38 @@ public class ProductosService {
     @PersistenceContext(unitName = "sigp_PU")
     protected EntityManager em;
 
-    public Respuesta guardarProducto(ProductosDto productoDto) {
+    public Respuesta guardarProducto(SaveProducto saveProducto) {
         try {
             Productos producto;
-            if (productoDto.getId() != null && productoDto.getId() > 0) {
-                producto = em.find(Productos.class, productoDto.getId());
+            if (saveProducto.getProducto().getId() != null && saveProducto.getProducto().getId() > 0) {
+                producto = em.find(Productos.class, saveProducto.getProducto().getId());
                 if (producto == null) {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encontro el producto especificado", "guardarProducto NoResultException");
                 }
-                producto.actualizar(productoDto);
+                producto.actualizar(saveProducto.getProducto());
                 producto = em.merge(producto);
             } else {
-                producto = new Productos(productoDto);
+                producto = new Productos(saveProducto.getProducto());
                 em.persist(producto);
             }
             em.flush();
-            BodegasProductosDto bodegaProducto;
-//            if (productoDto.getDetalles() != null) {
-//                bodegaProducto = productoDto.getDetalles();
-//                if (productoDto.getBodega() != null) {
-//                    e.setBodega(productoDto.getBodega());
-//                }
-//                Respuesta res = this.guardarProductoBodega(bodegaProducto);
-//                if (!res.getEstado()) {
-//                    return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, res.getMensaje(), res.getMensajeInterno());
-//                }
-//            } else 
-            if (productoDto.getBodega() != null && productoDto.getDetalles() != null) {
-                bodegaProducto = new BodegasProductosDto(new BodegasProductos(productoDto.getDetalles()));
-                bodegaProducto.setBodega(productoDto.getBodega());
-                bodegaProducto.setProducto(productoDto);
+            for (BodegasProductosDto bd : saveProducto.getBodegasProductos()) {
+                BodegasProductosDto bodegaProducto = bd;
+                bodegaProducto.setProducto(new ProductosDto(producto));
                 Respuesta res = this.guardarProductoBodega(bodegaProducto);
                 if (!res.getEstado()) {
+                    em.getTransaction().rollback();
+                    removeProductById(producto.getIdProducto());
                     return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, res.getMensaje(), res.getMensajeInterno());
                 }
             }
-//            producto = em.find(Productos.class, producto.getIdProducto());
+//            if (productoDto.getBodega() != null && productoDto.getDetalles() != null) {
+//                bodegaProducto = new BodegasProductosDto(new BodegasProductos(productoDto.getDetalles()));
+//                bodegaProducto.setBodega(productoDto.getBodega());
+//                bodegaProducto.setProducto(productoDto);
+//                
+//            }
+            em.flush();
             em.refresh(producto); // si no funciona para refrescar el guardado de ProductoBodega -> quitar y descomentar la linea de arriba
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "producto", new ProductosDto(producto));
         } catch (Exception e) {
@@ -82,7 +79,18 @@ public class ProductosService {
         }
     }
 
-    public Respuesta guardarProductoBodega(BodegasProductosDto bodegaProductoDto) {
+    private void removeProductById(Integer id) {
+        if (id != null && id > 0) {
+            try {
+                Productos p = em.getReference(Productos.class, id);
+                em.remove(p);
+            } catch (Exception e) {
+                LOG.log(Level.SEVERE, "Ocurrio un error al eliminar el producto.", e);
+            }
+        }
+    }
+
+    private Respuesta guardarProductoBodega(BodegasProductosDto bodegaProductoDto) {
         try {
             BodegasProductos bodegaProducto;
             if (bodegaProductoDto.getId() != null && bodegaProductoDto.getId() > 0) {
@@ -96,11 +104,11 @@ public class ProductosService {
                 bodegaProducto = new BodegasProductos(bodegaProductoDto);
                 em.persist(bodegaProducto);
             }
-            em.flush();
+//            em.flush();
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "producto", new BodegasProductosDto(bodegaProducto));
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar el cerdo.", e);
-            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar cerdo.", "guardarCerdo " + e.getMessage());
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el producto en la bodega.", "guardarProductoBodega " + e.getMessage());
         }
     }
 
@@ -150,7 +158,7 @@ public class ProductosService {
                             d.setUnidadMedida(o.getUnidadMedida());
                             d.setPrecioProducto(o.getPrecioProducto());
                             d.setCantidadProducto(m.getCantidad());
-                            
+
                             o.setCantidadProducto(o.getCantidadProducto() - m.getCantidad());
                             em.merge(o);
                             em.persist(d);

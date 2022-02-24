@@ -7,6 +7,7 @@ package cr.grupojf.sigp.sigp_ws.controller;
 import cr.grupojf.sigp.sigp_ws.model.BodegaDto;
 import cr.grupojf.sigp.sigp_ws.model.MoveProductDto;
 import cr.grupojf.sigp.sigp_ws.model.ProductosDto;
+import cr.grupojf.sigp.sigp_ws.model.SaveProducto;
 import cr.grupojf.sigp.sigp_ws.service.MetodoPagoService;
 import cr.grupojf.sigp.sigp_ws.service.ProductosService;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
@@ -42,9 +43,9 @@ public class ProductosController {
     @Path("/guardarProducto")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response guardarProducto(ProductosDto productoDto) {
+    public Response guardarProducto(SaveProducto saveProducto) {
         try {
-            Respuesta respuesta = service.guardarProducto(productoDto);
+            Respuesta respuesta = service.guardarProducto(saveProducto);
             if (!respuesta.getEstado()) {
                 return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
             }
