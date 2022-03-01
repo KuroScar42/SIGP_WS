@@ -292,6 +292,7 @@ public class ProductosService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los inventarios.", "getBodegas " + ex.getMessage());
         }
     }
+
     public Respuesta getAllBodegas() {
         try {
             Query query = em.createNamedQuery("Bodegas.findAll", Bodegas.class);
@@ -311,12 +312,59 @@ public class ProductosService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los inventarios.", "getBodegas " + ex.getMessage());
         }
     }
-    
+
     public Integer getCantProdBodega(Integer bodegaId) {
-            Query query = em.createNamedQuery("Bodegas.findCantProdBodega", Productos.class);
-            query.setParameter("idBodega", bodegaId);
-            Integer resultado = Math.round((Long) query.getSingleResult());
-            return resultado;
+        Query query = em.createNamedQuery("Bodegas.findCantProdBodega", Productos.class);
+        query.setParameter("idBodega", bodegaId);
+        Integer resultado = Math.round((Long) query.getSingleResult());
+        return resultado;
+    }
+
+    public Respuesta guardarBodega(BodegaDto bodegaDto) {
+        try {
+            Bodegas bodega;
+            if (bodegaDto.getId() != null && bodegaDto.getId() > 0) {
+                bodega = em.find(Bodegas.class, bodegaDto.getId());
+                if (bodega == null) {
+                    return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encontro la bodega especificada", "guardarBodega NoResultException");
+                }
+                bodega.actualizar(bodegaDto);
+                bodega = em.merge(bodega);
+            } else {
+                bodega = new Bodegas(bodegaDto);
+                em.persist(bodega);
+            }
+            em.flush();
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "bodega", new BodegaDto(bodega));
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al guardar la bodega.", e);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar la bodega.", "guardarBodega " + e.getMessage());
+        }
+    }
+
+    public Respuesta eliminarBodega(BodegaDto bodegaDto) {
+        try {
+            Bodegas bodega;
+            if (bodegaDto.getId() != null && bodegaDto.getId() > 0) {
+                bodega = em.find(Bodegas.class, bodegaDto.getId());
+                if (bodega == null) {
+                    return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encontro la bodega especificada", "eliminarBodega NoResultException");
+                }
+                if (getCantProdBodega(bodega.getIdBodega()) == 0) {
+                    em.remove(bodega);
+                } else {
+                    return new Respuesta(false, CodigoRespuesta.ERROR_CLIENTE, "Para eliminar la bodega esta debe esta vacia", "eliminarBodega NoResultException");
+                }
+            } else {
+                return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encontro la bodega especificada", "eliminarBodega NoResultException");
+            }
+            em.flush();
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "");
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al guardar el producto pedido", e);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar la bodega especificada", "eliminarBodega " + e.getMessage());
+        }
+
     }
 
 }

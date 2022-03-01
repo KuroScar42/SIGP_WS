@@ -86,7 +86,7 @@ public class Bodegas implements Serializable {
         this.version = version;
     }
 
-    Bodegas(BodegaDto b) {
+    public Bodegas(BodegaDto b) {
         this.idBodega = b.getId();
         this.actualizar(b);
         
@@ -174,7 +174,10 @@ public class Bodegas implements Serializable {
     }
 
     public void actualizar(BodegaDto b) {
-//        this.
+        this.codigoBodega = b.getCodigoBodega();
+        this.descripcion = b.getDescripcion();
+        this.estado = b.getEstado();
+        this.nombreBodega = b.getNombre();
     }
     
 }

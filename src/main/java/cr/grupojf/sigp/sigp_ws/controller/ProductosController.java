@@ -192,10 +192,36 @@ public class ProductosController {
     }
     
     @POST
-    @Path("moveProduct")
+    @Path("/deleteBodega")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response moveProduct(){
-        return null;
+    public Response deleteBodega(BodegaDto bodegaDto){
+        try {
+            Respuesta respuesta = service.eliminarBodega(bodegaDto);
+            if (!respuesta.getEstado()) {
+                return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
+            }
+            return Response.ok(respuesta.getMensaje()).build();
+        } catch (Exception ex) {
+            Logger.getLogger(ProductosController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al eliminar las bodegas").build();
+        }
+    }
+    
+    @POST
+    @Path("/guardarBodega")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response guardarBodega(BodegaDto bodegaDto) {
+        try {
+            Respuesta respuesta = service.guardarBodega(bodegaDto);
+            if (!respuesta.getEstado()) {
+                return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
+            }
+            return Response.ok((BodegaDto) respuesta.getResultado("bodega")).build();
+        }catch (Exception ex) {
+            Logger.getLogger(ProductosController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al guardar la bodega").build();
+        }
     }
 }
