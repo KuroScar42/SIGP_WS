@@ -280,7 +280,10 @@ public class ProductosService {
             List<BodegaDto> bodegasDto = new ArrayList<>();
 
             for (Bodegas bodega : bodegas) {
-                bodegasDto.add(new BodegaDto(bodega));
+                int cant = getCantProdBodega(bodega.getIdBodega());
+                BodegaDto b = new BodegaDto(bodega);
+                b.setCantProductos(cant);
+                bodegasDto.add(b);
             }
 
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "bodegas", bodegasDto);
@@ -288,6 +291,32 @@ public class ProductosService {
             LOG.log(Level.SEVERE, "Ocurrio un error al consultar los inventarios.", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los inventarios.", "getBodegas " + ex.getMessage());
         }
+    }
+    public Respuesta getAllBodegas() {
+        try {
+            Query query = em.createNamedQuery("Bodegas.findAll", Bodegas.class);
+            List<Bodegas> bodegas = query.getResultList();
+            List<BodegaDto> bodegasDto = new ArrayList<>();
+
+            for (Bodegas bodega : bodegas) {
+                int cant = getCantProdBodega(bodega.getIdBodega());
+                BodegaDto b = new BodegaDto(bodega);
+                b.setCantProductos(cant);
+                bodegasDto.add(b);
+            }
+
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "bodegas", bodegasDto);
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar los inventarios.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los inventarios.", "getBodegas " + ex.getMessage());
+        }
+    }
+    
+    public Integer getCantProdBodega(Integer bodegaId) {
+            Query query = em.createNamedQuery("Bodegas.findCantProdBodega", Productos.class);
+            query.setParameter("idBodega", bodegaId);
+            Integer resultado = Math.round((Long) query.getSingleResult());
+            return resultado;
     }
 
 }

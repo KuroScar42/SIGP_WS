@@ -29,6 +29,7 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Bodegas.findAll", query = "SELECT b FROM Bodegas b"),
     @NamedQuery(name = "Bodegas.findAllActives", query = "SELECT b FROM Bodegas b where b.estado = 'A'"),
+    @NamedQuery(name = "Bodegas.findCantProdBodega", query = "SELECT COUNT(bp.idBodegaProductos) FROM Bodegas b join b.bodegasProductosList bp where b.idBodega = :idBodega"),
     @NamedQuery(name = "Bodegas.findByIdBodega", query = "SELECT b FROM Bodegas b WHERE b.idBodega = :idBodega"),
 //    @NamedQuery(name = "Bodegas.findProductosByBodega", query = "SELECT p FROM Bodegas b join b.bodegasProductosList bp join bp.idProducto p WHERE p.estado = 'A' and b.idBodega = :idBodega"),
 //    @NamedQuery(name = "Bodegas.findProductosByIds", query = "SELECT p FROM Bodegas b join b.bodegasProductosList bp join bp.idProducto p WHERE p.estado = 'A' and b.idBodega = :idBodega and p.codigoInterno = :codigo"),

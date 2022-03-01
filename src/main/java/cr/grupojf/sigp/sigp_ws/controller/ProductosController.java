@@ -172,6 +172,25 @@ public class ProductosController {
         }
     }
     
+    @GET
+    @Path("/getAllBodegas")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getAllBodegas() {
+        try {
+            Respuesta respuesta = service.getAllBodegas();
+            if (!respuesta.getEstado()) {
+                return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
+            }
+            List resultado = (List) respuesta.getResultado("bodegas");
+            return Response.ok(new GenericEntity<List<BodegaDto>>(resultado) {
+            }).build();
+        } catch (Exception ex) {
+            Logger.getLogger(ProductosController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar las bodegas").build();
+        }
+    }
+    
     @POST
     @Path("moveProduct")
     @Produces(MediaType.APPLICATION_JSON)

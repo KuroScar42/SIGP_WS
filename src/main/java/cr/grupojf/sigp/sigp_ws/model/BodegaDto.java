@@ -13,6 +13,7 @@ public class BodegaDto {
    private String codigoBodega;
    private String nombre;
    private String descripcion;
+   private Integer cantProductos;
    private String estado;
 
     public BodegaDto(Bodegas bod) {
@@ -66,6 +67,15 @@ public class BodegaDto {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    public Integer getCantProductos() {
+        return cantProductos;
+    }
+
+    public void setCantProductos(Integer cantProductos) {
+        this.cantProductos = cantProductos;
+    }
    
+    
    
 }

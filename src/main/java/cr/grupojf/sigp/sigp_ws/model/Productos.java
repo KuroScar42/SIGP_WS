@@ -84,7 +84,7 @@ public class Productos implements Serializable {
     private float precioCosto;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 16)
+    @Size(max = 16)
     @Column(name = "CODIGO_CABYS")
     private String codigoCabys;
     @Column(name = "CADUCIDAD")
@@ -142,6 +142,7 @@ public class Productos implements Serializable {
         this.unidadEmbalage = p.getUnidadEmbalage();
         this.precioCosto = p.getCosto();
         this.codigoCabys = p.getCodigoCabys();
+        this.ivaProducto = p.getIvaProducto();
         this.estado = p.getEstado();
     }
 
