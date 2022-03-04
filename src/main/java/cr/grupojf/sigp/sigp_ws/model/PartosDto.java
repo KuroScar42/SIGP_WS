@@ -22,6 +22,8 @@ public class PartosDto {
     private String estadoCerda;
     private Integer cantTotalNacidos;
     private String detalles;
+    private Float pesoProNacimiento;
+    private Float pesoProDestete;
 
     public PartosDto() {
     }
@@ -37,6 +39,8 @@ public class PartosDto {
         this.estadoCerda = p.getEstadoCerda();
         this.cantTotalNacidos = p.getCantidadTodalNacidos();
         this.detalles = p.getDetalleParto();
+        this.pesoProNacimiento = p.getPesoProNacimiento();
+        this.pesoProDestete = p.getPesoProDestete();
     }
 
     public Integer getId() {
@@ -117,6 +121,22 @@ public class PartosDto {
 
     public void setDetalles(String detalles) {
         this.detalles = detalles;
+    }
+
+    public Float getPesoProNacimiento() {
+        return pesoProNacimiento;
+    }
+
+    public void setPesoProNacimiento(Float pesoProNacimiento) {
+        this.pesoProNacimiento = pesoProNacimiento;
+    }
+
+    public Float getPesoProDestete() {
+        return pesoProDestete;
+    }
+
+    public void setPesoProDestete(Float pesoProDestete) {
+        this.pesoProDestete = pesoProDestete;
     }
     
     

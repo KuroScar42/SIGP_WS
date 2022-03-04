@@ -83,6 +83,12 @@ public class Partos implements Serializable {
     @NotNull
     @Column(name = "CANTIDAD_TODAL_NACIDOS")
     private int cantidadTodalNacidos;
+    @NotNull
+    @Column(name = "PESO_PRO_NACIMIENTO")
+    private float pesoProNacimiento;
+    @NotNull
+    @Column(name = "PESO_PRO_DESTETE")
+    private float pesoProDestete;
     @Size(max = 750)
     @Column(name = "DETALLE_PARTO")
     private String detalleParto;
@@ -229,6 +235,24 @@ public class Partos implements Serializable {
     public void setIdUsuario(Usuarios idUsuario) {
         this.idUsuario = idUsuario;
     }
+
+    public float getPesoProNacimiento() {
+        return pesoProNacimiento;
+    }
+
+    public void setPesoProNacimiento(float pesoProNacimiento) {
+        this.pesoProNacimiento = pesoProNacimiento;
+    }
+
+    public float getPesoProDestete() {
+        return pesoProDestete;
+    }
+
+    public void setPesoProDestete(float pesoProDestete) {
+        this.pesoProDestete = pesoProDestete;
+    }
+    
+    
 
     @Override
     public int hashCode() {

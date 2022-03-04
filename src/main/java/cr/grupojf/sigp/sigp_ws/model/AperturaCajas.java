@@ -60,6 +60,13 @@ public class AperturaCajas implements Serializable {
     private Usuarios idUsuario;
     @OneToMany(mappedBy = "idApertura")
     private List<CierresCajas> cierresCajasList;
+    @NotNull
+    @Size(min = 1, max = 3)
+    @Column(name = "NUM_CAJA")
+    private String numCaja;
+    @NotNull
+    @Column(name = "FONDO_CAJA")
+    private Float fondoCaja;
 
     public AperturaCajas() {
     }
@@ -120,6 +127,22 @@ public class AperturaCajas implements Serializable {
 
     public void setCierresCajasList(List<CierresCajas> cierresCajasList) {
         this.cierresCajasList = cierresCajasList;
+    }
+
+    public String getNumCaja() {
+        return numCaja;
+    }
+
+    public void setNumCaja(String numCaja) {
+        this.numCaja = numCaja;
+    }
+
+    public Float getFondoCaja() {
+        return fondoCaja;
+    }
+
+    public void setFondoCaja(Float fondoCaja) {
+        this.fondoCaja = fondoCaja;
     }
 
     @Override

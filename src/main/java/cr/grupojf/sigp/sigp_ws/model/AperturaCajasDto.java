@@ -15,6 +15,8 @@ public class AperturaCajasDto {
     private Integer id;
     private Date fecha;
     private String estado;
+    private String numCaja;
+    private Float fondo;
     
 
     public AperturaCajasDto() {
@@ -24,6 +26,8 @@ public class AperturaCajasDto {
         this.id = apertura.getIdApertura();
         this.fecha = apertura.getFechaCaja();
         this.estado = apertura.getEstadoCaja();
+        this.numCaja = apertura.getNumCaja();
+        this.fondo = apertura.getFondoCaja();
     }
 
     public Integer getId() {
@@ -49,6 +53,24 @@ public class AperturaCajasDto {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    public String getNumCaja() {
+        return numCaja;
+    }
+
+    public void setNumCaja(String numCaja) {
+        this.numCaja = numCaja;
+    }
+
+    public Float getFondo() {
+        return fondo;
+    }
+
+    public void setFondo(Float fondo) {
+        this.fondo = fondo;
+    }
+    
+    
     
     
     

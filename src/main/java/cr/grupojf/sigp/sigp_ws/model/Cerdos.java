@@ -32,7 +32,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Cerdos.findByCodigoCerdo", query = "SELECT c FROM Cerdos c WHERE c.codigoCerdo = :codigoCerdo"),
     @NamedQuery(name = "Cerdos.findByEstadoCerdo", query = "SELECT c FROM Cerdos c WHERE c.estadoCerdo = :estadoCerdo"),
     @NamedQuery(name = "Cerdos.findByDescripcionCerdo", query = "SELECT c FROM Cerdos c WHERE c.descripcionCerdo = :descripcionCerdo"),
-    @NamedQuery(name = "Cerdos.findByFechaNacimiento", query = "SELECT c FROM Cerdos c WHERE c.fechaNacimiento = :fechaNacimiento"),
+//    @NamedQuery(name = "Cerdos.findByFechaNacimiento", query = "SELECT c FROM Cerdos c WHERE c.fechaNacimiento = :fechaNacimiento"),
     @NamedQuery(name = "Cerdos.findByPesoCerdo", query = "SELECT c FROM Cerdos c WHERE c.pesoCerdo = :pesoCerdo")})
 public class Cerdos implements Serializable {
 
@@ -57,9 +57,9 @@ public class Cerdos implements Serializable {
     private String descripcionCerdo;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "FECHA_NACIMIENTO")
+    @Column(name = "FECHA_REGISTRO")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaNacimiento;
+    private Date fechaRegistro;
     @Basic(optional = false)
     @NotNull
     @Column(name = "PESO_CERDO")
@@ -80,7 +80,7 @@ public class Cerdos implements Serializable {
         this.idCerdo = idCerdo;
         this.codigoCerdo = codigoCerdo;
         this.estadoCerdo = estadoCerdo;
-        this.fechaNacimiento = fechaNacimiento;
+        this.fechaRegistro = fechaNacimiento;
         this.pesoCerdo = pesoCerdo;
     }
 
@@ -121,12 +121,12 @@ public class Cerdos implements Serializable {
         this.descripcionCerdo = descripcionCerdo;
     }
 
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
+    public Date getFechaRegistro() {
+        return fechaRegistro;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
+    public void setFechaRegistro(Date fechaNacimiento) {
+        this.fechaRegistro = fechaNacimiento;
     }
 
     public float getPesoCerdo() {
@@ -182,7 +182,7 @@ public class Cerdos implements Serializable {
         this.codigoCerdo = cerdoDto.getCodigo();
         this.estadoCerdo = cerdoDto.getEstado();
         this.descripcionCerdo = cerdoDto.getDescripcion();
-        this.fechaNacimiento = cerdoDto.getNacimiento();
+        this.fechaRegistro = cerdoDto.getRegistro();
         this.pesoCerdo = cerdoDto.getPeso();
     }
 

@@ -51,6 +51,9 @@ public class Inseminacion implements Serializable {
     @Column(name = "FECHA_INSEMINACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaInseminacion;
+    @Column(name = "FECHA_REVISION")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaRevision;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2)
@@ -124,6 +127,16 @@ public class Inseminacion implements Serializable {
     public void setIdCerdo(Cerdos idCerdo) {
         this.idCerdo = idCerdo;
     }
+
+    public Date getFechaRevision() {
+        return fechaRevision;
+    }
+
+    public void setFechaRevision(Date fechaRevision) {
+        this.fechaRevision = fechaRevision;
+    }
+    
+    
 
     @Override
     public int hashCode() {

@@ -60,6 +60,8 @@ public class Productos implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID_PRODUCTO")
     private Integer idProducto;
+    @Basic(optional = false)
+    @NotNull
     @Size(max = 8)
     @Column(name = "CODIGO_INTERNO")
     private String codigoInterno;

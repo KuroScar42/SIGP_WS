@@ -5,7 +5,10 @@
  */
 package cr.grupojf.sigp.sigp_ws.model;
 
+import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -14,9 +17,10 @@ import java.util.Date;
 public class InseminacionDto {
     private Integer id;
     private String codigo;
-    private Date fecha;
+    private String fechaInseminacion;
     private String estado;
     private String detalle;
+    private String fechaRevision; 
 
     public InseminacionDto() {
     }
@@ -24,7 +28,12 @@ public class InseminacionDto {
     public InseminacionDto(Inseminacion i) {
         this.id = i.getIdInseminacion();
         this.codigo = i.getCodigoInsiminacion();
-        this.fecha = i.getFechaInseminacion();
+        try {
+            this.fechaInseminacion = LocalDateAdapter.adaptToJson(i.getFechaInseminacion());
+            this.fechaRevision = LocalDateAdapter.adaptToJson(i.getFechaRevision());
+        } catch (Exception ex) {
+            Logger.getLogger(PedidosDto.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.estado = i.getEstadoInsiminacion();
         this.detalle = i.getDetalleInsiminacion();
     }
@@ -45,13 +54,22 @@ public class InseminacionDto {
         this.codigo = codigo;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public String getFechaInseminacion() {
+        return fechaInseminacion;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setFechaInseminacion(String fecha) {
+        this.fechaInseminacion = fecha;
     }
+
+    public String getFechaRevision() {
+        return fechaRevision;
+    }
+
+    public void setFechaRevision(String fechaRevision) {
+        this.fechaRevision = fechaRevision;
+    }
+    
 
     public String getEstado() {
         return estado;
