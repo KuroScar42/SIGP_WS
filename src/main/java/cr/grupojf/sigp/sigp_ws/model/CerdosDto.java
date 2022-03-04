@@ -5,7 +5,10 @@
  */
 package cr.grupojf.sigp.sigp_ws.model;
 
+import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,7 +20,7 @@ public class CerdosDto {
     private String sexo;
     private String estado;
     private String descripcion;
-    private Date registro;
+    private String registro;
     private Float peso;
 
     public CerdosDto() {
@@ -28,8 +31,11 @@ public class CerdosDto {
         this.codigo = cerdo.getCodigoCerdo();
         this.estado = cerdo.getEstadoCerdo();
         this.descripcion = cerdo.getDescripcionCerdo();
-        this.registro = cerdo.getFechaRegistro();
-        this.peso = cerdo.getPesoCerdo();
+        try {
+            this.registro = LocalDateAdapter.adaptToJson(cerdo.getFechaRegistro());
+        } catch (Exception ex) {
+            Logger.getLogger(PedidosDto.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public Integer getId() {
@@ -72,11 +78,11 @@ public class CerdosDto {
         this.descripcion = descripcion;
     }
 
-    public Date getRegistro() {
+    public String getRegistro() {
         return registro;
     }
 
-    public void setRegistro(Date nacimiento) {
+    public void setRegistro(String nacimiento) {
         this.registro = nacimiento;
     }
 

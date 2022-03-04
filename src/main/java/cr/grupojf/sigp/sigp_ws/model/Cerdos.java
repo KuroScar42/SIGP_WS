@@ -4,12 +4,15 @@
  */
 package cr.grupojf.sigp.sigp_ws.model;
 
+import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -33,13 +36,14 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Cerdos.findByEstadoCerdo", query = "SELECT c FROM Cerdos c WHERE c.estadoCerdo = :estadoCerdo"),
     @NamedQuery(name = "Cerdos.findByDescripcionCerdo", query = "SELECT c FROM Cerdos c WHERE c.descripcionCerdo = :descripcionCerdo"),
 //    @NamedQuery(name = "Cerdos.findByFechaNacimiento", query = "SELECT c FROM Cerdos c WHERE c.fechaNacimiento = :fechaNacimiento"),
-    @NamedQuery(name = "Cerdos.findByPesoCerdo", query = "SELECT c FROM Cerdos c WHERE c.pesoCerdo = :pesoCerdo")})
+//    @NamedQuery(name = "Cerdos.findByPesoCerdo", query = "SELECT c FROM Cerdos c WHERE c.pesoCerdo = :pesoCerdo")
+})
 public class Cerdos implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ID_CERDO")
     private Integer idCerdo;
     @Basic(optional = false)
@@ -60,10 +64,6 @@ public class Cerdos implements Serializable {
     @Column(name = "FECHA_REGISTRO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaRegistro;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "PESO_CERDO")
-    private float pesoCerdo;
     @OneToMany(mappedBy = "idCerdo")
     private List<Embarazos> embarazosList;
     @OneToMany(mappedBy = "idCerdo")
@@ -81,7 +81,6 @@ public class Cerdos implements Serializable {
         this.codigoCerdo = codigoCerdo;
         this.estadoCerdo = estadoCerdo;
         this.fechaRegistro = fechaNacimiento;
-        this.pesoCerdo = pesoCerdo;
     }
 
     public Cerdos(CerdosDto cerdoDto) {
@@ -129,14 +128,6 @@ public class Cerdos implements Serializable {
         this.fechaRegistro = fechaNacimiento;
     }
 
-    public float getPesoCerdo() {
-        return pesoCerdo;
-    }
-
-    public void setPesoCerdo(float pesoCerdo) {
-        this.pesoCerdo = pesoCerdo;
-    }
-
     public List<Embarazos> getEmbarazosList() {
         return embarazosList;
     }
@@ -182,8 +173,10 @@ public class Cerdos implements Serializable {
         this.codigoCerdo = cerdoDto.getCodigo();
         this.estadoCerdo = cerdoDto.getEstado();
         this.descripcionCerdo = cerdoDto.getDescripcion();
-        this.fechaRegistro = cerdoDto.getRegistro();
-        this.pesoCerdo = cerdoDto.getPeso();
+        try {
+            this.fechaRegistro = LocalDateAdapter.adaptFromJson(cerdoDto.getRegistro());
+        } catch (Exception e) {
+        }
     }
 
 }
