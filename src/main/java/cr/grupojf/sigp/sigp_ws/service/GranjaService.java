@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -85,6 +86,23 @@ public class GranjaService {
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar el producto pedido", e);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el producto pedido", "eliminarCerdo " + e.getMessage());
+        }
+    }
+    
+    public Respuesta getCerdo(String codigo) {
+        try {
+            Query query = em.createNamedQuery("Cerdos.findByCodigoCerdo", Cerdos.class);
+            query.setParameter("codigoCerdo", codigo);
+            Cerdos cliente = (Cerdos) query.getSingleResult();
+            CerdosDto clienteDto = new CerdosDto(cliente);
+
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "cerdo", clienteDto);
+        } catch (NoResultException ex) {
+            LOG.log(Level.SEVERE, "No existe el cerdo con codigo '" + codigo, ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "No existe el cerdo con codigo '" + codigo, "getCerdo " + ex.getMessage());
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar el cerdo", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar el cerdo", "getCerdo " + ex.getMessage());
         }
     }
 }
