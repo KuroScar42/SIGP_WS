@@ -4,6 +4,7 @@
  */
 package cr.grupojf.sigp.sigp_ws.model;
 
+import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -80,6 +81,11 @@ public class Inseminacion implements Serializable {
         this.estadoInsiminacion = estadoInsiminacion;
     }
 
+    public Inseminacion(InseminacionDto i) {
+        this.idInseminacion = i.getId();
+        this.actualizar(i);
+    }
+
     public Integer getIdInseminacion() {
         return idInseminacion;
     }
@@ -135,8 +141,6 @@ public class Inseminacion implements Serializable {
     public void setFechaRevision(Date fechaRevision) {
         this.fechaRevision = fechaRevision;
     }
-    
-    
 
     @Override
     public int hashCode() {
@@ -162,5 +166,19 @@ public class Inseminacion implements Serializable {
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Inseminacion[ idInseminacion=" + idInseminacion + " ]";
     }
-    
+
+    public void actualizar(InseminacionDto i) {
+        this.codigoInsiminacion = i.getCodigo();
+        this.detalleInsiminacion = i.getDetalle();
+        this.estadoInsiminacion = i.getEstado();
+        try {
+            this.fechaInseminacion = LocalDateAdapter.adaptFromJson(i.getFechaInseminacion());
+            this.fechaRevision = LocalDateAdapter.adaptFromJson(i.getFechaRevision());
+        } catch (Exception exception) {
+        }
+        if (i.getCerdo() != null) {
+            this.idCerdo = new Cerdos(i.getCerdo());
+        }
+    }
+
 }

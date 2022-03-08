@@ -5,7 +5,10 @@
  */
 package cr.grupojf.sigp.sigp_ws.model;
 
+import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -13,20 +16,32 @@ import java.util.Date;
  */
 public class EmbarazosDto {
     private Integer id;
-    private Date fecha;
+    private String fecha;
     private String estado;
-    private Date parto;
+    private String parto;
     private String detalles;
+    private CerdosDto cerdo;
+    private PartosDto partoDto;
 
     public EmbarazosDto() {
     }
     
     public EmbarazosDto(Embarazos e) {
         this.id = e.getIdEmbarazo();
-        this.fecha = e.getFechaEmbarazo();
+        try {
+            this.fecha = LocalDateAdapter.adaptToJson(e.getFechaEmbarazo());
+            this.parto = LocalDateAdapter.adaptToJson(e.getFechaParto());
+        } catch (Exception ex) {
+            Logger.getLogger(EmbarazosDto.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.estado = e.getEstadoEmbarazo();
-        this.parto = e.getFechaParto();
         this.detalles = e.getDestallesEmbarazo();
+        if (e.getIdCerdo() != null) {
+            this.cerdo = new CerdosDto(e.getIdCerdo());
+        }
+        if (e.getIdParto() != null) {
+            this.partoDto = new PartosDto(e.getIdParto());
+        }
     }
 
     public Integer getId() {
@@ -37,11 +52,11 @@ public class EmbarazosDto {
         this.id = id;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
@@ -53,11 +68,11 @@ public class EmbarazosDto {
         this.estado = estado;
     }
 
-    public Date getParto() {
+    public String getParto() {
         return parto;
     }
 
-    public void setParto(Date parto) {
+    public void setParto(String parto) {
         this.parto = parto;
     }
 
@@ -67,6 +82,22 @@ public class EmbarazosDto {
 
     public void setDetalles(String detalles) {
         this.detalles = detalles;
+    }
+
+    public CerdosDto getCerdo() {
+        return cerdo;
+    }
+
+    public void setCerdo(CerdosDto cerdo) {
+        this.cerdo = cerdo;
+    }
+
+    public PartosDto getPartoDto() {
+        return partoDto;
+    }
+
+    public void setPartoDto(PartosDto partoDto) {
+        this.partoDto = partoDto;
     }
     
     

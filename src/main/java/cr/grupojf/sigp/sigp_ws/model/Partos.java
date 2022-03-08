@@ -4,9 +4,12 @@
  */
 package cr.grupojf.sigp.sigp_ws.model;
 
+import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -122,6 +125,11 @@ public class Partos implements Serializable {
         this.cantidadEstripados = cantidadEstripados;
         this.estadoCerda = estadoCerda;
         this.cantidadTodalNacidos = cantidadTodalNacidos;
+    }
+
+    public Partos(PartosDto partoDto) {
+        this.idParto = partoDto.getId();
+        this.actualizar(partoDto);
     }
 
     public Integer getIdParto() {
@@ -251,8 +259,6 @@ public class Partos implements Serializable {
     public void setPesoProDestete(float pesoProDestete) {
         this.pesoProDestete = pesoProDestete;
     }
-    
-    
 
     @Override
     public int hashCode() {
@@ -278,5 +284,23 @@ public class Partos implements Serializable {
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Partos[ idParto=" + idParto + " ]";
     }
-    
+
+    public void actualizar(PartosDto p) {
+        this.cantidadEstripados = p.getCantEstripados();
+        this.cantidadMomias = p.getCantMomias();
+        this.cantidadNacidosMuertos = p.getCantNacMuertos();
+        this.cantidadTodalNacidos = p.getCantTotalNacidos();
+        this.cantidadVivos = p.getCantVivos();
+        this.detalleParto = p.getDetalles();
+        try {
+            this.fechaParto = LocalDateAdapter.adaptFromJson(p.getFecha());
+        } catch (Exception ex) {
+            Logger.getLogger(Partos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.estadoCerda = p.getEstadoCerda();
+        this.pesoProDestete = p.getPesoProDestete();
+        this.pesoProNacimiento = p.getPesoProNacimiento();
+        this.tipoParto = p.getTipo();
+    }
+
 }

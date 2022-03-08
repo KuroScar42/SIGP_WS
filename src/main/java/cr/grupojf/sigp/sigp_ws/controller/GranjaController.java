@@ -6,6 +6,7 @@
 package cr.grupojf.sigp.sigp_ws.controller;
 
 import cr.grupojf.sigp.sigp_ws.model.CerdosDto;
+import cr.grupojf.sigp.sigp_ws.model.SaveCerdo;
 import cr.grupojf.sigp.sigp_ws.service.GranjaService;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
 import cr.grupojf.sigp.sigp_ws.util.Respuesta;
@@ -56,9 +57,9 @@ public class GranjaController {
     @Path("/guardarCerdo")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response guardarCerdos(CerdosDto ped) {
+    public Response guardarCerdos(SaveCerdo saveCerdo) {
         try {
-            Respuesta respuesta = service.guardarCerdo(ped);
+            Respuesta respuesta = service.guardarCerdo(saveCerdo);
             if (!respuesta.getEstado()) {
                 return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
             }
