@@ -5,7 +5,10 @@
  */
 package cr.grupojf.sigp.sigp_ws.model;
 
+import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -13,7 +16,7 @@ import java.util.Date;
  */
 public class AperturaCajasDto {
     private Integer id;
-    private Date fecha;
+    private String fecha;
     private String estado;
     private String numCaja;
     private Float fondo;
@@ -25,7 +28,11 @@ public class AperturaCajasDto {
     
     public AperturaCajasDto(AperturaCajas apertura) {
         this.id = apertura.getIdApertura();
-        this.fecha = apertura.getFechaCaja();
+        try {
+            this.fecha = LocalDateAdapter.adaptToJson(apertura.getFechaCaja());
+        } catch (Exception ex) {
+            Logger.getLogger(AperturaCajasDto.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.estado = apertura.getEstadoCaja();
         this.numCaja = apertura.getNumCaja();
         this.fondo = apertura.getFondoCaja();
@@ -42,11 +49,11 @@ public class AperturaCajasDto {
         this.id = id;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 

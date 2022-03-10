@@ -9,6 +9,7 @@ import cr.grupojf.sigp.sigp_ws.model.AperturaCajasDto;
 import cr.grupojf.sigp.sigp_ws.model.CierresCajas;
 import cr.grupojf.sigp.sigp_ws.model.CierresCajasDto;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
+import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
 import cr.grupojf.sigp.sigp_ws.util.Respuesta;
 import java.util.Date;
 import java.util.logging.Level;
@@ -27,11 +28,11 @@ import javax.persistence.Query;
 @Stateless
 @LocalBean
 public class CajaService {
+
     private static final Logger LOG = Logger.getLogger(CajaService.class.getName());
     @PersistenceContext(unitName = "sigp_PU")
     protected EntityManager em;
-    
-    
+
     public Respuesta abrirCaja(AperturaCajasDto cajaDto) {
         try {
             AperturaCajas caja;
@@ -53,8 +54,8 @@ public class CajaService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar la apertura de caja.", "abrirCaja " + e.getMessage());
         }
     }
-    
-    public Respuesta getAperturaCaja(String numCaja,Date fecha) {
+
+    public Respuesta getAperturaCaja(String numCaja, Date fecha) {
         try {
             Query query = em.createNamedQuery("Cerdos.findByCodigoCerdo", AperturaCajas.class);
             query.setParameter("numCaja", numCaja);
@@ -71,19 +72,17 @@ public class CajaService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar la apertura de caja", "getAperturaCaja " + ex.getMessage());
         }
     }
-    
+
     public Respuesta nuevoCorte(CierresCajasDto cierreDto) {
         try {
             CierresCajas caja;
             if (cierreDto.getId() != null && cierreDto.getId() > 0) {
                 caja = em.find(CierresCajas.class, cierreDto.getId());
-//                if (caja == null) {
-//                    return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encontro la caja especificada", "abrirCaja NoResultException");
-//                }
-//                caja.actualizar(cierreDto);
-//                caja = em.merge(caja);
             } else {
                 caja = new CierresCajas(cierreDto);
+                Float montoFactura = getMontoFacturado(cierreDto.getApertura().getNumCaja(), LocalDateAdapter.adaptFromJson(cierreDto.getApertura().getFecha()));
+                Float montoCorte = getCorteTotal(cierreDto.getApertura().getNumCaja(), LocalDateAdapter.adaptFromJson(cierreDto.getApertura().getFecha()));
+                caja.getIdEfectivo().setTotalEfectivo((montoFactura - montoCorte));
                 em.persist(caja);
             }
             em.flush();
@@ -93,4 +92,44 @@ public class CajaService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el corte/Cierre de caja.", "nuevoCorte " + e.getMessage());
         }
     }
+
+    private Float getMontoFacturado(String numCaja, Date fecha) {
+
+        Float total = 0f;
+        try {
+            Query query = em.createNamedQuery("Facturas.getMontoTotalPerDay", Long.class);
+            query.setParameter("fecha", fecha);
+            query.setParameter("numCaja", numCaja);
+            query.setParameter("metodo", "EF"); // EF = Efectivo
+
+            total = (Float) query.getSingleResult();
+        } catch (NoResultException e) {
+            LOG.log(Level.SEVERE, "No se encuentran registros de facturado.", e);
+            return 0f;
+        } catch (Exception e) {
+            return 0f;
+        }
+
+        return total;
+    }
+
+    private Float getCorteTotal(String numCaja, Date fecha) {
+
+        Float total = 0f;
+        try {
+            Query query = em.createNamedQuery("Facturas.getCorteTotalPerDay", Long.class);
+            query.setParameter("fecha", fecha);
+            query.setParameter("numCaja", numCaja);
+
+            total = (Float) query.getSingleResult();
+        } catch (NoResultException e) {
+            LOG.log(Level.SEVERE, "No se encuentran registros de cortes.", e);
+            return 0f;
+        } catch (Exception e) {
+            return 0f;
+        }
+
+        return total;
+    }
+
 }

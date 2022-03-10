@@ -60,6 +60,11 @@ public class Efectivo implements Serializable {
         this.idEfectivo = idEfectivo;
     }
 
+    public Efectivo(EfectivoDto e) {
+        this.idEfectivo = e.getId();
+        this.actualizar(e);
+    }
+
     public Efectivo(Integer idEfectivo, int cantidadEfectivo, int totalEfectivo) {
         this.idEfectivo = idEfectivo;
         this.cantidadEfectivo = cantidadEfectivo;
@@ -130,5 +135,10 @@ public class Efectivo implements Serializable {
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Efectivo[ idEfectivo=" + idEfectivo + " ]";
     }
-    
+
+    private void actualizar(EfectivoDto e) {
+        this.cantidadEfectivo = e.getCantidad();
+        this.totalEfectivo = e.getTotal();
+    }
+
 }

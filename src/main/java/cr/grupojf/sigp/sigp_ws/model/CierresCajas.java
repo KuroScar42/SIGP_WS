@@ -75,10 +75,7 @@ public class CierresCajas implements Serializable {
     }
     public CierresCajas(CierresCajasDto c) {
         this.idCierre = c.getId();
-        this.estadoCierre = c.getEstado();
-        this.fechaCierre = c.getFecha();
-        this.codigoCierre = c.getCodigo();
-        this.idApertura = new AperturaCajas(c.getApertura());
+        this.actualizar(c);
     }
 
     public CierresCajas(Integer idCierre, String codigoCierre, Date fechaCierre, String estadoCierre) {
@@ -167,6 +164,18 @@ public class CierresCajas implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.CierresCajas[ idCierre=" + idCierre + " ]";
+    }
+
+    private void actualizar(CierresCajasDto c) {
+        this.estadoCierre = c.getEstado();
+        this.fechaCierre = c.getFecha();
+        this.codigoCierre = c.getCodigo();
+        if (c.getApertura() != null) {
+            this.idApertura = new AperturaCajas(c.getApertura());
+        }
+        if (c.getEfectivo() != null) {
+            this.idEfectivo = new Efectivo(c.getEfectivo());
+        }
     }
     
 }

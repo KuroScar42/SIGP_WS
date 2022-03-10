@@ -18,6 +18,7 @@ public class CierresCajasDto {
     private Date fecha;
     private String estado;
     private AperturaCajasDto apertura;
+    private EfectivoDto efectivo;
     
 
     public CierresCajasDto() {
@@ -28,7 +29,12 @@ public class CierresCajasDto {
         this.codigo = cierre.getCodigoCierre();
         this.fecha = cierre.getFechaCierre();
         this.estado = cierre.getEstadoCierre();
-        this.apertura = new AperturaCajasDto(cierre.getIdApertura());
+        if (cierre.getIdApertura() != null) {
+            this.apertura = new AperturaCajasDto(cierre.getIdApertura());
+        }
+        if (cierre.getIdEfectivo() != null) {
+            this.efectivo = new EfectivoDto(cierre.getIdEfectivo());
+        }
     }
 
     public Integer getId() {
@@ -70,4 +76,13 @@ public class CierresCajasDto {
     public void setApertura(AperturaCajasDto apertura) {
         this.apertura = apertura;
     }
+
+    public EfectivoDto getEfectivo() {
+        return efectivo;
+    }
+
+    public void setEfectivo(EfectivoDto efectivo) {
+        this.efectivo = efectivo;
+    }
+    
 }
