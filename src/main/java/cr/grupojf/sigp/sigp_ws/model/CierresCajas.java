@@ -73,6 +73,13 @@ public class CierresCajas implements Serializable {
     public CierresCajas(Integer idCierre) {
         this.idCierre = idCierre;
     }
+    public CierresCajas(CierresCajasDto c) {
+        this.idCierre = c.getId();
+        this.estadoCierre = c.getEstado();
+        this.fechaCierre = c.getFecha();
+        this.codigoCierre = c.getCodigo();
+        this.idApertura = new AperturaCajas(c.getApertura());
+    }
 
     public CierresCajas(Integer idCierre, String codigoCierre, Date fechaCierre, String estadoCierre) {
         this.idCierre = idCierre;

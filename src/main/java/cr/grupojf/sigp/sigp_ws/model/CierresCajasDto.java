@@ -17,6 +17,7 @@ public class CierresCajasDto {
     private String codigo;
     private Date fecha;
     private String estado;
+    private AperturaCajasDto apertura;
     
 
     public CierresCajasDto() {
@@ -27,6 +28,7 @@ public class CierresCajasDto {
         this.codigo = cierre.getCodigoCierre();
         this.fecha = cierre.getFechaCierre();
         this.estado = cierre.getEstadoCierre();
+        this.apertura = new AperturaCajasDto(cierre.getIdApertura());
     }
 
     public Integer getId() {
@@ -60,11 +62,12 @@ public class CierresCajasDto {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
-    
-    
-    
-    
-    
-    
+
+    public AperturaCajasDto getApertura() {
+        return apertura;
+    }
+
+    public void setApertura(AperturaCajasDto apertura) {
+        this.apertura = apertura;
+    }
 }

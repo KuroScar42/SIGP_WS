@@ -74,6 +74,10 @@ public class AperturaCajas implements Serializable {
     public AperturaCajas(Integer idApertura) {
         this.idApertura = idApertura;
     }
+    public AperturaCajas(AperturaCajasDto a) {
+        this.idApertura = a.getId();
+        actualizar(a);
+    }
 
     public AperturaCajas(Integer idApertura, Date fechaCaja, String estadoCaja) {
         this.idApertura = idApertura;
@@ -168,6 +172,15 @@ public class AperturaCajas implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.AperturaCajas[ idApertura=" + idApertura + " ]";
+    }
+
+    public void actualizar(AperturaCajasDto a) {
+        this.estadoCaja = a.getEstado();
+        this.numCaja = a.getNumCaja();
+        this.fechaCaja = a.getFecha();
+        if (a.getUsuario() != null) {
+            this.idUsuario = new Usuarios(a.getUsuario());
+        }
     }
     
 }
