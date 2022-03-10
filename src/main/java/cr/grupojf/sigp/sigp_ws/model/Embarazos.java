@@ -4,9 +4,12 @@
  */
 package cr.grupojf.sigp.sigp_ws.model;
 
+import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -82,6 +85,11 @@ public class Embarazos implements Serializable {
         this.fechaEmbarazo = fechaEmbarazo;
         this.estadoEmbarazo = estadoEmbarazo;
         this.fechaParto = fechaParto;
+    }
+
+    public Embarazos(EmbarazosDto embarazoDto) {
+        this.idEmbarazo = embarazoDto.getId();
+        this.actualizar(embarazoDto);
     }
 
     public Integer getIdEmbarazo() {
@@ -172,5 +180,16 @@ public class Embarazos implements Serializable {
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Embarazos[ idEmbarazo=" + idEmbarazo + " ]";
     }
-    
+
+    public void actualizar(EmbarazosDto e) {
+        this.destallesEmbarazo = e.getDetalles();
+        this.estadoEmbarazo = e.getEstado();
+        try {
+            this.fechaEmbarazo = LocalDateAdapter.adaptFromJson(e.getFecha());
+            this.fechaParto = LocalDateAdapter.adaptFromJson(e.getParto());
+        } catch (Exception ex) {
+            Logger.getLogger(Embarazos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

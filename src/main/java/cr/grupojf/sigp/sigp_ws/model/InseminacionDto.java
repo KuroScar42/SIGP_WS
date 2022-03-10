@@ -20,7 +20,8 @@ public class InseminacionDto {
     private String fechaInseminacion;
     private String estado;
     private String detalle;
-    private String fechaRevision; 
+    private String fechaRevision;
+    private CerdosDto cerdo;
 
     public InseminacionDto() {
     }
@@ -32,10 +33,13 @@ public class InseminacionDto {
             this.fechaInseminacion = LocalDateAdapter.adaptToJson(i.getFechaInseminacion());
             this.fechaRevision = LocalDateAdapter.adaptToJson(i.getFechaRevision());
         } catch (Exception ex) {
-            Logger.getLogger(PedidosDto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InseminacionDto.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.estado = i.getEstadoInsiminacion();
         this.detalle = i.getDetalleInsiminacion();
+        if (i.getIdCerdo() != null) {
+            cerdo = new CerdosDto(i.getIdCerdo());
+        }
     }
 
     public Integer getId() {
@@ -85,6 +89,14 @@ public class InseminacionDto {
 
     public void setDetalle(String detalle) {
         this.detalle = detalle;
+    }
+
+    public CerdosDto getCerdo() {
+        return cerdo;
+    }
+
+    public void setCerdo(CerdosDto cerdo) {
+        this.cerdo = cerdo;
     }
     
     

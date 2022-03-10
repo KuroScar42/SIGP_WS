@@ -5,7 +5,10 @@
  */
 package cr.grupojf.sigp.sigp_ws.model;
 
+import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -13,7 +16,7 @@ import java.util.Date;
  */
 public class PartosDto {
     private Integer id;
-    private Date fecha;
+    private String fecha;
     private String tipo;
     private Integer cantVivos;
     private Integer cantNacMuertos;
@@ -30,7 +33,11 @@ public class PartosDto {
 
     public PartosDto(Partos p) {
         this.id = p.getIdParto();
-        this.fecha = p.getFechaParto();
+        try {
+            this.fecha = LocalDateAdapter.adaptToJson(p.getFechaParto());
+        } catch (Exception ex) {
+            Logger.getLogger(PartosDto.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.tipo = p.getTipoParto();
         this.cantVivos = p.getCantidadVivos();
         this.cantNacMuertos = p.getCantidadNacidosMuertos();
@@ -51,11 +58,11 @@ public class PartosDto {
         this.id = id;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
