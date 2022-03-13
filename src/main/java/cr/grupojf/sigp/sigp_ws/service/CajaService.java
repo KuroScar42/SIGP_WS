@@ -8,6 +8,7 @@ import cr.grupojf.sigp.sigp_ws.model.AperturaCajas;
 import cr.grupojf.sigp.sigp_ws.model.AperturaCajasDto;
 import cr.grupojf.sigp.sigp_ws.model.CierresCajas;
 import cr.grupojf.sigp.sigp_ws.model.CierresCajasDto;
+import cr.grupojf.sigp.sigp_ws.model.FacturasDto;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
 import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
 import cr.grupojf.sigp.sigp_ws.util.Respuesta;
@@ -130,6 +131,10 @@ public class CajaService {
         }
 
         return total;
+    }
+    
+    private Respuesta guardarFactura(FacturasDto factura){
+        return null;
     }
 
 }

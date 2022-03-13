@@ -4,9 +4,12 @@
  */
 package cr.grupojf.sigp.sigp_ws.model;
 
+import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -177,7 +180,11 @@ public class AperturaCajas implements Serializable {
     public void actualizar(AperturaCajasDto a) {
         this.estadoCaja = a.getEstado();
         this.numCaja = a.getNumCaja();
-        this.fechaCaja = a.getFecha();
+        try {
+            this.fechaCaja = LocalDateAdapter.adaptFromJson(a.getFecha());
+        } catch (Exception ex) {
+            Logger.getLogger(AperturaCajas.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if (a.getUsuario() != null) {
             this.idUsuario = new Usuarios(a.getUsuario());
         }
