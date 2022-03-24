@@ -11,8 +11,8 @@ package cr.grupojf.sigp.sigp_ws.model;
  */
 public class EfectivoDto {
     private Integer id;
-    private Integer cantidad;
-    private Integer total;
+    private Float cantidad;
+    private Float total;
 
     public EfectivoDto() {
     }
@@ -31,19 +31,19 @@ public class EfectivoDto {
         this.id = id;
     }
 
-    public Integer getCantidad() {
+    public Float getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(Integer cantidad) {
+    public void setCantidad(Float cantidad) {
         this.cantidad = cantidad;
     }
 
-    public Integer getTotal() {
+    public Float getTotal() {
         return total;
     }
 
-    public void setTotal(Integer total) {
+    public void setTotal(Float total) {
         this.total = total;
     }
     

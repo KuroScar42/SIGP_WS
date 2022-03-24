@@ -47,7 +47,7 @@ public class Clientes implements Serializable {
     private Integer idCliente;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 50)
     @Column(name = "EMAIL_CLIENTE")
     private String emailCliente;
     @Basic(optional = false)

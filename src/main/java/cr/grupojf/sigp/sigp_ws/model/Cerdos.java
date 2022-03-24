@@ -56,7 +56,7 @@ public class Cerdos implements Serializable {
     @Size(min = 1, max = 1)
     @Column(name = "ESTADO_CERDO")
     private String estadoCerdo;
-    @Size(max = 750)
+    @Size(max = 800)
     @Column(name = "DESCRIPCION_CERDO")
     private String descripcionCerdo;
     @Basic(optional = false)
