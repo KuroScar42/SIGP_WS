@@ -9,10 +9,15 @@ import cr.grupojf.sigp.sigp_ws.model.AperturaCajasDto;
 import cr.grupojf.sigp.sigp_ws.model.CierresCajas;
 import cr.grupojf.sigp.sigp_ws.model.CierresCajasDto;
 import cr.grupojf.sigp.sigp_ws.model.FacturasDto;
+import cr.grupojf.sigp.sigp_ws.model.Usuarios;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
 import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
 import cr.grupojf.sigp.sigp_ws.util.Respuesta;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.LocalBean;
@@ -46,6 +51,7 @@ public class CajaService {
                 caja = em.merge(caja);
             } else {
                 caja = new AperturaCajas(cajaDto);
+                caja.setIdUsuario(em.find(Usuarios.class, cajaDto.getUsuario()));
                 em.persist(caja);
             }
             em.flush();
@@ -58,13 +64,22 @@ public class CajaService {
 
     public Respuesta getAperturaCaja(String numCaja, Date fecha) {
         try {
-            Query query = em.createNamedQuery("Cerdos.findByCodigoCerdo", AperturaCajas.class);
+            Query query = em.createNamedQuery("AperturaCajas.findByNumCaja", AperturaCajas.class);
             query.setParameter("numCaja", numCaja);
-            query.setParameter("fecha", fecha);
-            AperturaCajas aperturaCaja = (AperturaCajas) query.getSingleResult();
-            AperturaCajasDto acDto = new AperturaCajasDto(aperturaCaja);
+            List<AperturaCajas> list = query.setMaxResults(1).getResultList();
+            if (list != null) {
+                AperturaCajas aperturaCaja = list.get(0);
+                AperturaCajasDto acDto = new AperturaCajasDto(aperturaCaja);
+                if (isSameDate(LocalDateAdapter.adaptFromJson(acDto.getFecha()),fecha)) {
 
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "isOpen", acDto);
+                    return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "caja", acDto);
+                } else {
+                    return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "No existe una apertura de caja'", "getAperturaCaja");
+                }
+            } else {
+                return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "No existe una apertura de caja'", "getAperturaCaja");
+            }
+
         } catch (NoResultException ex) {
             LOG.log(Level.SEVERE, "No existe una apertura de caja'", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "No existe una apertura de caja'", "getAperturaCaja " + ex.getMessage());
@@ -72,6 +87,23 @@ public class CajaService {
             LOG.log(Level.SEVERE, "Ocurrio un error al consultar la apertura de caja", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar la apertura de caja", "getAperturaCaja " + ex.getMessage());
         }
+    }
+
+    private LocalDate dateToLocalDate(Date date) {
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+
+        //Converting the date to Instant
+        Instant instant = date.toInstant();
+
+        //Converting the Date to LocalDate
+        LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
+        return localDate;
+    }
+    
+    private boolean isSameDate(Date d1, Date d2){
+        LocalDate ld1 = dateToLocalDate(d1);
+        LocalDate ld2 = dateToLocalDate(d2);
+        return ld1.compareTo(ld2) == 0;
     }
 
     public Respuesta nuevoCorte(CierresCajasDto cierreDto) {
@@ -132,8 +164,8 @@ public class CajaService {
 
         return total;
     }
-    
-    private Respuesta guardarFactura(FacturasDto factura){
+
+    private Respuesta guardarFactura(FacturasDto factura) {
         return null;
     }
 

@@ -6,7 +6,9 @@
 package cr.grupojf.sigp.sigp_ws.model;
 
 import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,6 +24,7 @@ public class CerdosDto {
     private String descripcion;
     private String registro;
     private Float peso;
+    private List<EmbarazosDto> embarazos;
 
     public CerdosDto() {
     }
@@ -35,6 +38,12 @@ public class CerdosDto {
             this.registro = LocalDateAdapter.adaptToJson(cerdo.getFechaRegistro());
         } catch (Exception ex) {
             Logger.getLogger(PedidosDto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (cerdo.getEmbarazosList() != null) {
+            embarazos = new ArrayList<>();
+            for (Embarazos e : cerdo.getEmbarazosList()) {
+                embarazos.add(new EmbarazosDto(e));
+            }
         }
     }
 
@@ -93,6 +102,16 @@ public class CerdosDto {
     public void setPeso(Float peso) {
         this.peso = peso;
     }
+
+    public List<EmbarazosDto> getEmbarazos() {
+        return embarazos;
+    }
+
+    public void setEmbarazos(List<EmbarazosDto> embarazos) {
+        this.embarazos = embarazos;
+    }
+    
+    
     
     
     

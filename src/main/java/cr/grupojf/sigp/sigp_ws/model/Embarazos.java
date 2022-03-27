@@ -19,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -64,14 +65,16 @@ public class Embarazos implements Serializable {
     @Size(max = 750)
     @Column(name = "DESTALLES_EMBARAZO")
     private String destallesEmbarazo;
+    
     @JoinColumn(name = "ID_CERDO", referencedColumnName = "ID_CERDO")
     @ManyToOne
     private Cerdos idCerdo;
-    @JoinColumn(name = "ID_PARTO", referencedColumnName = "ID_PARTO")
-    @ManyToOne
+//    @JoinColumn(name = "ID_PARTO", referencedColumnName = "ID_PARTO")
+    
+    @OneToOne(mappedBy = "idEmbarazo")
     private Partos idParto;
-    @OneToMany(mappedBy = "idEmbarazo")
-    private List<Partos> partosList;
+//    @OneToMany(mappedBy = "idEmbarazo")
+//    private List<Partos> partosList;
 
     public Embarazos() {
     }
@@ -147,14 +150,14 @@ public class Embarazos implements Serializable {
     public void setIdParto(Partos idParto) {
         this.idParto = idParto;
     }
-
-    public List<Partos> getPartosList() {
-        return partosList;
-    }
-
-    public void setPartosList(List<Partos> partosList) {
-        this.partosList = partosList;
-    }
+//
+//    public List<Partos> getPartosList() {
+//        return partosList;
+//    }
+//
+//    public void setPartosList(List<Partos> partosList) {
+//        this.partosList = partosList;
+//    }
 
     @Override
     public int hashCode() {

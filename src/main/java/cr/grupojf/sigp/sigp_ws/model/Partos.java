@@ -21,6 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -100,10 +101,10 @@ public class Partos implements Serializable {
         @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")})
     @ManyToMany
     private List<Usuarios> usuariosList;
-    @OneToMany(mappedBy = "idParto")
-    private List<Embarazos> embarazosList;
+//    @OneToMany(mappedBy = "idParto")
+//    private List<Embarazos> embarazosList;
     @JoinColumn(name = "ID_EMBARAZO", referencedColumnName = "ID_EMBARAZO")
-    @ManyToOne
+    @OneToOne
     private Embarazos idEmbarazo;
     @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")
     @ManyToOne
@@ -220,13 +221,13 @@ public class Partos implements Serializable {
         this.usuariosList = usuariosList;
     }
 
-    public List<Embarazos> getEmbarazosList() {
-        return embarazosList;
-    }
-
-    public void setEmbarazosList(List<Embarazos> embarazosList) {
-        this.embarazosList = embarazosList;
-    }
+//    public List<Embarazos> getEmbarazosList() {
+//        return embarazosList;
+//    }
+//
+//    public void setEmbarazosList(List<Embarazos> embarazosList) {
+//        this.embarazosList = embarazosList;
+//    }
 
     public Embarazos getIdEmbarazo() {
         return idEmbarazo;

@@ -37,7 +37,7 @@ public class EmbarazosDto {
         this.estado = e.getEstadoEmbarazo();
         this.detalles = e.getDestallesEmbarazo();
         if (e.getIdCerdo() != null) {
-            this.cerdo = new CerdosDto(e.getIdCerdo());
+//            this.cerdo = new CerdosDto(e.getIdCerdo());
         }
         if (e.getIdParto() != null) {
             this.partoDto = new PartosDto(e.getIdParto());

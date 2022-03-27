@@ -50,7 +50,7 @@ public class Emisores implements Serializable {
     private String cedulaEmisor;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 30)
+    @Size(min = 1, max = 50)
     @Column(name = "EMAIL_EMISOR")
     private String emailEmisor;
     @Basic(optional = false)

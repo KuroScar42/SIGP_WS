@@ -42,11 +42,11 @@ public class Efectivo implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "CANTIDAD_EFECTIVO")
-    private int cantidadEfectivo;
+    private float cantidadEfectivo;
     @Basic(optional = false)
     @NotNull
     @Column(name = "TOTAL_EFECTIVO")
-    private int totalEfectivo;
+    private float totalEfectivo;
     @OneToMany(mappedBy = "idEfectivo")
     private List<CierresCajas> cierresCajasList;
     @JoinColumn(name = "ID_DENOMINACION", referencedColumnName = "ID_DENOMINACION")
@@ -79,7 +79,7 @@ public class Efectivo implements Serializable {
         this.idEfectivo = idEfectivo;
     }
 
-    public int getCantidadEfectivo() {
+    public float getCantidadEfectivo() {
         return cantidadEfectivo;
     }
 
@@ -87,11 +87,11 @@ public class Efectivo implements Serializable {
         this.cantidadEfectivo = cantidadEfectivo;
     }
 
-    public int getTotalEfectivo() {
+    public float getTotalEfectivo() {
         return totalEfectivo;
     }
 
-    public void setTotalEfectivo(int totalEfectivo) {
+    public void setTotalEfectivo(Float totalEfectivo) {
         this.totalEfectivo = totalEfectivo;
     }
 
