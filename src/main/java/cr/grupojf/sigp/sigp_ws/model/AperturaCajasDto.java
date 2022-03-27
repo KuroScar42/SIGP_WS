@@ -20,7 +20,7 @@ public class AperturaCajasDto {
     private String estado;
     private String numCaja;
     private Float fondo;
-    private UsuarioDto usuario;
+    private Integer usuario;
     
 
     public AperturaCajasDto() {
@@ -36,9 +36,9 @@ public class AperturaCajasDto {
         this.estado = apertura.getEstadoCaja();
         this.numCaja = apertura.getNumCaja();
         this.fondo = apertura.getFondoCaja();
-        if (apertura.getIdUsuario() != null) {
-            this.usuario = new UsuarioDto(apertura.getIdUsuario());
-        }
+//        if (apertura.getIdUsuario() != null) {
+//            this.usuario = new UsuarioDto(apertura.getIdUsuario());
+//        }
     }
 
     public Integer getId() {
@@ -81,11 +81,11 @@ public class AperturaCajasDto {
         this.fondo = fondo;
     }
 
-    public UsuarioDto getUsuario() {
+    public Integer getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(UsuarioDto usuario) {
+    public void setUsuario(Integer usuario) {
         this.usuario = usuario;
     }
     

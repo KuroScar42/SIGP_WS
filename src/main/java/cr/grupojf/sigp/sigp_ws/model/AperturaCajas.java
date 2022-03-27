@@ -37,6 +37,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "AperturaCajas.findAll", query = "SELECT a FROM AperturaCajas a"),
     @NamedQuery(name = "AperturaCajas.findByIdApertura", query = "SELECT a FROM AperturaCajas a WHERE a.idApertura = :idApertura"),
     @NamedQuery(name = "AperturaCajas.findByFechaCaja", query = "SELECT a FROM AperturaCajas a WHERE a.fechaCaja = :fechaCaja"),
+    @NamedQuery(name = "AperturaCajas.findByNumCaja", query = "SELECT a FROM AperturaCajas a WHERE a.numCaja = :numCaja order by a.fechaCaja asc"),
     @NamedQuery(name = "AperturaCajas.findByEstadoCaja", query = "SELECT a FROM AperturaCajas a WHERE a.estadoCaja = :estadoCaja")})
 public class AperturaCajas implements Serializable {
 
@@ -180,6 +181,7 @@ public class AperturaCajas implements Serializable {
     public void actualizar(AperturaCajasDto a) {
         this.estadoCaja = a.getEstado();
         this.numCaja = a.getNumCaja();
+        this.fondoCaja = a.getFondo();
         try {
             this.fechaCaja = LocalDateAdapter.adaptFromJson(a.getFecha());
         } catch (Exception ex) {

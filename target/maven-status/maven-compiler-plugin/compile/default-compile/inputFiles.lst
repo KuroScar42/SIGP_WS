@@ -21,6 +21,7 @@
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/BodegaDto.java
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Facturas.java
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/InseminacionDto.java
+/home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/controller/CajaController.java
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/FacturasProductosDto.java
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/EfectivoDto.java
 /home/sigp/Documentos/Proyectos/SIGP_WS/src/main/java/cr/grupojf/sigp/sigp_ws/model/Partos.java

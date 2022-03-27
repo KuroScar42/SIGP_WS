@@ -16,6 +16,7 @@ cr/grupojf/sigp/sigp_ws/model/BodegaDto.class
 cr/grupojf/sigp/sigp_ws/controller/GranjaController$1.class
 cr/grupojf/sigp/sigp_ws/model/EmpresasDto.class
 cr/grupojf/sigp/sigp_ws/controller/ProductosController$1.class
+cr/grupojf/sigp/sigp_ws/controller/CajaController.class
 cr/grupojf/sigp/sigp_ws/controller/MetodoPagoController.class
 cr/grupojf/sigp/sigp_ws/model/FacturasDto.class
 cr/grupojf/sigp/sigp_ws/model/FacturasProductosDto.class
