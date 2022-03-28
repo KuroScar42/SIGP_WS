@@ -4,6 +4,7 @@
  */
 package cr.grupojf.sigp.sigp_ws.model;
 
+import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -168,7 +169,10 @@ public class CierresCajas implements Serializable {
 
     private void actualizar(CierresCajasDto c) {
         this.estadoCierre = c.getEstado();
-        this.fechaCierre = c.getFecha();
+        try {
+            this.fechaCierre = LocalDateAdapter.adaptFromJson(c.getFecha());
+        } catch (Exception e) {
+        }
         this.codigoCierre = c.getCodigo();
         if (c.getApertura() != null) {
             this.idApertura = new AperturaCajas(c.getApertura());
