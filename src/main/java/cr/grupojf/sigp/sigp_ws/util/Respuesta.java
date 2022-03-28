@@ -5,7 +5,6 @@
  */
 package cr.grupojf.sigp.sigp_ws.util;
 
-import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -21,7 +20,7 @@ public class Respuesta implements Serializable {
     private CodigoRespuesta codigoRespuesta;   
     private String mensaje;    
     private String mensajeInterno;
-    private HashMap<String, Object> resultado; 
+    private final HashMap<String, Object> resultado; 
 
     public Respuesta() {
         this.resultado = new HashMap<>();

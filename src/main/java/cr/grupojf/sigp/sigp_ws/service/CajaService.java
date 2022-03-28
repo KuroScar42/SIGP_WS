@@ -70,7 +70,7 @@ public class CajaService {
             if (list != null) {
                 AperturaCajas aperturaCaja = list.get(0);
                 AperturaCajasDto acDto = new AperturaCajasDto(aperturaCaja);
-                if (isSameDate(LocalDateAdapter.adaptFromJson(acDto.getFecha()),fecha)) {
+                if (isSameDate(LocalDateAdapter.adaptFromJson(acDto.getFecha()), fecha)) {
 
                     return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "caja", acDto);
                 } else {
@@ -99,8 +99,8 @@ public class CajaService {
         LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
         return localDate;
     }
-    
-    private boolean isSameDate(Date d1, Date d2){
+
+    private boolean isSameDate(Date d1, Date d2) {
         LocalDate ld1 = dateToLocalDate(d1);
         LocalDate ld2 = dateToLocalDate(d2);
         return ld1.compareTo(ld2) == 0;
@@ -113,9 +113,16 @@ public class CajaService {
                 caja = em.find(CierresCajas.class, cierreDto.getId());
             } else {
                 caja = new CierresCajas(cierreDto);
-                Float montoFactura = getMontoFacturado(cierreDto.getApertura().getNumCaja(), LocalDateAdapter.adaptFromJson(cierreDto.getApertura().getFecha()));
-                Float montoCorte = getCorteTotal(cierreDto.getApertura().getNumCaja(), LocalDateAdapter.adaptFromJson(cierreDto.getApertura().getFecha()));
-                caja.getIdEfectivo().setTotalEfectivo((montoFactura - montoCorte));
+                Float montoFactura = getMontoFacturado(cierreDto.getApertura().getNumCaja(),
+                        LocalDateAdapter.adaptFromJson(cierreDto.getApertura().getFecha()), cierreDto.getApertura().getId());
+                Float montoCorte = getCorteTotal(cierreDto.getApertura().getNumCaja(),
+                        LocalDateAdapter.adaptFromJson(cierreDto.getApertura().getFecha()), cierreDto.getApertura().getId());
+                Float montoRestanteCaja = montoFactura - montoCorte;
+                if (montoRestanteCaja < caja.getIdEfectivo().getCantidadEfectivo()) {
+                    return new Respuesta(false, CodigoRespuesta.ERROR_CLIENTE, "El monto del corte no puede ser superior al monto restante", "");
+                }
+                caja.getIdEfectivo().setTotalEfectivo(montoFactura - montoCorte);
+
                 em.persist(caja);
             }
             em.flush();
@@ -126,13 +133,14 @@ public class CajaService {
         }
     }
 
-    private Float getMontoFacturado(String numCaja, Date fecha) {
+    private Float getMontoFacturado(String numCaja, Date fecha, Integer aperturaId) {
 
         Float total = 0f;
         try {
             Query query = em.createNamedQuery("Facturas.getMontoTotalPerDay", Long.class);
             query.setParameter("fecha", fecha);
             query.setParameter("numCaja", numCaja);
+            query.setParameter("idApertura", aperturaId);
             query.setParameter("metodo", "EF"); // EF = Efectivo
 
             total = (Float) query.getSingleResult();
@@ -146,13 +154,14 @@ public class CajaService {
         return total;
     }
 
-    private Float getCorteTotal(String numCaja, Date fecha) {
+    private Float getCorteTotal(String numCaja, Date fecha, Integer aperturaId) {
 
         Float total = 0f;
         try {
             Query query = em.createNamedQuery("Facturas.getCorteTotalPerDay", Long.class);
             query.setParameter("fecha", fecha);
             query.setParameter("numCaja", numCaja);
+            query.setParameter("idApertura", aperturaId);
 
             total = (Float) query.getSingleResult();
         } catch (NoResultException e) {

@@ -46,8 +46,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Facturas.findByTotalFactura", query = "SELECT f FROM Facturas f WHERE f.totalFactura = :totalFactura"),
     @NamedQuery(name = "Facturas.findByPagoFactura", query = "SELECT f FROM Facturas f WHERE f.pagoFactura = :pagoFactura"),
     @NamedQuery(name = "Facturas.findByVueltoFactura", query = "SELECT f FROM Facturas f WHERE f.vueltoFactura = :vueltoFactura"),
-    @NamedQuery(name = "Facturas.getMontoTotalPerDay", query = "SELECT SUM(f.totalFactura) FROM Facturas f join f.idApertura a join f.idMetodo m WHERE a.fechaCaja = :fecha AND a.numCaja = :numCaja AND m.metodoPago = :metodo"),
-    @NamedQuery(name = "Facturas.getCorteTotalPerDay", query = "SELECT SUM(e.cantidadEfectivo) FROM AperturaCajas a join a.cierresCajasList c join c.idEfectivo e WHERE a.fechaCaja = :fecha AND a.numCaja = :numCaja"),
+    @NamedQuery(name = "Facturas.getMontoTotalPerDay", query = "SELECT SUM(f.totalFactura) FROM Facturas f join f.idApertura a join f.idMetodo m WHERE a.fechaCaja = :fecha AND a.numCaja = :numCaja AND m.metodoPago = :metodo AND a.idApertura = :idApertura"),
+    @NamedQuery(name = "Facturas.getCorteTotalPerDay", query = "SELECT SUM(e.cantidadEfectivo) FROM AperturaCajas a join a.cierresCajasList c join c.idEfectivo e WHERE a.fechaCaja = :fecha AND a.numCaja = :numCaja AND a.idApertura = :idApertura"),
     @NamedQuery(name = "Facturas.findByObservacionesFactura", query = "SELECT f FROM Facturas f WHERE f.observacionesFactura = :observacionesFactura")})
 public class Facturas implements Serializable {
 
