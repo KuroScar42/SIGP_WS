@@ -21,6 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.QueryHint;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,7 +38,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "AperturaCajas.findAll", query = "SELECT a FROM AperturaCajas a"),
     @NamedQuery(name = "AperturaCajas.findByIdApertura", query = "SELECT a FROM AperturaCajas a WHERE a.idApertura = :idApertura"),
     @NamedQuery(name = "AperturaCajas.findByFechaCaja", query = "SELECT a FROM AperturaCajas a WHERE a.fechaCaja = :fechaCaja"),
-    @NamedQuery(name = "AperturaCajas.findByNumCaja", query = "SELECT a FROM AperturaCajas a WHERE a.numCaja = :numCaja order by a.fechaCaja asc"),
+    @NamedQuery(name = "AperturaCajas.findByNumCaja", query = "SELECT a FROM AperturaCajas a WHERE a.numCaja = :numCaja order by a.fechaCaja desc", hints = @QueryHint(name = "eclipselink.refresh", value = "true")),
     @NamedQuery(name = "AperturaCajas.findByEstadoCaja", query = "SELECT a FROM AperturaCajas a WHERE a.estadoCaja = :estadoCaja")})
 public class AperturaCajas implements Serializable {
 

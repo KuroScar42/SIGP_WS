@@ -5,6 +5,7 @@
 package cr.grupojf.sigp.sigp_ws.controller;
 
 import cr.grupojf.sigp.sigp_ws.model.AperturaCajasDto;
+import cr.grupojf.sigp.sigp_ws.model.CierresCajasDto;
 import cr.grupojf.sigp.sigp_ws.service.CajaService;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
 import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
@@ -43,7 +44,7 @@ public class CajaController {
             }
             return Response.ok((AperturaCajasDto) respuesta.getResultado("caja")).build();
         } catch (Exception ex) {
-            Logger.getLogger(GranjaController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CajaController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al intentar abrir la caja").build();
         }
     }
@@ -61,8 +62,25 @@ public class CajaController {
             AperturaCajasDto aperturaCaja = (AperturaCajasDto) respuesta.getResultado("caja");
             return Response.ok(aperturaCaja).build();
         } catch (Exception ex) {
-            Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CajaController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar la caja").build();
+        }
+    }
+    
+    @POST
+    @Path("/nuevoCorte")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response nuevoCorte(CierresCajasDto cc) {
+        try {
+            Respuesta respuesta = service.nuevoCorte(cc);
+            if (!respuesta.getEstado()) {
+                return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
+            }
+            return Response.ok((CierresCajasDto) respuesta.getResultado("corte")).build();
+        } catch (Exception ex) {
+            Logger.getLogger(CajaController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al guardar el nuevo corte").build();
         }
     }
 }

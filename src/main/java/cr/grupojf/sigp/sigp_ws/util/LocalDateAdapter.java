@@ -20,7 +20,7 @@ public class LocalDateAdapter {
 
     private static final Logger LOG = Logger.getLogger(LocalDateAdapter.class.getName());
     private DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
-    private static final DateFormat format = new SimpleDateFormat("yy-mm-dd hh:mm:ss");
+    private static final DateFormat format = new SimpleDateFormat("yy-MM-dd hh:mm:ss");
 
     public static String adaptToJson(Date date) throws Exception {
         try {
