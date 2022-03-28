@@ -15,7 +15,7 @@ public class SaveCerdo {
     
     private CerdosDto cerdo;
     private ArrayList<InseminacionDto> inseminaciones;
-    private ArrayList<PartosDto> partos;
+//    private ArrayList<PartosDto> partos;
     private ArrayList<EmbarazosDto> embarazos;
 
     public SaveCerdo() {
@@ -37,13 +37,13 @@ public class SaveCerdo {
         this.inseminaciones = inseminaciones;
     }
 
-    public ArrayList<PartosDto> getPartos() {
-        return partos;
-    }
-
-    public void setPartos(ArrayList<PartosDto> partos) {
-        this.partos = partos;
-    }
+//    public ArrayList<PartosDto> getPartos() {
+//        return partos;
+//    }
+//
+//    public void setPartos(ArrayList<PartosDto> partos) {
+//        this.partos = partos;
+//    }
 
     public ArrayList<EmbarazosDto> getEmbarazos() {
         return embarazos;

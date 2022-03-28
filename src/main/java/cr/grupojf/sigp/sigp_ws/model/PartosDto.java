@@ -27,6 +27,7 @@ public class PartosDto {
     private String detalles;
     private Float pesoProNacimiento;
     private Float pesoProDestete;
+    private EmbarazosDto embarazo;
 
     public PartosDto() {
     }
@@ -144,6 +145,14 @@ public class PartosDto {
 
     public void setPesoProDestete(Float pesoProDestete) {
         this.pesoProDestete = pesoProDestete;
+    }
+
+    public EmbarazosDto getEmbarazo() {
+        return embarazo;
+    }
+
+    public void setEmbarazo(EmbarazosDto embarazo) {
+        this.embarazo = embarazo;
     }
     
     

@@ -78,11 +78,14 @@ public class GranjaService {
             for (EmbarazosDto e : saveCerdo.getEmbarazos()) {
                 e.setCerdo(new CerdosDto(em.getReference(Cerdos.class, cerdo.getIdCerdo())));
 //                e.setPartoDto(partoDto);
-                guardarEmbarazos(e);
-            }
-//            guardar los partos aqui -- ver por que hay que ver por que llevan embarazos como key
-            for (PartosDto p : saveCerdo.getPartos()) {
-                
+                Respuesta res = guardarEmbarazos(e);
+                if (res.getEstado()) {
+                    EmbarazosDto em = (EmbarazosDto) res.getResultado();
+                    if (e.getPartoDto() != null) {
+                        e.getPartoDto().setEmbarazo(em);
+                        guardarPartos(em.getPartoDto());
+                    }
+                }
             }
             em.flush();
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "cerdo", new CerdosDto(cerdo));
@@ -129,7 +132,7 @@ public class GranjaService {
                 em.persist(embarazo);
             }
             em.flush();
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "embarazo", new EmbarazosDto(embarazo));
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", new EmbarazosDto(embarazo));
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar el embarazo.", e);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el embarazo.", "guardarEmbarazo " + e.getMessage());
@@ -139,19 +142,25 @@ public class GranjaService {
     public Respuesta guardarPartos(PartosDto partoDto) {
         try {
             Partos parto;
-            if (partoDto.getId() != null && partoDto.getId() > 0) {
-                parto = em.find(Partos.class, partoDto.getId());
-                if (parto == null) {
-                    return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "", "Parto NoResultException");
+            if (partoDto.getEmbarazo() != null) {
+                if (partoDto.getId() != null && partoDto.getId() > 0) {
+                    parto = em.find(Partos.class, partoDto.getId());
+                    if (parto == null) {
+                        return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "", "Parto NoResultException");
+                    }
+                    parto.actualizar(partoDto);
+                    parto.setIdEmbarazo(new Embarazos(partoDto.getEmbarazo()));
+                    parto = em.merge(parto);
+                } else {
+                    parto = new Partos(partoDto);
+                    parto.setIdEmbarazo(new Embarazos(partoDto.getEmbarazo()));
+                    em.persist(parto);
                 }
-                parto.actualizar(partoDto);
-                parto = em.merge(parto);
-            } else {
-                parto = new Partos(partoDto);
-                em.persist(parto);
+                em.flush();
+                return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", new PartosDto(parto));
+            } else{
+                return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se puede guardar un parto sin embarazo", "Embarazo no existe");
             }
-            em.flush();
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "parto", new PartosDto(parto));
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar el parto.", e);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el parto.", "guardarParto " + e.getMessage());
@@ -193,5 +202,8 @@ public class GranjaService {
             LOG.log(Level.SEVERE, "Ocurrio un error al consultar el cerdo", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar el cerdo", "getCerdo " + ex.getMessage());
         }
+    }
+    public Respuesta getAllCerdo(){
+        return null;
     }
 }
