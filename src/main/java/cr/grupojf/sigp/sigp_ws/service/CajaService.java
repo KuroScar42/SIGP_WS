@@ -117,7 +117,7 @@ public class CajaService {
                         LocalDateAdapter.adaptFromJson(cierreDto.getApertura().getFecha()), cierreDto.getApertura().getId());
                 Float montoCorte = getCorteTotal(cierreDto.getApertura().getNumCaja(),
                         LocalDateAdapter.adaptFromJson(cierreDto.getApertura().getFecha()), cierreDto.getApertura().getId());
-                Float montoRestanteCaja = montoFactura - montoCorte;
+                Float montoRestanteCaja = cierreDto.getApertura().getFondo() + montoFactura - montoCorte;
                 if (montoRestanteCaja < caja.getIdEfectivo().getCantidadEfectivo()) {
                     return new Respuesta(false, CodigoRespuesta.ERROR_CLIENTE, "El monto del corte no puede ser superior al monto restante", "");
                 }
@@ -151,7 +151,7 @@ public class CajaService {
             return 0f;
         }
 
-        return total;
+        return total != null ? total : 0f;
     }
 
     private Float getCorteTotal(String numCaja, Date fecha, Integer aperturaId) {
@@ -171,8 +171,10 @@ public class CajaService {
             return 0f;
         }
 
-        return total;
+        return total != null ? total : 0f;
     }
+    
+    pe
 
     private Respuesta guardarFactura(FacturasDto factura) {
         return null;
