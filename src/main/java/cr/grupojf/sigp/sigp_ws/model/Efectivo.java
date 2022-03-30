@@ -136,7 +136,7 @@ public class Efectivo implements Serializable {
         return "cr.grupojf.sigp.sigp_ws.model.Efectivo[ idEfectivo=" + idEfectivo + " ]";
     }
 
-    private void actualizar(EfectivoDto e) {
+    public void actualizar(EfectivoDto e) {
         this.cantidadEfectivo = e.getCantidad();
         this.totalEfectivo = e.getTotal();
     }

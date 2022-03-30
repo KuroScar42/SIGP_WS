@@ -8,6 +8,8 @@ import cr.grupojf.sigp.sigp_ws.model.AperturaCajas;
 import cr.grupojf.sigp.sigp_ws.model.AperturaCajasDto;
 import cr.grupojf.sigp.sigp_ws.model.CierresCajas;
 import cr.grupojf.sigp.sigp_ws.model.CierresCajasDto;
+import cr.grupojf.sigp.sigp_ws.model.Efectivo;
+import cr.grupojf.sigp.sigp_ws.model.EfectivoDto;
 import cr.grupojf.sigp.sigp_ws.model.FacturasDto;
 import cr.grupojf.sigp.sigp_ws.model.Usuarios;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
@@ -118,12 +120,16 @@ public class CajaService {
                 Float montoCorte = getCorteTotal(cierreDto.getApertura().getNumCaja(),
                         LocalDateAdapter.adaptFromJson(cierreDto.getApertura().getFecha()), cierreDto.getApertura().getId());
                 Float montoRestanteCaja = cierreDto.getApertura().getFondo() + montoFactura - montoCorte;
-                if (montoRestanteCaja < caja.getIdEfectivo().getCantidadEfectivo()) {
-                    return new Respuesta(false, CodigoRespuesta.ERROR_CLIENTE, "El monto del corte no puede ser superior al monto restante", "");
+                Respuesta res = guardarEfectivo(cierreDto.getEfectivo());
+                if (res.getEstado()) {
+                    caja.setIdEfectivo(new Efectivo((EfectivoDto) res.getResultado()));
+                    if (montoRestanteCaja < caja.getIdEfectivo().getCantidadEfectivo()) {
+                        return new Respuesta(false, CodigoRespuesta.ERROR_CLIENTE, "El monto del corte no puede ser superior al monto restante", "");
+                    }
+                    caja.getIdEfectivo().setTotalEfectivo(montoFactura - montoCorte);
+                    em.persist(caja);
                 }
-                caja.getIdEfectivo().setTotalEfectivo(montoFactura - montoCorte);
 
-                em.persist(caja);
             }
             em.flush();
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "caja", new CierresCajasDto(caja));
@@ -173,8 +179,28 @@ public class CajaService {
 
         return total != null ? total : 0f;
     }
-    
-    pe
+
+    private Respuesta guardarEfectivo(EfectivoDto efectivoDto) {
+        try {
+            Efectivo efectivo;
+            if (efectivoDto.getId() != null && efectivoDto.getId() > 0) {
+                efectivo = em.find(Efectivo.class, efectivoDto.getId());
+                if (efectivo == null) {
+                    return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "", "Efectivo NoResultException");
+                }
+                efectivo.actualizar(efectivoDto);
+                efectivo = em.merge(efectivo);
+            } else {
+                efectivo = new Efectivo(efectivoDto);
+                em.persist(efectivo);
+            }
+            em.flush();
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", new EfectivoDto(efectivo));
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al guardar el efectivo.", e);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el efectivo.", "guardarEfectivo " + e.getMessage());
+        }
+    }
 
     private Respuesta guardarFactura(FacturasDto factura) {
         return null;
