@@ -11,6 +11,7 @@ import cr.grupojf.sigp.sigp_ws.model.CierresCajasDto;
 import cr.grupojf.sigp.sigp_ws.model.Efectivo;
 import cr.grupojf.sigp.sigp_ws.model.EfectivoDto;
 import cr.grupojf.sigp.sigp_ws.model.FacturasDto;
+import cr.grupojf.sigp.sigp_ws.model.SaveCierre;
 import cr.grupojf.sigp.sigp_ws.model.Usuarios;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
 import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
@@ -126,7 +127,7 @@ public class CajaService {
                         caja.setIdEfectivo(new Efectivo((EfectivoDto) res.getResultado()));
                         em.persist(caja);
                     }else{
-                        throw new Exception("Algo");
+                        throw new Exception("Surgio un problema a la hora de guardar el efectivo");
                     }
                 } else {
                     return new Respuesta(false, CodigoRespuesta.ERROR_CLIENTE, "El monto del corte no puede ser superior al monto restante", "");
@@ -203,6 +204,37 @@ public class CajaService {
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar el efectivo.", e);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el efectivo.", "guardarEfectivo " + e.getMessage());
+        }
+    }
+    
+    public Respuesta cerrarCaja(CierresCajasDto cajaDto) {
+        Float montoFacturado=0f;
+        Float montoCorte=0f;
+        Float montoRestanteCaja=0f;
+        try {
+            CierresCajas caja;
+            if (cajaDto.getId() != null && cajaDto.getId() > 0) {
+                caja = em.find(CierresCajas.class, cajaDto.getId());
+                if (caja == null) {
+                    return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encontro la caja especificada", "abrirCaja NoResultException");
+                }
+                caja.actualizar(cajaDto);
+                caja = em.merge(caja);
+            } else {
+                caja = new CierresCajas(cajaDto);
+                montoFacturado = getMontoFacturado(cajaDto.getApertura().getNumCaja(),
+                        LocalDateAdapter.adaptFromJson(cajaDto.getApertura().getFecha()), cajaDto.getApertura().getId());
+                montoCorte = getCorteTotal(cajaDto.getApertura().getNumCaja(),
+                        LocalDateAdapter.adaptFromJson(cajaDto.getApertura().getFecha()), cajaDto.getApertura().getId());
+                montoRestanteCaja = cajaDto.getApertura().getFondo() + montoFacturado - montoCorte;
+                abrirCaja(cajaDto.getApertura());
+                em.persist(caja);
+            }
+            em.flush();
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "caja", new SaveCierre(new CierresCajasDto(caja),montoFacturado,montoCorte,montoRestanteCaja));
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al guardar el cierre de caja.", e);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el cierre de caja.", "cerrarCaja " + e.getMessage());
         }
     }
 

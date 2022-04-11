@@ -167,7 +167,7 @@ public class CierresCajas implements Serializable {
         return "cr.grupojf.sigp.sigp_ws.model.CierresCajas[ idCierre=" + idCierre + " ]";
     }
 
-    private void actualizar(CierresCajasDto c) {
+    public void actualizar(CierresCajasDto c) {
         this.estadoCierre = c.getEstado();
         try {
             this.fechaCierre = LocalDateAdapter.adaptFromJson(c.getFecha());

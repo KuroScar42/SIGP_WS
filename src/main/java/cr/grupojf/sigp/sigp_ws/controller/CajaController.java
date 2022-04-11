@@ -6,6 +6,7 @@ package cr.grupojf.sigp.sigp_ws.controller;
 
 import cr.grupojf.sigp.sigp_ws.model.AperturaCajasDto;
 import cr.grupojf.sigp.sigp_ws.model.CierresCajasDto;
+import cr.grupojf.sigp.sigp_ws.model.SaveCierre;
 import cr.grupojf.sigp.sigp_ws.service.CajaService;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
 import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
@@ -81,6 +82,22 @@ public class CajaController {
         } catch (Exception ex) {
             Logger.getLogger(CajaController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al guardar el nuevo corte").build();
+        }
+    }
+    @POST
+    @Path("/cerrarCaja")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response cerrarCaja(CierresCajasDto cc) {
+        try {
+            Respuesta respuesta = service.cerrarCaja(cc);
+            if (!respuesta.getEstado()) {
+                return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
+            }
+            return Response.ok((SaveCierre) respuesta.getResultado("caja")).build();
+        } catch (Exception ex) {
+            Logger.getLogger(CajaController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al guardar el cierre de caja").build();
         }
     }
 }
