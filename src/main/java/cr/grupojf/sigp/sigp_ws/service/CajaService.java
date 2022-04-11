@@ -120,14 +120,17 @@ public class CajaService {
                 Float montoCorte = getCorteTotal(cierreDto.getApertura().getNumCaja(),
                         LocalDateAdapter.adaptFromJson(cierreDto.getApertura().getFecha()), cierreDto.getApertura().getId());
                 Float montoRestanteCaja = cierreDto.getApertura().getFondo() + montoFactura - montoCorte;
-                Respuesta res = guardarEfectivo(cierreDto.getEfectivo());
-                if (res.getEstado()) {
-                    caja.setIdEfectivo(new Efectivo((EfectivoDto) res.getResultado()));
-                    if (montoRestanteCaja < caja.getIdEfectivo().getCantidadEfectivo()) {
-                        return new Respuesta(false, CodigoRespuesta.ERROR_CLIENTE, "El monto del corte no puede ser superior al monto restante", "");
+                if (montoRestanteCaja > cierreDto.getEfectivo().getCantidad()) {
+                    Respuesta res = guardarEfectivo(cierreDto.getEfectivo());
+                    if (res.getEstado()) {
+                        caja.setIdEfectivo(new Efectivo((EfectivoDto) res.getResultado()));
+                        em.persist(caja);
+                    }else{
+                        throw new Exception("Algo");
                     }
-                    caja.getIdEfectivo().setTotalEfectivo(montoFactura - montoCorte);
-                    em.persist(caja);
+                } else {
+                    return new Respuesta(false, CodigoRespuesta.ERROR_CLIENTE, "El monto del corte no puede ser superior al monto restante", "");
+
                 }
 
             }
@@ -169,7 +172,8 @@ public class CajaService {
             query.setParameter("numCaja", numCaja);
             query.setParameter("idApertura", aperturaId);
 
-            total = (Float) query.getSingleResult();
+            double temp = (double) query.getSingleResult();
+            total = Float.valueOf(String.valueOf(temp));
         } catch (NoResultException e) {
             LOG.log(Level.SEVERE, "No se encuentran registros de cortes.", e);
             return 0f;
