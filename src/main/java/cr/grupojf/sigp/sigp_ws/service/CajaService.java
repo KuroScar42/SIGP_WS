@@ -19,6 +19,7 @@ import cr.grupojf.sigp.sigp_ws.util.Respuesta;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -240,6 +241,24 @@ public class CajaService {
 
     private Respuesta guardarFactura(FacturasDto factura) {
         return null;
+    }
+    
+    public Respuesta getCortes(Integer aperturaId) {
+        try {
+            Query query = em.createNamedQuery("CierresCajas.findByAperturaId", CierresCajas.class);
+            query.setParameter("idApertura", em.getReference(AperturaCajas.class, aperturaId));
+            List<CierresCajas> cierres = query.getResultList();
+            List<CierresCajasDto> cierresDtoList = new ArrayList<>();
+
+            for (CierresCajas cierreCaja : cierres) {
+                cierresDtoList.add(new CierresCajasDto(cierreCaja));
+            }
+
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "cortes", cierresDtoList);
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar los cortes de caja", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los cortes de caja", "getCortes " + ex.getMessage());
+        }
     }
 
 }

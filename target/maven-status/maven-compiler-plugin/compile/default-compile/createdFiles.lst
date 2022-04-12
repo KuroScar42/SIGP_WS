@@ -21,6 +21,7 @@ cr/grupojf/sigp/sigp_ws/controller/MetodoPagoController.class
 cr/grupojf/sigp/sigp_ws/model/FacturasDto.class
 cr/grupojf/sigp/sigp_ws/model/FacturasProductosDto.class
 cr/grupojf/sigp/sigp_ws/model/AperturaCajas.class
+cr/grupojf/sigp/sigp_ws/controller/CajaController$1.class
 cr/grupojf/sigp/sigp_ws/model/UsuarioDto.class
 cr/grupojf/sigp/sigp_ws/model/PermisoDto.class
 cr/grupojf/sigp/sigp_ws/model/ClientesDto.class
@@ -70,6 +71,7 @@ cr/grupojf/sigp/sigp_ws/model/ProveedoresDto.class
 cr/grupojf/sigp/sigp_ws/model/CuentasPagarDto.class
 cr/grupojf/sigp/sigp_ws/model/Empresas.class
 cr/grupojf/sigp/sigp_ws/model/Monedas.class
+cr/grupojf/sigp/sigp_ws/model/SaveCierre.class
 cr/grupojf/sigp/sigp_ws/controller/PedidosController$2.class
 cr/grupojf/sigp/sigp_ws/controller/ProductosController$5.class
 cr/grupojf/sigp/sigp_ws/model/CreditosDto.class

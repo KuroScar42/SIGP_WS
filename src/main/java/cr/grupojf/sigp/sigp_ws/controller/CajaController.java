@@ -11,6 +11,7 @@ import cr.grupojf.sigp.sigp_ws.service.CajaService;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
 import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
 import cr.grupojf.sigp.sigp_ws.util.Respuesta;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -20,6 +21,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -98,6 +100,25 @@ public class CajaController {
         } catch (Exception ex) {
             Logger.getLogger(CajaController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al guardar el cierre de caja").build();
+        }
+    }
+    
+    @GET
+    @Path("/getCortesByApertura/{aperturaId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getCortesByApertura(@PathParam("aperturaId") Integer aperturaId) {
+        try {
+            Respuesta respuesta = service.getCortes(aperturaId);
+            if (!respuesta.getEstado()) {
+                return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
+            }
+            List resultado = (List) respuesta.getResultado("cortes");
+            return Response.ok(new GenericEntity<List<CierresCajasDto>>(resultado) {
+            }).build();
+        } catch (Exception ex) {
+            Logger.getLogger(ProductosController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar los cortes").build();
         }
     }
 }
