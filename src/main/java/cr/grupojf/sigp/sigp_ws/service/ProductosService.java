@@ -12,11 +12,13 @@ import cr.grupojf.sigp.sigp_ws.model.MoveProductDto;
 import cr.grupojf.sigp.sigp_ws.model.ProductosDto;
 import cr.grupojf.sigp.sigp_ws.model.Productos;
 import cr.grupojf.sigp.sigp_ws.model.Proveedores;
+import cr.grupojf.sigp.sigp_ws.model.ProveedoresDto;
 import cr.grupojf.sigp.sigp_ws.model.SaveProducto;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
 import cr.grupojf.sigp.sigp_ws.util.Respuesta;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.LocalBean;
@@ -64,12 +66,25 @@ public class ProductosService {
                     return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, res.getMensaje(), res.getMensajeInterno());
                 }
             }
-//            if (productoDto.getBodega() != null && productoDto.getDetalles() != null) {
-//                bodegaProducto = new BodegasProductosDto(new BodegasProductos(productoDto.getDetalles()));
-//                bodegaProducto.setBodega(productoDto.getBodega());
-//                bodegaProducto.setProducto(productoDto);
-//                
-//            }
+            
+            List<Proveedores> proveedores = new ArrayList();
+            eliminarAllProveedoresFromProducto(producto.getIdProducto());
+            for (ProveedoresDto proveedorDto : saveProducto.getProducto().getProveedores()) {
+                Proveedores p = em.find(Proveedores.class, proveedorDto.getId());
+                em.refresh(p);
+                producto.getProveedoresList().add(p);
+                
+                final Integer productoId = producto.getIdProducto();
+                if (!p.getProductosList().stream().filter(e -> Objects.equals(e.getIdProducto(), productoId)).findAny().isPresent()) {
+                    p.getProductosList().add(producto);
+                }
+                
+                proveedores.add(p);
+            }
+
+            for (Proveedores proveedor : proveedores) {
+                em.merge(proveedor);
+            }
             em.flush();
             em.refresh(producto); // si no funciona para refrescar el guardado de ProductoBodega -> quitar y descomentar la linea de arriba
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "producto", new ProductosDto(producto));
@@ -77,6 +92,14 @@ public class ProductosService {
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar el producto.", e);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el producto.", "guardarCerdo " + e.getMessage());
         }
+    }
+    
+    private void eliminarAllProveedoresFromProducto(Integer idProducto) {
+        // hacer consulta y eliminar 
+        em
+                .createNativeQuery("DELETE FROM Productos_Proveedores WHERE ID_PRODUCTO = " + idProducto)
+                .executeUpdate();
+        em.flush();
     }
 
     private void removeProductById(Integer id) {
