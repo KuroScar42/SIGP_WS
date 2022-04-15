@@ -157,10 +157,26 @@ public class ClienteService {
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "cliente", clienteDto);
         } catch (NoResultException ex) {
             LOG.log(Level.SEVERE, "No existe el cliente con '" + cedula, ex);
-            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "No existe el cliente con '" + cedula, "getClienteByCedula " + ex.getMessage());
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "No existe el cliente con '" + cedula + "'", "getClienteByCedula " + ex.getMessage());
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al consultar el cliente", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar el cliente", "getClienteByCedula " + ex.getMessage());
+        }
+    }
+    public Respuesta getPersonaByCedula(String cedula) {
+        try {
+            Query query = em.createNamedQuery("Personas.findByCedula", Personas.class);
+            query.setParameter("cedula", cedula);
+            Personas persona = (Personas) query.getSingleResult();
+            PersonasDto personaDto = new PersonasDto(persona);
+
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", personaDto);
+        } catch (NoResultException ex) {
+            LOG.log(Level.SEVERE, "No existe la persona con '" + cedula, ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "No existe la persona con '" + cedula +"'", "getPersonaByCedula " + ex.getMessage());
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar la persona", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar la persona", "getPersonaByCedula " + ex.getMessage());
         }
     }
 }

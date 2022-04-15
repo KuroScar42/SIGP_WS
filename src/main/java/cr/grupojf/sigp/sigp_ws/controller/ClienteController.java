@@ -6,6 +6,7 @@
 package cr.grupojf.sigp.sigp_ws.controller;
 
 import cr.grupojf.sigp.sigp_ws.model.ClientesDto;
+import cr.grupojf.sigp.sigp_ws.model.PersonasDto;
 import cr.grupojf.sigp.sigp_ws.service.ClienteService;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
 import cr.grupojf.sigp.sigp_ws.util.Respuesta;
@@ -84,6 +85,23 @@ public class ClienteController {
         } catch (Exception ex) {
             Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar el cliente").build();
+        }
+    }
+    @GET
+    @Path("/getPersonaByCedula/{cedula}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getPersonaByCedula(@PathParam("cedula") String cedula) {
+        try {
+            Respuesta respuesta = service.getPersonaByCedula(cedula);
+            if (!respuesta.getEstado()) {
+                return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
+            }
+            PersonasDto persona = (PersonasDto) respuesta.getResultado();
+            return Response.ok(persona).build();
+        } catch (Exception ex) {
+            Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar la persona").build();
         }
     }
 }
