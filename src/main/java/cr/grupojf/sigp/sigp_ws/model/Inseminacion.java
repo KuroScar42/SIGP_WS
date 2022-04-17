@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -66,6 +67,9 @@ public class Inseminacion implements Serializable {
     @JoinColumn(name = "ID_CERDO", referencedColumnName = "ID_CERDO")
     @ManyToOne
     private Cerdos idCerdo;
+    @JoinColumn(name = "ID_EMBARAZO", referencedColumnName = "ID_EMBARAZO")
+    @OneToOne(mappedBy = "idInseminacion")
+    private Embarazos idEmbarazo;
 
     public Inseminacion() {
     }
@@ -141,6 +145,16 @@ public class Inseminacion implements Serializable {
     public void setFechaRevision(Date fechaRevision) {
         this.fechaRevision = fechaRevision;
     }
+
+    public Embarazos getIdEmbarazo() {
+        return idEmbarazo;
+    }
+
+    public void setIdEmbarazo(Embarazos idEmbarazo) {
+        this.idEmbarazo = idEmbarazo;
+    }
+    
+    
 
     @Override
     public int hashCode() {

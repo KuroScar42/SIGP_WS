@@ -22,6 +22,7 @@ public class InseminacionDto {
     private String detalle;
     private String fechaRevision;
     private CerdosDto cerdo;
+    private EmbarazosDto embarazo;
 
     public InseminacionDto() {
     }
@@ -39,6 +40,9 @@ public class InseminacionDto {
         this.detalle = i.getDetalleInsiminacion();
         if (i.getIdCerdo() != null) {
             cerdo = new CerdosDto(i.getIdCerdo());
+        }
+        if (i.getIdEmbarazo() != null) {
+            this.embarazo = new EmbarazosDto(i.getIdEmbarazo());
         }
     }
 

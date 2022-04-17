@@ -75,18 +75,18 @@ public class GranjaService {
                 guardarInseminacion(i);
             }
 //            guardar los embarazos aqui
-            for (EmbarazosDto e : saveCerdo.getEmbarazos()) {
-                e.setCerdo(new CerdosDto(em.getReference(Cerdos.class, cerdo.getIdCerdo())));
-//                e.setPartoDto(partoDto);
-                Respuesta res = guardarEmbarazos(e);
-                if (res.getEstado()) {
-                    EmbarazosDto em = (EmbarazosDto) res.getResultado();
-                    if (e.getPartoDto() != null) {
-                        e.getPartoDto().setEmbarazo(em);
-                        guardarPartos(em.getPartoDto());
-                    }
-                }
-            }
+//            for (EmbarazosDto e : saveCerdo.getEmbarazos()) {
+//                e.setCerdo(new CerdosDto(em.getReference(Cerdos.class, cerdo.getIdCerdo())));
+////                e.setPartoDto(partoDto);
+//                Respuesta res = guardarEmbarazos(e);
+//                if (res.getEstado()) {
+//                    EmbarazosDto em = (EmbarazosDto) res.getResultado();
+//                    if (e.getPartoDto() != null) {
+//                        e.getPartoDto().setEmbarazo(em);
+//                        guardarPartos(em.getPartoDto());
+//                    }
+//                }
+//            }
             em.flush();
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "cerdo", new CerdosDto(cerdo));
         } catch (Exception e) {

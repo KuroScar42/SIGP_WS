@@ -78,6 +78,8 @@ public class Usuarios implements Serializable {
     @OneToMany(mappedBy = "idUsuario")
     private List<AperturaCajas> aperturaCajasList;
     @OneToMany(mappedBy = "idUsuario")
+    private List<CierresCajas> cierresCajasList;
+    @OneToMany(mappedBy = "idUsuario")
     private List<Pedidos> pedidosList;
     @OneToMany(mappedBy = "idUsuario")
     private List<Partos> partosList1;

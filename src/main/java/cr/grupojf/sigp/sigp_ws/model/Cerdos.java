@@ -32,7 +32,7 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Cerdos.findAll", query = "SELECT c FROM Cerdos c"),
     @NamedQuery(name = "Cerdos.findByIdCerdo", query = "SELECT c FROM Cerdos c WHERE c.idCerdo = :idCerdo"),
-    @NamedQuery(name = "Cerdos.findByCodigoCerdo", query = "SELECT c FROM Cerdos c join c.embarazosList e join e.idParto p where c.codigoCerdo = :codigoCerdo and c.estadoCerdo ='A'"),
+    @NamedQuery(name = "Cerdos.findByCodigoCerdo", query = "SELECT c FROM Cerdos c where c.codigoCerdo = :codigoCerdo and c.estadoCerdo ='A'"),
     @NamedQuery(name = "Cerdos.findByEstadoCerdo", query = "SELECT c FROM Cerdos c WHERE c.estadoCerdo = :estadoCerdo"),
     @NamedQuery(name = "Cerdos.findByDescripcionCerdo", query = "SELECT c FROM Cerdos c WHERE c.descripcionCerdo = :descripcionCerdo"),
 //    @NamedQuery(name = "Cerdos.findByFechaNacimiento", query = "SELECT c FROM Cerdos c WHERE c.fechaNacimiento = :fechaNacimiento"),
@@ -64,8 +64,8 @@ public class Cerdos implements Serializable {
     @Column(name = "FECHA_REGISTRO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaRegistro;
-    @OneToMany(mappedBy = "idCerdo")
-    private List<Embarazos> embarazosList;
+//    @OneToMany(mappedBy = "idCerdo")
+//    private List<Inseminacion> embarazosList;
     @OneToMany(mappedBy = "idCerdo")
     private List<Inseminacion> inseminacionList;
 
@@ -128,13 +128,13 @@ public class Cerdos implements Serializable {
         this.fechaRegistro = fechaNacimiento;
     }
 
-    public List<Embarazos> getEmbarazosList() {
-        return embarazosList;
-    }
-
-    public void setEmbarazosList(List<Embarazos> embarazosList) {
-        this.embarazosList = embarazosList;
-    }
+//    public List<Embarazos> getEmbarazosList() {
+//        return embarazosList;
+//    }
+//
+//    public void setEmbarazosList(List<Embarazos> embarazosList) {
+//        this.embarazosList = embarazosList;
+//    }
 
     public List<Inseminacion> getInseminacionList() {
         return inseminacionList;

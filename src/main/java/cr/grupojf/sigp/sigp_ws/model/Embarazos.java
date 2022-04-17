@@ -66,9 +66,12 @@ public class Embarazos implements Serializable {
     @Column(name = "DESTALLES_EMBARAZO")
     private String destallesEmbarazo;
     
-    @JoinColumn(name = "ID_CERDO", referencedColumnName = "ID_CERDO")
-    @ManyToOne
-    private Cerdos idCerdo;
+//    @JoinColumn(name = "ID_CERDO", referencedColumnName = "ID_CERDO")
+//    @ManyToOne
+//    private Cerdos idCerdo;
+    @OneToOne
+    @JoinColumn(name = "ID_INSEMINACION", referencedColumnName = "ID_INSEMINACION")
+    private Inseminacion idInseminacion;
 //    @JoinColumn(name = "ID_PARTO", referencedColumnName = "ID_PARTO")
     
     @OneToOne(mappedBy = "idEmbarazo")
@@ -135,13 +138,13 @@ public class Embarazos implements Serializable {
         this.destallesEmbarazo = destallesEmbarazo;
     }
 
-    public Cerdos getIdCerdo() {
-        return idCerdo;
-    }
-
-    public void setIdCerdo(Cerdos idCerdo) {
-        this.idCerdo = idCerdo;
-    }
+//    public Cerdos getIdCerdo() {
+//        return idCerdo;
+//    }
+//
+//    public void setIdCerdo(Cerdos idCerdo) {
+//        this.idCerdo = idCerdo;
+//    }
 
     public Partos getIdParto() {
         return idParto;

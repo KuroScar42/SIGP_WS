@@ -68,6 +68,9 @@ public class CierresCajas implements Serializable {
     @JoinColumn(name = "ID_VALORES", referencedColumnName = "ID_VALORES")
     @ManyToOne
     private OtrosValores idValores;
+    @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")
+    @ManyToOne
+    private Usuarios idUsuario;
 
     public CierresCajas() {
     }

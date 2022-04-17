@@ -216,8 +216,8 @@ public class UsuariosService {
 
     public Respuesta getPersonaByCedula(String cedula) {
         try {
-            Query query = em.createNamedQuery("Personas.findByCedulaPersona", Personas.class);
-            query.setParameter("cedulaPersona", cedula);
+            Query query = em.createNamedQuery("Personas.findByCedula", Personas.class);
+            query.setParameter("cedula", cedula);
             PersonasDto personaDto = new PersonasDto((Personas) query.getSingleResult());
 
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "persona", personaDto);

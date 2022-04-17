@@ -24,7 +24,7 @@ public class CerdosDto {
     private String descripcion;
     private String registro;
     private Float peso;
-    private List<EmbarazosDto> embarazos;
+//    private List<EmbarazosDto> embarazos;
 
     public CerdosDto() {
     }
@@ -39,12 +39,12 @@ public class CerdosDto {
         } catch (Exception ex) {
             Logger.getLogger(PedidosDto.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (cerdo.getEmbarazosList() != null) {
-            embarazos = new ArrayList<>();
-            for (Embarazos e : cerdo.getEmbarazosList()) {
-                embarazos.add(new EmbarazosDto(e));
-            }
-        }
+//        if (cerdo.getEmbarazosList() != null) {
+//            embarazos = new ArrayList<>();
+//            for (Embarazos e : cerdo.getEmbarazosList()) {
+//                embarazos.add(new EmbarazosDto(e));
+//            }
+//        }
     }
 
     public Integer getId() {
@@ -103,13 +103,13 @@ public class CerdosDto {
         this.peso = peso;
     }
 
-    public List<EmbarazosDto> getEmbarazos() {
-        return embarazos;
-    }
-
-    public void setEmbarazos(List<EmbarazosDto> embarazos) {
-        this.embarazos = embarazos;
-    }
+//    public List<EmbarazosDto> getEmbarazos() {
+//        return embarazos;
+//    }
+//
+//    public void setEmbarazos(List<EmbarazosDto> embarazos) {
+//        this.embarazos = embarazos;
+//    }
     
     
     
