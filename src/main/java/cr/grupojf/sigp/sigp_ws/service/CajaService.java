@@ -71,7 +71,7 @@ public class CajaService {
             Query query = em.createNamedQuery("AperturaCajas.findByNumCaja", AperturaCajas.class);
             query.setParameter("numCaja", numCaja);
             List<AperturaCajas> list = query.setMaxResults(1).getResultList();
-            if (list != null) {
+            if (list != null && !list.isEmpty()) {
                 AperturaCajas aperturaCaja = list.get(0);
                 AperturaCajasDto acDto = new AperturaCajasDto(aperturaCaja);
                 if (isSameDate(LocalDateAdapter.adaptFromJson(acDto.getFecha()), fecha)) {
@@ -117,6 +117,7 @@ public class CajaService {
                 caja = em.find(CierresCajas.class, cierreDto.getId());
             } else {
                 caja = new CierresCajas(cierreDto);
+                caja.setIdUsuario(em.getReference(Usuarios.class, cierreDto.getUsuario().getId()));
                 Float montoFactura = getMontoFacturado(cierreDto.getApertura().getNumCaja(),
                         LocalDateAdapter.adaptFromJson(cierreDto.getApertura().getFecha()), cierreDto.getApertura().getId());
                 Float montoCorte = getCorteTotal(cierreDto.getApertura().getNumCaja(),
@@ -223,6 +224,7 @@ public class CajaService {
                 caja = em.merge(caja);
             } else {
                 caja = new CierresCajas(cajaDto);
+                caja.setIdUsuario(em.getReference(Usuarios.class, cajaDto.getUsuario().getId()));
                 montoFacturado = getMontoFacturado(cajaDto.getApertura().getNumCaja(),
                         LocalDateAdapter.adaptFromJson(cajaDto.getApertura().getFecha()), cajaDto.getApertura().getId());
                 montoCorte = getCorteTotal(cajaDto.getApertura().getNumCaja(),

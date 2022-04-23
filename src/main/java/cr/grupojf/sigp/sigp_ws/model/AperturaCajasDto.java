@@ -36,9 +36,9 @@ public class AperturaCajasDto {
         this.estado = apertura.getEstadoCaja();
         this.numCaja = apertura.getNumCaja();
         this.fondo = apertura.getFondoCaja();
-//        if (apertura.getIdUsuario() != null) {
-//            this.usuario = new UsuarioDto(apertura.getIdUsuario());
-//        }
+        if (apertura.getIdUsuario() != null) {
+            this.usuario = apertura.getIdUsuario().getIdUsuario();
+        }
     }
 
     public Integer getId() {

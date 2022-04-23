@@ -68,26 +68,28 @@ public class GranjaService {
                 cerdo = new Cerdos(saveCerdo.getCerdo());
                 em.persist(cerdo);
             }
-
+            em.flush();
 //            guardar las inseminaciones aqui
             for (InseminacionDto i : saveCerdo.getInseminaciones()) {
                 i.setCerdo(new CerdosDto(em.getReference(Cerdos.class, cerdo.getIdCerdo())));
-                guardarInseminacion(i);
+                Respuesta res = guardarInseminacion(i);
+                if (res.getEstado()) {
+                    if (i.getEmbarazo() != null) {
+                        i.getEmbarazo().setInsemincion((InseminacionDto) res.getResultado("ins"));
+
+                        Respuesta res2 = guardarEmbarazos(i.getEmbarazo());
+                        if (res2.getEstado()) {
+                            if (i.getEmbarazo().getPartoDto() != null) {
+                                i.getEmbarazo().getPartoDto().setEmbarazo((EmbarazosDto) res2.getResultado());
+                                guardarPartos(i.getEmbarazo().getPartoDto());
+                            }
+                        }
+
+                    }
+
+                }
+
             }
-//            guardar los embarazos aqui
-//            for (EmbarazosDto e : saveCerdo.getEmbarazos()) {
-//                e.setCerdo(new CerdosDto(em.getReference(Cerdos.class, cerdo.getIdCerdo())));
-////                e.setPartoDto(partoDto);
-//                Respuesta res = guardarEmbarazos(e);
-//                if (res.getEstado()) {
-//                    EmbarazosDto em = (EmbarazosDto) res.getResultado();
-//                    if (e.getPartoDto() != null) {
-//                        e.getPartoDto().setEmbarazo(em);
-//                        guardarPartos(em.getPartoDto());
-//                    }
-//                }
-//            }
-            em.flush();
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "cerdo", new CerdosDto(cerdo));
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar el cerdo.", e);
@@ -158,7 +160,7 @@ public class GranjaService {
                 }
                 em.flush();
                 return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", new PartosDto(parto));
-            } else{
+            } else {
                 return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se puede guardar un parto sin embarazo", "Embarazo no existe");
             }
         } catch (Exception e) {
@@ -203,7 +205,8 @@ public class GranjaService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar el cerdo", "getCerdo " + ex.getMessage());
         }
     }
-    public Respuesta getAllCerdo(){
+
+    public Respuesta getAllCerdo() {
         return null;
     }
 }

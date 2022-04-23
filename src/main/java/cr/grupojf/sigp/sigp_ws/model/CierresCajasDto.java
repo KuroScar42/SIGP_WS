@@ -19,6 +19,7 @@ public class CierresCajasDto {
     private String estado;
     private AperturaCajasDto apertura;
     private EfectivoDto efectivo;
+    private UsuarioDto usuario;
     
 
     public CierresCajasDto() {
@@ -38,6 +39,9 @@ public class CierresCajasDto {
         }
         if (cierre.getIdEfectivo() != null) {
             this.efectivo = new EfectivoDto(cierre.getIdEfectivo());
+        }
+        if (cierre.getIdUsuario() != null) {
+            this.usuario = new UsuarioDto(cierre.getIdUsuario());
         }
     }
 
@@ -88,5 +92,15 @@ public class CierresCajasDto {
     public void setEfectivo(EfectivoDto efectivo) {
         this.efectivo = efectivo;
     }
+
+    public UsuarioDto getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(UsuarioDto usuario) {
+        this.usuario = usuario;
+    }
+    
+    
     
 }

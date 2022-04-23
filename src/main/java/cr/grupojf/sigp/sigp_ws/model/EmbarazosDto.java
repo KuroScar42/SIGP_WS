@@ -20,7 +20,7 @@ public class EmbarazosDto {
     private String estado;
     private String parto;
     private String detalles;
-    private CerdosDto cerdo;
+    private InseminacionDto inseminacion;
     private PartosDto partoDto;
 
     public EmbarazosDto() {
@@ -37,7 +37,7 @@ public class EmbarazosDto {
         this.estado = e.getEstadoEmbarazo();
         this.detalles = e.getDestallesEmbarazo();
 //        if (e.getIdCerdo() != null) {
-//            this.cerdo = new CerdosDto(e.getIdCerdo());
+//            this.inseminacion = new CerdosDto(e.getIdCerdo());
 //        }
         if (e.getIdParto() != null) {
             this.partoDto = new PartosDto(e.getIdParto());
@@ -84,12 +84,12 @@ public class EmbarazosDto {
         this.detalles = detalles;
     }
 
-    public CerdosDto getCerdo() {
-        return cerdo;
+    public InseminacionDto getInseminacion() {
+        return inseminacion;
     }
 
-    public void setCerdo(CerdosDto cerdo) {
-        this.cerdo = cerdo;
+    public void setInsemincion(InseminacionDto inseminacion) {
+        this.inseminacion = inseminacion;
     }
 
     public PartosDto getPartoDto() {

@@ -102,6 +102,14 @@ public class InseminacionDto {
     public void setCerdo(CerdosDto cerdo) {
         this.cerdo = cerdo;
     }
+
+    public EmbarazosDto getEmbarazo() {
+        return embarazo;
+    }
+
+    public void setEmbarazo(EmbarazosDto embarazo) {
+        this.embarazo = embarazo;
+    }
     
     
     

@@ -146,6 +146,16 @@ public class CierresCajas implements Serializable {
         this.idValores = idValores;
     }
 
+    public Usuarios getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Usuarios idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+    
+    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -183,6 +193,9 @@ public class CierresCajas implements Serializable {
         }
         if (c.getEfectivo() != null) {
             this.idEfectivo = new Efectivo(c.getEfectivo());
+        }
+        if (c.getUsuario() != null) {
+            this.idUsuario = new Usuarios(c.getUsuario());
         }
     }
     
