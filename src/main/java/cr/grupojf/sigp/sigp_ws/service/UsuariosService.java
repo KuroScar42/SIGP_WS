@@ -14,6 +14,7 @@ import cr.grupojf.sigp.sigp_ws.model.UsuarioDto;
 import cr.grupojf.sigp.sigp_ws.model.Usuarios;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
 import cr.grupojf.sigp.sigp_ws.util.Respuesta;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -209,7 +210,13 @@ public class UsuariosService {
             em.flush();
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "usuario", new UsuarioDto(usuario));
         } catch (Exception e) {
+            
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar el usuario.", e);
+            if (e.getCause().getCause() instanceof SQLIntegrityConstraintViolationException) {
+                if (((SQLIntegrityConstraintViolationException)e.getCause().getCause()).getErrorCode() == 1062) {
+                    return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "El nombre de usuario '"+usuarioDto.getNombreUsuario()+"' ya se encuentra en uso.", "El nombre de usuario ya esta en uso.");
+                }
+            }
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el usuario.", "guardarUsuario " + e.getMessage());
         }
     }
