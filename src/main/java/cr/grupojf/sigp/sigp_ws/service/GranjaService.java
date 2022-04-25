@@ -26,6 +26,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.eclipse.persistence.config.CacheUsage;
+import org.eclipse.persistence.config.QueryHints;
 
 /**
  *
@@ -109,6 +111,7 @@ public class GranjaService {
                 inseminacion = em.merge(inseminacion);
             } else {
                 inseminacion = new Inseminacion(inseminacionDto);
+                inseminacion.setIdCerdo(em.getReference(Cerdos.class, inseminacionDto.getCerdo().getId()));
                 em.persist(inseminacion);
             }
             em.flush();
@@ -131,6 +134,7 @@ public class GranjaService {
                 embarazo = em.merge(embarazo);
             } else {
                 embarazo = new Embarazos(embarazoDto);
+                embarazo.setIdInseminacion(em.getReference(Inseminacion.class, embarazoDto.getInseminacion().getId()));
                 em.persist(embarazo);
             }
             em.flush();
@@ -155,7 +159,7 @@ public class GranjaService {
                     parto = em.merge(parto);
                 } else {
                     parto = new Partos(partoDto);
-                    parto.setIdEmbarazo(new Embarazos(partoDto.getEmbarazo()));
+                    parto.setIdEmbarazo(em.getReference(Embarazos.class, partoDto.getEmbarazo().getId()));
                     em.persist(parto);
                 }
                 em.flush();
@@ -208,5 +212,46 @@ public class GranjaService {
 
     public Respuesta getAllCerdo() {
         return null;
+    }
+
+    public Respuesta getInseminacionesByCerdo(String codigoCerdo) {
+        try {
+//            Query query = em.createNamedQuery("Cerdos.findInseminacionesByCodigoCerdo", Cerdos.class) .setHint("org.hibernate.cacheable", false);
+//            query.setParameter("codigoCerdo", codigoCerdo);
+            List<Inseminacion> inseminaciones = em
+                    .createNativeQuery("SELECT i.* FROM Cerdos c join Inseminacion i on i.ID_CERDO = c.ID_CERDO WHERE c.ESTADO_CERDO = 'A' and c.CODIGO_CERDO = " + codigoCerdo, Inseminacion.class)
+                    .getResultList();
+//            List<Inseminacion> inseminaciones = query.getResultList();
+
+            List<InseminacionDto> inseminacionesDto = new ArrayList<>();
+
+//            for (Inseminacion inseminacion : inseminaciones) {
+//                inseminacion = em.getReference(Inseminacion.class, inseminacion.getIdInseminacion());
+//                InseminacionDto i = new InseminacionDto(inseminacion);
+//                inseminacionesDto.add(i);
+//            }
+            for (Inseminacion i : inseminaciones) {
+                List<Embarazos> embarazos = em
+                        .createNativeQuery("SELECT e.* FROM Embarazos e WHERE e.ID_INSEMINACION = " + i.getIdInseminacion(), Embarazos.class)
+                        .getResultList();
+                if (!embarazos.isEmpty()) {
+                    Embarazos embarazo = embarazos.get(0);
+                    List<Partos> partos = em
+                            .createNativeQuery("SELECT p.* FROM Partos p WHERE p.ID_EMBARAZO = " + embarazos.get(0).getIdEmbarazo(), Partos.class)
+                            .getResultList();
+                    if (!partos.isEmpty()) {
+                        embarazo.setIdParto(partos.get(0));
+                    }
+                    i.setIdEmbarazo(embarazo);
+                }
+                inseminacionesDto.add(new InseminacionDto(i));
+            }
+
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "inseminaciones", inseminacionesDto);
+//            return null;
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar las inseminacionese.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar las inseminaciones.", "getInseminacionesByCerdo " + ex.getMessage());
+        }
     }
 }

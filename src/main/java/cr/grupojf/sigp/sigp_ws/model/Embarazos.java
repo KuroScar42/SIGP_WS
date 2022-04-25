@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -43,8 +45,8 @@ public class Embarazos implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ID_EMBARAZO")
     private Integer idEmbarazo;
     @Basic(optional = false)
@@ -58,7 +60,6 @@ public class Embarazos implements Serializable {
     @Column(name = "ESTADO_EMBARAZO")
     private String estadoEmbarazo;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "FECHA_PARTO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaParto;
@@ -153,6 +154,15 @@ public class Embarazos implements Serializable {
     public void setIdParto(Partos idParto) {
         this.idParto = idParto;
     }
+
+    public Inseminacion getIdInseminacion() {
+        return idInseminacion;
+    }
+
+    public void setIdInseminacion(Inseminacion idInseminacion) {
+        this.idInseminacion = idInseminacion;
+    }
+    
 //
 //    public List<Partos> getPartosList() {
 //        return partosList;
@@ -195,6 +205,9 @@ public class Embarazos implements Serializable {
             this.fechaParto = LocalDateAdapter.adaptFromJson(e.getParto());
         } catch (Exception ex) {
             Logger.getLogger(Embarazos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (e.getInseminacion() != null) {
+            this.idInseminacion = new Inseminacion(e.getInseminacion());
         }
     }
 

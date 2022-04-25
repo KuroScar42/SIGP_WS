@@ -6,6 +6,7 @@
 package cr.grupojf.sigp.sigp_ws.controller;
 
 import cr.grupojf.sigp.sigp_ws.model.CerdosDto;
+import cr.grupojf.sigp.sigp_ws.model.InseminacionDto;
 import cr.grupojf.sigp.sigp_ws.model.SaveCerdo;
 import cr.grupojf.sigp.sigp_ws.service.GranjaService;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
@@ -85,6 +86,24 @@ public class GranjaController {
         } catch (Exception ex) {
             Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar el cerdo").build();
+        }
+    }
+    
+    @GET
+    @Path("/getInseminacionesByCerdo/{codigo}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getInseminacionesByCerdo(@PathParam("codigo") String codigo) {
+        try {
+            Respuesta respuesta = service.getInseminacionesByCerdo(codigo);
+            if (!respuesta.getEstado()) {
+                return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
+            }
+            List resultado = (List) respuesta.getResultado("inseminaciones");
+            return Response.ok(new GenericEntity<List<InseminacionDto>>(resultado) {}).build();
+        } catch (Exception ex) {
+            Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar las inseminaciones").build();
         }
     }
 }
