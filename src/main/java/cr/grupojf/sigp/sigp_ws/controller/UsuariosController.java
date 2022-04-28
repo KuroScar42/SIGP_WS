@@ -168,7 +168,7 @@ public class UsuariosController {
     @Path("/getPersonaByCedula/{cedula}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getProductoByBodega(@PathParam("cedula")String cedula) {
+    public Response getPersonaByCedula(@PathParam("cedula")String cedula) {
         try {
             Respuesta respuesta = service.getPersonaByCedula(cedula);
             if (!respuesta.getEstado()) {
@@ -179,6 +179,23 @@ public class UsuariosController {
         } catch (Exception ex) {
             Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar la persona").build();
+        }
+    }
+    @GET
+    @Path("/getRolByUsuario/{idUsuario}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getRolByUsuario(@PathParam("idUsuario")Integer idUsuario) {
+        try {
+            Respuesta respuesta = service.getRolByUsuario(idUsuario);
+            if (!respuesta.getEstado()) {
+                return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
+            }
+            RolesDto rolDto = (RolesDto) respuesta.getResultado("rol");
+            return Response.ok(rolDto).build();
+        } catch (Exception ex) {
+            Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar el rol").build();
         }
     }
 }

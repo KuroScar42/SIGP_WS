@@ -236,5 +236,28 @@ public class UsuariosService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar la persona", "getPersonaByCedula " + ex.getMessage());
         }
     }
+    
+    public Respuesta getRolByUsuario(Integer idUsuario) {
+        try {
+            System.out.println("------------------------>" + idUsuario);
+            Query query = em.createNamedQuery("Roles.findRolByUsuario", Usuarios.class);
+            query.setParameter("idUsuario", idUsuario);
+            Usuarios usu = (Usuarios) query.getSingleResult();
+            
+            if (usu.getIdRol() != null) {
+                RolesDto rolDto = new RolesDto(usu.getIdRol());
+                return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "rol", rolDto);
+            }else{
+                return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "El usuario no cuenta con un rol definido" , "getRolByUsuario ");
+            }
+            
+        } catch (NoResultException ex) {
+            LOG.log(Level.SEVERE, "No existe el usuario especificado", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "No existe el usuario especificado" , "getRolByUsuario " + ex.getMessage());
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar el usuario.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar el usuario", "getRolByUsuario " + ex.getMessage());
+        }
+    }
 
 }
