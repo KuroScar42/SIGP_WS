@@ -105,7 +105,14 @@ public class PedidosServices {
                     eliminarProductoPedido(pp);
                 }
             }
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Pedido", new PedidosDto(pedido));
+            PedidosDto pDto = new PedidosDto(pedido);
+            Respuesta res = getProductosByPedidos(pedido.getIdPedidos());
+            if (res.getEstado()) {
+                pDto.setProductosPedido((List<ProductosPedidosDto>) res.getResultado("productos"));
+            }else{
+                return res;
+            }
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Pedido", pDto);
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar los pedidos.", e);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar los pedidos.", "guardarPedido " + e.getMessage());
