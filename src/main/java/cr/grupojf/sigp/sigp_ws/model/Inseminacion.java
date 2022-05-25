@@ -36,6 +36,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Inseminacion.findByCodigoInsiminacion", query = "SELECT i FROM Inseminacion i WHERE i.codigoInsiminacion = :codigoInsiminacion"),
     @NamedQuery(name = "Inseminacion.findByFechaInseminacion", query = "SELECT i FROM Inseminacion i WHERE i.fechaInseminacion = :fechaInseminacion"),
     @NamedQuery(name = "Inseminacion.findByEstadoInsiminacion", query = "SELECT i FROM Inseminacion i WHERE i.estadoInsiminacion = :estadoInsiminacion"),
+    @NamedQuery(name = "Inseminacion.inseminacionByCerda", query = "SELECT i FROM Inseminacion i WHERE i.idCerdo.idCerdo = :idCerdo ORDER BY i.idInseminacion DESC"),
     @NamedQuery(name = "Inseminacion.findByDetalleInsiminacion", query = "SELECT i FROM Inseminacion i WHERE i.detalleInsiminacion = :detalleInsiminacion")})
 public class Inseminacion implements Serializable {
 

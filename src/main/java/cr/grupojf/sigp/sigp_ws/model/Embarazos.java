@@ -40,6 +40,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Embarazos.findByFechaEmbarazo", query = "SELECT e FROM Embarazos e WHERE e.fechaEmbarazo = :fechaEmbarazo"),
     @NamedQuery(name = "Embarazos.findByEstadoEmbarazo", query = "SELECT e FROM Embarazos e WHERE e.estadoEmbarazo = :estadoEmbarazo"),
     @NamedQuery(name = "Embarazos.findByFechaParto", query = "SELECT e FROM Embarazos e WHERE e.fechaParto = :fechaParto"),
+    @NamedQuery(name = "Embarazos.embarazosByCerdo", query = "SELECT e FROM Cerdos c join c.inseminacionList i join i.idEmbarazo e WHERE c.idCerdo = :idCerdo ORDER BY e.idEmbarazo DESC"),
     @NamedQuery(name = "Embarazos.findByDestallesEmbarazo", query = "SELECT e FROM Embarazos e WHERE e.destallesEmbarazo = :destallesEmbarazo")})
 public class Embarazos implements Serializable {
 
