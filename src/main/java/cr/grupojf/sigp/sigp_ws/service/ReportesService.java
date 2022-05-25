@@ -1,11 +1,17 @@
 package cr.grupojf.sigp.sigp_ws.service;
 
+import cr.grupojf.sigp.sigp_ws.model.BodegaDto;
 import cr.grupojf.sigp.sigp_ws.model.Cerdos;
 import cr.grupojf.sigp.sigp_ws.model.Embarazos;
 import cr.grupojf.sigp.sigp_ws.model.EmbarazosDto;
 import cr.grupojf.sigp.sigp_ws.model.Inseminacion;
 import cr.grupojf.sigp.sigp_ws.model.InseminacionDto;
+import cr.grupojf.sigp.sigp_ws.model.ProductosDto;
+import cr.grupojf.sigp.sigp_ws.model.ReporteCajaDto;
 import cr.grupojf.sigp.sigp_ws.model.ReporteCerdaDto;
+import cr.grupojf.sigp.sigp_ws.model.ReporteGananciaDto;
+import cr.grupojf.sigp.sigp_ws.model.ReporteInventarioDto;
+import cr.grupojf.sigp.sigp_ws.model.ReportePendienteDto;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
 import cr.grupojf.sigp.sigp_ws.util.Respuesta;
 import java.util.ArrayList;
@@ -31,6 +37,23 @@ public class ReportesService {
     private static final Logger LOG = Logger.getLogger(UsuariosService.class.getName());
     @PersistenceContext(unitName = "sigp_PU")
     protected EntityManager em;
+
+    public Respuesta getReporteCajas() {
+        try {
+            Query query = em.createNamedQuery("Cerdos.findAll", Cerdos.class);
+            List<Cerdos> cerdas = query.getResultList();
+            List<ReporteCajaDto> reporteDto = new ArrayList<>();
+            for (int i = 0; i < 10; i++) {
+                reporteDto.add(new ReporteCajaDto(String.valueOf(i), "10-10-2010", 5, 5));
+
+            }
+
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", reporteDto);
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar las cajas en el sistema", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar las cajas en el sistema.", "getReporteCajas " + ex.getMessage());
+        }
+    }
 
     public Respuesta getReporteCerdas() {
         try {
@@ -75,6 +98,56 @@ public class ReportesService {
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al consultar las cerdas en el sistema", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar las cerdas en el sistema.", "getReporteCerdas " + ex.getMessage());
+        }
+    }
+
+    public Respuesta getReporteGanancias() {
+        try {
+            Query query = em.createNamedQuery("Cerdos.findAll", Cerdos.class);
+            List<Cerdos> cerdas = query.getResultList();
+            List<ReporteGananciaDto> reporteDto = new ArrayList<>();
+            for (int i = 0; i < 10; i++) {
+                reporteDto.add(new ReporteGananciaDto( "10-10-2010", 505000f));
+
+            }
+
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", reporteDto);
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar las cajas en el sistema", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar las cajas en el sistema.", "getReporteGanancias " + ex.getMessage());
+        }
+    }
+
+    public Respuesta getReporteInventarios() {
+        try {
+            Query query = em.createNamedQuery("Cerdos.findAll", Cerdos.class);
+            List<Cerdos> cerdas = query.getResultList();
+            List<ReporteInventarioDto> reporteDto = new ArrayList<>();
+            for (int i = 0; i < 10; i++) {
+                reporteDto.add(new ReporteInventarioDto(new ProductosDto(), 5, new BodegaDto()));
+
+            }
+
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", reporteDto);
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar las cajas en el sistema", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar las cajas en el sistema.", "getReporteInventarios " + ex.getMessage());
+        }
+    }
+
+    public Respuesta getReportePendientes() {
+        try {
+            Query query = em.createNamedQuery("Cerdos.findAll", Cerdos.class);
+            List<Cerdos> cerdas = query.getResultList();
+            List<ReportePendienteDto> reporteDto = new ArrayList<>();
+            for (int i = 0; i < 10; i++) {
+                reporteDto.add(new ReportePendienteDto("Cliente" + i, 0f, 0f, "10-10-2010", i));
+
+            }
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", reporteDto);
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar las cajas en el sistema", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar las cajas en el sistema.", "getReportePendientes " + ex.getMessage());
         }
     }
 
