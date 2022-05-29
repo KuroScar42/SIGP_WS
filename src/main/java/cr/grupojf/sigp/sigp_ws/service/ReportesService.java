@@ -1,6 +1,7 @@
 package cr.grupojf.sigp.sigp_ws.service;
 
 import cr.grupojf.sigp.sigp_ws.model.BodegaDto;
+import cr.grupojf.sigp.sigp_ws.model.BodegasProductos;
 import cr.grupojf.sigp.sigp_ws.model.Cerdos;
 import cr.grupojf.sigp.sigp_ws.model.Embarazos;
 import cr.grupojf.sigp.sigp_ws.model.EmbarazosDto;
@@ -113,25 +114,29 @@ public class ReportesService {
 
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", reporteDto);
         } catch (Exception ex) {
-            LOG.log(Level.SEVERE, "Ocurrio un error al consultar las cajas en el sistema", ex);
-            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar las cajas en el sistema.", "getReporteGanancias " + ex.getMessage());
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar las ganancias en el sistema", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar las ganancias en el sistema.", "getReporteGanancias " + ex.getMessage());
         }
     }
 
     public Respuesta getReporteInventarios() {
         try {
-            Query query = em.createNamedQuery("Cerdos.findAll", Cerdos.class);
-            List<Cerdos> cerdas = query.getResultList();
+            Query query = em.createNamedQuery("BodegasProductos.findAll", BodegasProductos.class);
+            List<BodegasProductos> bodegasProductos = query.getResultList();
             List<ReporteInventarioDto> reporteDto = new ArrayList<>();
-            for (int i = 0; i < 10; i++) {
-                reporteDto.add(new ReporteInventarioDto(new ProductosDto(), 5, new BodegaDto()));
-
+            for (BodegasProductos bp : bodegasProductos) {
+                reporteDto.add(new ReporteInventarioDto(new ProductosDto(bp.getIdProducto()),bp.getCantidadProducto(),new BodegaDto(bp.getIdBodega())));
             }
+            
+//            for (int i = 0; i < 10; i++) {
+//                reporteDto.add(new ReporteInventarioDto(new ProductosDto(), 5f, new BodegaDto()));
+//
+//            }
 
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", reporteDto);
         } catch (Exception ex) {
-            LOG.log(Level.SEVERE, "Ocurrio un error al consultar las cajas en el sistema", ex);
-            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar las cajas en el sistema.", "getReporteInventarios " + ex.getMessage());
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar los inventarios del sistema", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los inventarios del sistema.", "getReporteInventarios " + ex.getMessage());
         }
     }
 
@@ -147,7 +152,7 @@ public class ReportesService {
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", reporteDto);
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al consultar las cajas en el sistema", ex);
-            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar las cajas en el sistema.", "getReportePendientes " + ex.getMessage());
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar las pendientes del sistema.", "getReportePendientes " + ex.getMessage());
         }
     }
 

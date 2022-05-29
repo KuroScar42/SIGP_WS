@@ -12,13 +12,13 @@ package cr.grupojf.sigp.sigp_ws.model;
 public class ReporteInventarioDto {
     
     private ProductosDto producto;
-    private Integer cantidad;
+    private Float cantidad;
     private BodegaDto bodega;
 
     public ReporteInventarioDto() {
     }
 
-    public ReporteInventarioDto(ProductosDto producto, Integer cantidad, BodegaDto bodega) {
+    public ReporteInventarioDto(ProductosDto producto, Float cantidad, BodegaDto bodega) {
         this.producto = producto;
         this.cantidad = cantidad;
         this.bodega = bodega;
@@ -32,11 +32,11 @@ public class ReporteInventarioDto {
         this.producto = producto;
     }
 
-    public Integer getCantidad() {
+    public Float getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(Integer cantidad) {
+    public void setCantidad(Float cantidad) {
         this.cantidad = cantidad;
     }
 
