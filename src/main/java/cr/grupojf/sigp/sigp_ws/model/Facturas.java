@@ -19,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.QueryHint;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -48,6 +49,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Facturas.findByVueltoFactura", query = "SELECT f FROM Facturas f WHERE f.vueltoFactura = :vueltoFactura"),
     @NamedQuery(name = "Facturas.getMontoTotalPerDay", query = "SELECT SUM(f.totalFactura) FROM Facturas f join f.idApertura a join f.idMetodo m WHERE a.fechaCaja = :fecha AND a.numCaja = :numCaja AND m.metodoPago = :metodo AND a.idApertura = :idApertura"),
     @NamedQuery(name = "Facturas.getCorteTotalPerDay", query = "SELECT SUM(e.cantidadEfectivo) FROM AperturaCajas a join a.cierresCajasList c join c.idEfectivo e WHERE a.fechaCaja = :fecha AND a.numCaja = :numCaja AND a.idApertura = :idApertura"),
+    @NamedQuery(name = "Facturas.pendientes", query = "SELECT f, SUM(c.montoAbonado) FROM Facturas f JOIN f.creditosList c WHERE f.tipoFactura = 'CR' group by f", hints = @QueryHint(name = "eclipselink.refresh", value = "true")),
     @NamedQuery(name = "Facturas.findByObservacionesFactura", query = "SELECT f FROM Facturas f WHERE f.observacionesFactura = :observacionesFactura")})
 public class Facturas implements Serializable {
 
@@ -133,6 +135,8 @@ public class Facturas implements Serializable {
     private Usuarios idUsuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFactura")
     private List<FacturasProductos> facturasProductosList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFactura")
+    private List<Creditos> creditosList;
 
     public Facturas() {
     }
@@ -318,6 +322,14 @@ public class Facturas implements Serializable {
         this.facturasProductosList = facturasProductosList;
     }
 
+    public List<Creditos> getCreditosList() {
+        return creditosList;
+    }
+
+    public void setCreditosList(List<Creditos> creditosList) {
+        this.creditosList = creditosList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -342,5 +354,5 @@ public class Facturas implements Serializable {
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Facturas[ idFactura=" + idFactura + " ]";
     }
-    
+
 }

@@ -33,10 +33,10 @@ import javax.validation.constraints.Size;
 @Table(name = "Creditos")
 @NamedQueries({
     @NamedQuery(name = "Creditos.findAll", query = "SELECT c FROM Creditos c"),
-    @NamedQuery(name = "Creditos.findByIdCredito", query = "SELECT c FROM Creditos c WHERE c.idCredito = :idCredito"),
-    @NamedQuery(name = "Creditos.findByTotalCredito", query = "SELECT c FROM Creditos c WHERE c.totalCredito = :totalCredito"),
-    @NamedQuery(name = "Creditos.findByFechaCreditoProceso", query = "SELECT c FROM Creditos c WHERE c.fechaCreditoProceso = :fechaCreditoProceso"),
-    @NamedQuery(name = "Creditos.findByEstadoCredito", query = "SELECT c FROM Creditos c WHERE c.estadoCredito = :estadoCredito")})
+    @NamedQuery(name = "Creditos.findByIdCredito", query = "SELECT c FROM Creditos c WHERE c.idCredito = :idCredito"), //    @NamedQuery(name = "Creditos.findByTotalCredito", query = "SELECT c FROM Creditos c WHERE c.totalCredito = :totalCredito"),
+//    @NamedQuery(name = "Creditos.findByFechaCreditoProceso", query = "SELECT c FROM Creditos c WHERE c.fechaCreditoProceso = :fechaCreditoProceso"),
+//    @NamedQuery(name = "Creditos.findByEstadoCredito", query = "SELECT c FROM Creditos c WHERE c.estadoCredito = :estadoCredito")
+})
 public class Creditos implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,26 +47,26 @@ public class Creditos implements Serializable {
     private Integer idCredito;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "TOTAL_CREDITO")
-    private float totalCredito;
+    @Column(name = "MONTO_ABONADO")
+    private float montoAbonado;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "FECHA_CREDITO_PROCESO")
+    @Column(name = "FECHA_PAGO")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaCreditoProceso;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 1)
-    @Column(name = "ESTADO_CREDITO")
-    private String estadoCredito;
+    private Date fechaPago;
+//    @Basic(optional = false)
+//    @NotNull
+//    @Size(min = 1, max = 1)
+//    @Column(name = "ESTADO_CREDITO")
+//    private String estadoCredito;
     @JoinTable(name = "Creditos_Cuentas_Cobrar", joinColumns = {
         @JoinColumn(name = "ID_CREDITO", referencedColumnName = "ID_CREDITO")}, inverseJoinColumns = {
         @JoinColumn(name = "ID_COBRAR", referencedColumnName = "ID_COBRAR")})
     @ManyToMany
     private List<CuentasCobrar> cuentasCobrarList;
-    @JoinColumn(name = "ID_CLIENTE", referencedColumnName = "ID_CLIENTE")
+    @JoinColumn(name = "ID_FACTURA", referencedColumnName = "ID_FACTURA")
     @ManyToOne
-    private Clientes idCliente;
+    private Facturas idFactura;
     @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")
     @ManyToOne
     private Usuarios idUsuario;
@@ -78,11 +78,11 @@ public class Creditos implements Serializable {
         this.idCredito = idCredito;
     }
 
-    public Creditos(Integer idCredito, float totalCredito, Date fechaCreditoProceso, String estadoCredito) {
+    public Creditos(Integer idCredito, float MontoAbonado, Date fechaPago, String estadoCredito) {
         this.idCredito = idCredito;
-        this.totalCredito = totalCredito;
-        this.fechaCreditoProceso = fechaCreditoProceso;
-        this.estadoCredito = estadoCredito;
+        this.montoAbonado = MontoAbonado;
+        this.fechaPago = fechaPago;
+//        this.estadoCredito = estadoCredito;
     }
 
     public Integer getIdCredito() {
@@ -93,30 +93,29 @@ public class Creditos implements Serializable {
         this.idCredito = idCredito;
     }
 
-    public float getTotalCredito() {
-        return totalCredito;
+    public float getMontoAbonado() {
+        return montoAbonado;
     }
 
-    public void setTotalCredito(float totalCredito) {
-        this.totalCredito = totalCredito;
+    public void setMontoAbonado(float montoAbonado) {
+        this.montoAbonado = montoAbonado;
     }
 
-    public Date getFechaCreditoProceso() {
-        return fechaCreditoProceso;
+    public Date getFechaPago() {
+        return fechaPago;
     }
 
-    public void setFechaCreditoProceso(Date fechaCreditoProceso) {
-        this.fechaCreditoProceso = fechaCreditoProceso;
+    public void setFechaPago(Date fechaPago) {
+        this.fechaPago = fechaPago;
     }
 
-    public String getEstadoCredito() {
-        return estadoCredito;
-    }
-
-    public void setEstadoCredito(String estadoCredito) {
-        this.estadoCredito = estadoCredito;
-    }
-
+//    public String getEstadoCredito() {
+//        return estadoCredito;
+//    }
+//
+//    public void setEstadoCredito(String estadoCredito) {
+//        this.estadoCredito = estadoCredito;
+//    }
     public List<CuentasCobrar> getCuentasCobrarList() {
         return cuentasCobrarList;
     }
@@ -125,12 +124,12 @@ public class Creditos implements Serializable {
         this.cuentasCobrarList = cuentasCobrarList;
     }
 
-    public Clientes getIdCliente() {
-        return idCliente;
+    public Facturas getIdCliente() {
+        return idFactura;
     }
 
-    public void setIdCliente(Clientes idCliente) {
-        this.idCliente = idCliente;
+    public void setIdCliente(Facturas idFacturas) {
+        this.idFactura = idFacturas;
     }
 
     public Usuarios getIdUsuario() {
@@ -165,5 +164,5 @@ public class Creditos implements Serializable {
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Creditos[ idCredito=" + idCredito + " ]";
     }
-    
+
 }

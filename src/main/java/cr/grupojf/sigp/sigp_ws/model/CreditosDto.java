@@ -22,9 +22,9 @@ public class CreditosDto {
     
     public CreditosDto(Creditos credito){
         this.id = credito.getIdCredito();
-        this.credito = credito.getTotalCredito();
-        this.fechaProceso = credito.getFechaCreditoProceso();
-        this.estado = credito.getEstadoCredito();
+        this.credito = credito.getMontoAbonado();
+        this.fechaProceso = credito.getFechaPago();
+//        this.estado = credito.getEstadoCredito();
     }
 
     public Integer getId() {

@@ -5,6 +5,7 @@ import cr.grupojf.sigp.sigp_ws.model.BodegasProductos;
 import cr.grupojf.sigp.sigp_ws.model.Cerdos;
 import cr.grupojf.sigp.sigp_ws.model.Embarazos;
 import cr.grupojf.sigp.sigp_ws.model.EmbarazosDto;
+import cr.grupojf.sigp.sigp_ws.model.Facturas;
 import cr.grupojf.sigp.sigp_ws.model.Inseminacion;
 import cr.grupojf.sigp.sigp_ws.model.InseminacionDto;
 import cr.grupojf.sigp.sigp_ws.model.ProductosDto;
@@ -14,8 +15,12 @@ import cr.grupojf.sigp.sigp_ws.model.ReporteGananciaDto;
 import cr.grupojf.sigp.sigp_ws.model.ReporteInventarioDto;
 import cr.grupojf.sigp.sigp_ws.model.ReportePendienteDto;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
+import cr.grupojf.sigp.sigp_ws.util.DateUtils;
+import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
 import cr.grupojf.sigp.sigp_ws.util.Respuesta;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -108,7 +113,7 @@ public class ReportesService {
             List<Cerdos> cerdas = query.getResultList();
             List<ReporteGananciaDto> reporteDto = new ArrayList<>();
             for (int i = 0; i < 10; i++) {
-                reporteDto.add(new ReporteGananciaDto( "10-10-2010", 505000f));
+                reporteDto.add(new ReporteGananciaDto("10-10-2010", 505000f));
 
             }
 
@@ -125,14 +130,8 @@ public class ReportesService {
             List<BodegasProductos> bodegasProductos = query.getResultList();
             List<ReporteInventarioDto> reporteDto = new ArrayList<>();
             for (BodegasProductos bp : bodegasProductos) {
-                reporteDto.add(new ReporteInventarioDto(new ProductosDto(bp.getIdProducto()),bp.getCantidadProducto(),new BodegaDto(bp.getIdBodega())));
+                reporteDto.add(new ReporteInventarioDto(new ProductosDto(bp.getIdProducto()), bp.getCantidadProducto(), new BodegaDto(bp.getIdBodega())));
             }
-            
-//            for (int i = 0; i < 10; i++) {
-//                reporteDto.add(new ReporteInventarioDto(new ProductosDto(), 5f, new BodegaDto()));
-//
-//            }
-
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", reporteDto);
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al consultar los inventarios del sistema", ex);
@@ -142,14 +141,24 @@ public class ReportesService {
 
     public Respuesta getReportePendientes() {
         try {
-            Query query = em.createNamedQuery("Cerdos.findAll", Cerdos.class);
-            List<Cerdos> cerdas = query.getResultList();
-            List<ReportePendienteDto> reporteDto = new ArrayList<>();
-            for (int i = 0; i < 10; i++) {
-                reporteDto.add(new ReportePendienteDto("Cliente" + i, 0f, 0f, "10-10-2010", i));
-
+            Query query = em.createNamedQuery("Facturas.pendientes", Facturas.class);
+            List<Object[]> reportResult = query.getResultList();
+            List<ReportePendienteDto> reportesDto = new ArrayList<>();
+            for (Object[] r : reportResult) {
+                Date date = ((Facturas) r[0]).getFechaFactura();
+                Float total = ((Facturas) r[0]).getTotalFactura();
+                Float pagado = Float.valueOf(String.valueOf(((Double)r[1])));
+                reportesDto.add(new ReportePendienteDto(((Facturas) r[0]).getIdCliente().getIdPersona().getFullname(),
+                        total,
+                        total - pagado,
+                        LocalDateAdapter.adaptToJson(date),
+                        new DateUtils().daysBetween(date, new Date())));
             }
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", reporteDto);
+//            for (int i = 0; i < 10; i++) {
+//                reportesDto.add(new ReportePendienteDto("Cliente" + i, 0f, 0f, "10-10-2010", i));
+//
+//            }
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", reportesDto);
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al consultar las cajas en el sistema", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar las pendientes del sistema.", "getReportePendientes " + ex.getMessage());

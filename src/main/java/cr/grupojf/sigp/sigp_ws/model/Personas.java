@@ -200,4 +200,8 @@ public class Personas implements Serializable {
         this.nombrePersona = personaDto.getNombre();
     }
     
+    public String getFullname(){
+        return nombrePersona + " " + apellidoPersona + " " + apellido2Persona;
+    }
+    
 }

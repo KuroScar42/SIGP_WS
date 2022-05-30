@@ -78,8 +78,8 @@ public class Clientes implements Serializable {
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
     @ManyToOne
     private Personas idPersona;
-    @OneToMany(mappedBy = "idCliente")
-    private List<Creditos> creditosList;
+//    @OneToMany(mappedBy = "idCliente")
+//    private List<Creditos> creditosList;
 
     public Clientes() {
     }
@@ -181,13 +181,13 @@ public class Clientes implements Serializable {
         this.idPersona = idPersona;
     }
 
-    public List<Creditos> getCreditosList() {
-        return creditosList;
-    }
-
-    public void setCreditosList(List<Creditos> creditosList) {
-        this.creditosList = creditosList;
-    }
+//    public List<Creditos> getCreditosList() {
+//        return creditosList;
+//    }
+//
+//    public void setCreditosList(List<Creditos> creditosList) {
+//        this.creditosList = creditosList;
+//    }
 
     @Override
     public int hashCode() {
