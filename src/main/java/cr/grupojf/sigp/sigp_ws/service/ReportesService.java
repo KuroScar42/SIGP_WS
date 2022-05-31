@@ -1,5 +1,6 @@
 package cr.grupojf.sigp.sigp_ws.service;
 
+import cr.grupojf.sigp.sigp_ws.model.AperturaCajas;
 import cr.grupojf.sigp.sigp_ws.model.BodegaDto;
 import cr.grupojf.sigp.sigp_ws.model.BodegasProductos;
 import cr.grupojf.sigp.sigp_ws.model.Cerdos;
@@ -46,12 +47,17 @@ public class ReportesService {
 
     public Respuesta getReporteCajas() {
         try {
-            Query query = em.createNamedQuery("Cerdos.findAll", Cerdos.class);
-            List<Cerdos> cerdas = query.getResultList();
+//            Query query = em.createNamedQuery("AperturaCajas.numCajas", AperturaCajas.class);
+            Query query = em.
+                    createNativeQuery("SELECT a.NUM_CAJA,DATE(a.FECHA_CAJA),COUNT(a.ID_APERTURA), COUNT(c.ID_CIERRE) FROM Apertura_Cajas a LEFT JOIN Cierres_Cajas c ON c.ID_APERTURA = a.ID_APERTURA GROUP BY a.NUM_CAJA,DATE(a.FECHA_CAJA);");
+            List<Object[]> aperturas = query.getResultList();
             List<ReporteCajaDto> reporteDto = new ArrayList<>();
-            for (int i = 0; i < 10; i++) {
-                reporteDto.add(new ReporteCajaDto(String.valueOf(i), "10-10-2010", 5, 5));
-
+//            for (int i = 0; i < 10; i++) {
+//                reporteDto.add(new ReporteCajaDto(String.valueOf(i), "10-10-2010", 5, 5));
+//
+//            }
+            for (Object[] a : aperturas) {
+                reporteDto.add(new ReporteCajaDto((String) a[0], LocalDateAdapter.adaptToJson((Date) a[1]), Integer.valueOf(String.valueOf(a[2])), Integer.valueOf(String.valueOf(a[3]))));
             }
 
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", reporteDto);
@@ -147,7 +153,7 @@ public class ReportesService {
             for (Object[] r : reportResult) {
                 Date date = ((Facturas) r[0]).getFechaFactura();
                 Float total = ((Facturas) r[0]).getTotalFactura();
-                Float pagado = Float.valueOf(String.valueOf(((Double)r[1])));
+                Float pagado = Float.valueOf(String.valueOf(((Double) r[1])));
                 reportesDto.add(new ReportePendienteDto(((Facturas) r[0]).getIdCliente().getIdPersona().getFullname(),
                         total,
                         total - pagado,

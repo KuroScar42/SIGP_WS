@@ -39,6 +39,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "AperturaCajas.findByIdApertura", query = "SELECT a FROM AperturaCajas a WHERE a.idApertura = :idApertura"),
     @NamedQuery(name = "AperturaCajas.findByFechaCaja", query = "SELECT a FROM AperturaCajas a WHERE a.fechaCaja = :fechaCaja"),
     @NamedQuery(name = "AperturaCajas.findByNumCaja", query = "SELECT a FROM AperturaCajas a WHERE a.numCaja = :numCaja and a.estadoCaja = 'A' order by a.fechaCaja desc", hints = @QueryHint(name = "eclipselink.refresh", value = "true")),
+//    @NamedQuery(name = "AperturaCajas.numCajas", query = "SELECT a,COUNT(a.idApertura), COUNT(c.idCierre) FROM AperturaCajas a LEFT JOIN a.cierresCajasList c GROUP BY a.numCaja,DATE(a.fechaCaja)", hints = @QueryHint(name = "eclipselink.refresh", value = "true")),
     @NamedQuery(name = "AperturaCajas.findByEstadoCaja", query = "SELECT a FROM AperturaCajas a WHERE a.estadoCaja = :estadoCaja")})
 public class AperturaCajas implements Serializable {
 
