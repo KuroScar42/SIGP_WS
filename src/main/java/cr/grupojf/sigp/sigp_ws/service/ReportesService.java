@@ -115,13 +115,18 @@ public class ReportesService {
 
     public Respuesta getReporteGanancias() {
         try {
-            Query query = em.createNamedQuery("Cerdos.findAll", Cerdos.class);
-            List<Cerdos> cerdas = query.getResultList();
+//            Query query = em.createNamedQuery("Cerdos.findAll", Cerdos.class);
+            Query query = em.createNativeQuery("SELECT DATE(f.FECHA_FACTURA), SUM(f.TOTAL_FACTURA) FROM Facturas f GROUP BY DATE(f.FECHA_FACTURA);");
+            List<Object[]> reporte = query.getResultList();
             List<ReporteGananciaDto> reporteDto = new ArrayList<>();
-            for (int i = 0; i < 10; i++) {
-                reporteDto.add(new ReporteGananciaDto("10-10-2010", 505000f));
-
+            for (Object[] g : reporte) {
+                reporteDto.add(new ReporteGananciaDto(LocalDateAdapter.adaptToJson((Date) g[0]), Float.valueOf(String.valueOf(g[1]))));
             }
+            
+//            for (int i = 0; i < 10; i++) {
+//                reporteDto.add(new ReporteGananciaDto("10-10-2010", 505000f));
+//
+//            }
 
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", reporteDto);
         } catch (Exception ex) {
