@@ -41,7 +41,7 @@ import javax.persistence.Query;
 @LocalBean
 public class ReportesService {
 
-    private static final Logger LOG = Logger.getLogger(UsuariosService.class.getName());
+    private static final Logger LOG = Logger.getLogger(ReportesService.class.getName());
     @PersistenceContext(unitName = "sigp_PU")
     protected EntityManager em;
 

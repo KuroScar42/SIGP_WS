@@ -145,6 +145,10 @@ public class Facturas implements Serializable {
         this.idFactura = idFactura;
     }
 
+    public Facturas(FacturasDto fd){
+        this.idFactura = fd.getId();
+        actualizarFactura(fd);
+    }
     public Facturas(Integer idFactura, String tipoFactura, String referenciaFactura, String claveFactura, String electronicaFactura, Date fechaFactura, String estadoFactura, int versionFactura, float subtotalFactura, float ivaFactura, float totalFactura, float pagoFactura, float vueltoFactura, String observacionesFactura) {
         this.idFactura = idFactura;
         this.tipoFactura = tipoFactura;
@@ -162,6 +166,7 @@ public class Facturas implements Serializable {
         this.observacionesFactura = observacionesFactura;
     }
 
+  
     public Integer getIdFactura() {
         return idFactura;
     }
@@ -353,6 +358,16 @@ public class Facturas implements Serializable {
     @Override
     public String toString() {
         return "cr.grupojf.sigp.sigp_ws.model.Facturas[ idFactura=" + idFactura + " ]";
+    }
+    
+    public void actualizarFactura(FacturasDto fd){
+        this.claveFactura = fd.getClave();
+        this.electronicaFactura =fd.getElectronica();
+        this.estadoFactura = fd.getEstado();
+        //this.creditosList =
+        //this.facturasProductosList = 
+        this.fechaFactura = fd.getFecha();
+        //this.
     }
 
 }
