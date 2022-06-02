@@ -24,7 +24,15 @@ public class FacturasDto {
     private Float total;
     private Float pago;
     private Float vuelto;
+    private ClientesDto cliente;
+    private EmisoresDto emisor;
+    private MetodosPagoDto metodo;
+    private AperturaCajasDto apertura;
+    private String observaciones;
 
+
+    
+    
     public FacturasDto() {
     }
     
@@ -41,6 +49,19 @@ public class FacturasDto {
         this.total = f.getTotalFactura();
         this.pago = f.getPagoFactura();
         this.vuelto = f.getVueltoFactura();
+        this.observaciones = f.getObservacionesFactura();
+        if (f.getIdCliente() != null) {
+            this.cliente = new ClientesDto(f.getIdCliente());
+        }
+        if (f.getIdEmisor()!= null) {
+            this.emisor = new EmisoresDto(f.getIdEmisor());
+        }
+        if (f.getIdMetodo() != null) {
+            this.metodo = new MetodosPagoDto(f.getIdMetodo());
+        }
+        if (f.getIdApertura()!= null) {
+            this.apertura = new AperturaCajasDto(f.getIdApertura());
+        }
     }
 
     public Integer getId() {
@@ -139,8 +160,46 @@ public class FacturasDto {
         this.vuelto = vuelto;
     }
     
+    public ClientesDto getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ClientesDto cliente) {
+        this.cliente = cliente;
+    }
+
+    public EmisoresDto getEmisor() {
+        return emisor;
+    }
+
+    public void setEmisor(EmisoresDto emisor) {
+        this.emisor = emisor;
+    }
+
+    public MetodosPagoDto getMetodo() {
+        return metodo;
+    }
+
+    public void setMetodo(MetodosPagoDto metodo) {
+        this.metodo = metodo;
+    }
+
+    public AperturaCajasDto getApertura() {
+        return apertura;
+    }
+
+    public void setApertura(AperturaCajasDto apertura) {
+        this.apertura = apertura;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
     
-    
-    
+
     
 }

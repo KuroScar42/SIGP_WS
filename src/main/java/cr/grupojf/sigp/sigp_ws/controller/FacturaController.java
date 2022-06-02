@@ -9,6 +9,7 @@ import cr.grupojf.sigp.sigp_ws.model.ClientesDto;
 import cr.grupojf.sigp.sigp_ws.model.FacturasDto;
 import cr.grupojf.sigp.sigp_ws.model.PersonasDto;
 import cr.grupojf.sigp.sigp_ws.service.ClienteService;
+import cr.grupojf.sigp.sigp_ws.service.FacturaService;
 import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
 import cr.grupojf.sigp.sigp_ws.util.Respuesta;
 import java.util.List;
@@ -32,7 +33,7 @@ import javax.ws.rs.core.Response;
 @Path("/FacturaController")
 public class FacturaController {
     @EJB
-    private ClienteService service;
+    private FacturaService service;
     
     
     @POST
@@ -41,7 +42,7 @@ public class FacturaController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response guardarFactura(FacturasDto facturaDto) {
         try {
-            Respuesta respuesta = service.guardarCliente(clienteDto);
+            Respuesta respuesta = service.guardarFactura(facturaDto);
             if (!respuesta.getEstado()) {
                 return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
             }
@@ -52,7 +53,7 @@ public class FacturaController {
         }
     }
     
-    @GET
+    /*@GET
     @Path("/getfactura")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -104,5 +105,5 @@ public class FacturaController {
             Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar la persona").build();
         }
-    }
+    }*/
 }

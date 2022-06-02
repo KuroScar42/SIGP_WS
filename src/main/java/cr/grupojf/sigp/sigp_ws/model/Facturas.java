@@ -360,14 +360,18 @@ public class Facturas implements Serializable {
         return "cr.grupojf.sigp.sigp_ws.model.Facturas[ idFactura=" + idFactura + " ]";
     }
     
-    public void actualizarFactura(FacturasDto fd){
+    public final void actualizarFactura(FacturasDto fd){
         this.claveFactura = fd.getClave();
         this.electronicaFactura =fd.getElectronica();
         this.estadoFactura = fd.getEstado();
-        //this.creditosList =
-        //this.facturasProductosList = 
         this.fechaFactura = fd.getFecha();
-        //this.
+        this.referenciaFactura = fd.getReferencia();
+        this.subtotalFactura = fd.getSubTotal();
+        this.ivaFactura = fd.getIva();
+        this.totalFactura = fd.getTotal();
+        this.pagoFactura = fd.getPago();
+        this.vueltoFactura = fd.getVuelto();
+        this.observacionesFactura = fd.getObservaciones();
     }
 
 }
