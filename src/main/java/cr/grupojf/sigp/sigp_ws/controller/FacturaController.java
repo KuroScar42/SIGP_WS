@@ -53,6 +53,25 @@ public class FacturaController {
         }
     }
     
+    @GET
+    @Path("/getFacturas")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getClientes() {
+        try {
+            Respuesta respuesta = service.getFacturas();
+            if (!respuesta.getEstado()) {
+                return Response.status(respuesta.getCodigoRespuesta().getValue()).entity(respuesta.getMensaje()).build();
+            }
+            List resultado = (List) respuesta.getResultado();
+            return Response.ok(new GenericEntity<List<FacturasDto>>(resultado) {
+            }).build();
+        } catch (Exception ex) {
+            Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al consultar las facturas").build();
+        }
+    }
+    
     /*@GET
     @Path("/getfactura")
     @Produces(MediaType.APPLICATION_JSON)

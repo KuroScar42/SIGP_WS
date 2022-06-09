@@ -10,15 +10,22 @@ import cr.grupojf.sigp.sigp_ws.util.CodigoRespuesta;
 import cr.grupojf.sigp.sigp_ws.util.Respuesta;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
  * @author sigp
  */
+@Stateless
+@LocalBean
 public class FacturaService {
     private static final Logger LOG = Logger.getLogger(FacturaService.class.getName());
     @PersistenceContext(unitName = "sigp_PU")
@@ -57,6 +64,23 @@ public class FacturaService {
             }
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar la Factura", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar la Factura", "guardarFactura " + ex.getMessage());
+        }
+    }
+
+    public Respuesta getFacturas() {
+        try {
+            Query query = em.createNamedQuery("Facturas.findAll", Facturas.class);
+            List<Facturas> facturas = query.getResultList();
+            List<FacturasDto> facturasList = new ArrayList<>();
+            
+            facturas.forEach((factura) -> {
+                facturasList.add(new FacturasDto(factura));
+            });
+            
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", facturasList);
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar las facturas.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar las facturas.", "getFacturas" + ex.getMessage());
         }
     }
     
