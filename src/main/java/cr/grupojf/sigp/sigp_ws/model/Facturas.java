@@ -4,9 +4,12 @@
  */
 package cr.grupojf.sigp.sigp_ws.model;
 
+import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -364,7 +367,11 @@ public class Facturas implements Serializable {
         this.claveFactura = fd.getClave();
         this.electronicaFactura =fd.getElectronica();
         this.estadoFactura = fd.getEstado();
-        this.fechaFactura = fd.getFecha();
+        try {
+            this.fechaFactura = LocalDateAdapter.adaptFromJson(fd.getFecha());
+        } catch (Exception ex) {
+            Logger.getLogger(Facturas.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.referenciaFactura = fd.getReferencia();
         this.subtotalFactura = fd.getSubTotal();
         this.ivaFactura = fd.getIva();

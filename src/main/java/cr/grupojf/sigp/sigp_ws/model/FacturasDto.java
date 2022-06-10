@@ -5,7 +5,10 @@
  */
 package cr.grupojf.sigp.sigp_ws.model;
 
+import cr.grupojf.sigp.sigp_ws.util.LocalDateAdapter;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,7 +20,7 @@ public class FacturasDto {
     private String referencia;
     private String clave;
     private String electronica;
-    private Date fecha;
+    private String fecha;
     private String estado;
     private Float subTotal;
     private Float iva;
@@ -25,10 +28,11 @@ public class FacturasDto {
     private Float pago;
     private Float vuelto;
     private ClientesDto cliente;
-    private EmisoresDto emisor;
+    private Integer emisor;
     private MetodosPagoDto metodo;
     private AperturaCajasDto apertura;
     private String observaciones;
+    private Integer usuario;
 
 
     
@@ -42,7 +46,11 @@ public class FacturasDto {
         this.referencia = f.getReferenciaFactura();
         this.clave = f.getClaveFactura();
         this.electronica = f.getElectronicaFactura();
-        this.fecha = f.getFechaFactura();
+        try {
+            this.fecha = LocalDateAdapter.adaptToJson(f.getFechaFactura());
+        } catch (Exception ex) {
+            Logger.getLogger(FacturasDto.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.estado = f.getEstadoFactura();
         this.subTotal = f.getSubtotalFactura();
         this.iva = f.getIvaFactura();
@@ -54,7 +62,7 @@ public class FacturasDto {
             this.cliente = new ClientesDto(f.getIdCliente());
         }
         if (f.getIdEmisor()!= null) {
-            this.emisor = new EmisoresDto(f.getIdEmisor());
+            this.emisor = f.getIdEmisor().getIdEmisor();
         }
         if (f.getIdMetodo() != null) {
             this.metodo = new MetodosPagoDto(f.getIdMetodo());
@@ -104,11 +112,11 @@ public class FacturasDto {
         this.electronica = electronica;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
@@ -168,11 +176,11 @@ public class FacturasDto {
         this.cliente = cliente;
     }
 
-    public EmisoresDto getEmisor() {
+    public Integer getEmisor() {
         return emisor;
     }
 
-    public void setEmisor(EmisoresDto emisor) {
+    public void setEmisor(Integer emisor) {
         this.emisor = emisor;
     }
 
