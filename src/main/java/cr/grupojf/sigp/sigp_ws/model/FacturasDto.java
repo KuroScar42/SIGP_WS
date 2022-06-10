@@ -70,6 +70,9 @@ public class FacturasDto {
         if (f.getIdApertura()!= null) {
             this.apertura = new AperturaCajasDto(f.getIdApertura());
         }
+        if(f.getIdUsuario()!=null){
+            this.usuario = f.getIdUsuario().getIdUsuario();
+        }
     }
 
     public Integer getId() {
@@ -207,7 +210,15 @@ public class FacturasDto {
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
-    
 
+    public Integer getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Integer usuario) {
+        this.usuario = usuario;
+    }
+    
+    
     
 }
